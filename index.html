@@ -1,0 +1,1774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pick My Task - Earn Money Completing Tasks</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* CSS Styles */
+        :root {
+            --primary: #0088cc;
+            --primary-dark: #006699;
+            --secondary: #34b7f1;
+            --accent: #ff6b35;
+            --success: #28a745;
+            --warning: #ffc107;
+            --danger: #dc3545;
+            --dark: #343a40;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+            --border: #dee2e6;
+            --shadow: 0 4px 12px rgba(0,0,0,0.1);
+            --radius: 10px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            color: var(--dark);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 30px;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-weight: 500;
+        }
+
+        nav ul li a:hover, nav ul li a.active {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--primary);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: var(--transition);
+            font-weight: 600;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0,0,0,0.15);
+        }
+
+        .btn-success {
+            background: var(--success);
+        }
+
+        .btn-warning {
+            background: var(--warning);
+            color: var(--dark);
+        }
+
+        .btn-danger {
+            background: var(--danger);
+        }
+
+        .btn-accent {
+            background: var(--accent);
+        }
+
+        .page {
+            display: none;
+            padding: 30px 0;
+            min-height: calc(100vh - 140px);
+        }
+
+        .page.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .page-header {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 2.2rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .page-header p {
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 25px;
+            margin-bottom: 25px;
+            transition: var(--transition);
+            border: 1px solid var(--border);
+        }
+
+        .card:hover {
+            box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+        }
+
+        .card h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .task-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .task-card {
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 20px;
+            transition: var(--transition);
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .task-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+
+        .task-category {
+            display: inline-block;
+            background: var(--light);
+            color: var(--gray);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-bottom: 15px;
+            align-self: flex-start;
+        }
+
+        .task-card h3 {
+            color: var(--dark);
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .task-card p {
+            color: var(--gray);
+            margin-bottom: 20px;
+            flex-grow: 1;
+            font-size: 0.95rem;
+        }
+
+        .task-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+        }
+
+        .task-reward {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--success);
+        }
+
+        .wallet-balance {
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border-radius: var(--radius);
+            margin-bottom: 30px;
+        }
+
+        .balance-amount {
+            font-size: 3rem;
+            font-weight: 700;
+            margin: 15px 0;
+        }
+
+        .wallet-actions {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .transaction-list {
+            list-style: none;
+        }
+
+        .transaction-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .transaction-item:last-child {
+            border-bottom: none;
+        }
+
+        .transaction-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .transaction-amount {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .positive {
+            color: var(--success);
+        }
+
+        .negative {
+            color: var(--danger);
+        }
+
+        .referral-card {
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, var(--accent) 0%, #ff8c5a 100%);
+            color: white;
+            border-radius: var(--radius);
+            margin-bottom: 30px;
+        }
+
+        .referral-code {
+            font-family: monospace;
+            font-size: 1.8rem;
+            letter-spacing: 3px;
+            background: rgba(255,255,255,0.2);
+            padding: 15px;
+            border-radius: var(--radius);
+            margin: 20px 0;
+            display: inline-block;
+        }
+
+        .referral-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px 20px;
+            border-radius: var(--radius);
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-value {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 10px 0;
+        }
+
+        .stat-label {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: white;
+            box-shadow: var(--shadow);
+        }
+
+        .profile-info {
+            flex: 1;
+        }
+
+        .profile-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .profile-detail {
+            color: var(--gray);
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .profile-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .profile-stat {
+            text-align: center;
+            padding: 15px;
+            background: var(--light);
+            border-radius: var(--radius);
+        }
+
+        .profile-stat-value {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .profile-stat-label {
+            font-size: 0.85rem;
+            color: var(--gray);
+            margin-top: 5px;
+        }
+
+        .login-container {
+            max-width: 450px;
+            margin: 0 auto;
+            padding: 40px 0;
+        }
+
+        .login-card {
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 40px;
+            text-align: center;
+        }
+
+        .login-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 136, 204, 0.2);
+            outline: none;
+        }
+
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 40px 0 20px;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .footer-section p, .footer-section a {
+            color: #adb5bd;
+            margin-bottom: 10px;
+            display: block;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #495057;
+            color: #adb5bd;
+            font-size: 0.9rem;
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 20px;
+        }
+
+        .tab {
+            padding: 12px 25px;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--gray);
+            border-bottom: 3px solid transparent;
+            transition: var(--transition);
+        }
+
+        .tab.active {
+            color: var(--primary);
+            border-bottom: 3px solid var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1100;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: var(--radius);
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray);
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: var(--radius);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .alert-success {
+            background: rgba(40, 167, 69, 0.1);
+            border: 1px solid var(--success);
+            color: var(--success);
+        }
+
+        .alert-error {
+            background: rgba(220, 53, 69, 0.1);
+            border: 1px solid var(--danger);
+            color: var(--danger);
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .task-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .wallet-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .wallet-actions .btn {
+                width: 100%;
+                max-width: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-tasks"></i>
+                    <span>Pick My Task</span>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a class="nav-link active" data-page="home" href="#"><i class="fas fa-home"></i> Home</a></li>
+                        <li><a class="nav-link" data-page="tasks" href="#"><i class="fas fa-list-check"></i> Tasks</a></li>
+                        <li><a class="nav-link" data-page="wallet" href="#"><i class="fas fa-wallet"></i> Wallet</a></li>
+                        <li><a class="nav-link" data-page="referral" href="#"><i class="fas fa-user-friends"></i> Referral</a></li>
+                        <li><a class="nav-link" data-page="profile" href="#"><i class="fas fa-user"></i> Profile</a></li>
+                    </ul>
+                </nav>
+                <div class="user-actions">
+                    <span class="balance-preview" id="user-balance" style="display: none;">₹0.00</span>
+                    <a class="btn btn-accent" href="#" id="login-btn"><i class="fas fa-sign-in-alt"></i> Login</a>
+                    <a class="btn btn-danger" href="#" id="logout-btn" style="display: none;"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="page active" id="home">
+            <div class="page-header">
+                <h1>Earn Money Completing Simple Tasks</h1>
+                <p>Complete tasks like opening bank accounts, applying for credit cards, and more to earn real money!</p>
+            </div>
+            <div class="card">
+                <h2><i class="fas fa-bolt"></i> Featured Tasks</h2>
+                <div class="task-grid" id="featured-tasks">
+                    <!-- Featured tasks will be loaded here -->
+                </div>
+            </div>
+            <div class="card">
+                <h2><i class="fas fa-chart-line"></i> How It Works</h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top: 20px;">
+                    <div style="text-align: center;">
+                        <div style="background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); color: white; width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; font-size: 1.8rem;">
+                            <i class="fas fa-user-plus"></i>
+                        </div>
+                        <h3>1. Sign Up</h3>
+                        <p>Create your account in less than a minute</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); color: white; width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; font-size: 1.8rem;">
+                            <i class="fas fa-tasks"></i>
+                        </div>
+                        <h3>2. Complete Tasks</h3>
+                        <p>Choose from various verified earning tasks</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); color: white; width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; font-size: 1.8rem;">
+                            <i class="fas fa-rupee-sign"></i>
+                        </div>
+                        <h3>3. Get Paid</h3>
+                        <p>Receive money directly to your wallet</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="page" id="tasks">
+            <div class="page-header">
+                <h1>Available Tasks</h1>
+                <p>Complete these tasks to earn money. New tasks added regularly!</p>
+            </div>
+            <div class="tabs">
+                <div class="tab active" data-tab="all">All Tasks</div>
+                <div class="tab" data-tab="banking">Banking</div>
+                <div class="tab" data-tab="finance">Finance</div>
+                <div class="tab" data-tab="other">Other</div>
+            </div>
+            <div class="tab-content active" id="tab-all">
+                <div class="task-grid" id="all-tasks">
+                    <!-- All tasks will be loaded here -->
+                </div>
+            </div>
+            <div class="tab-content" id="tab-banking">
+                <div class="task-grid" id="banking-tasks">
+                    <!-- Banking tasks will be loaded here -->
+                </div>
+            </div>
+            <div class="tab-content" id="tab-finance">
+                <div class="task-grid" id="finance-tasks">
+                    <!-- Finance tasks will be loaded here -->
+                </div>
+            </div>
+            <div class="tab-content" id="tab-other">
+                <div class="task-grid" id="other-tasks">
+                    <!-- Other tasks will be loaded here -->
+                </div>
+            </div>
+        </section>
+
+        <section class="page" id="wallet">
+            <div class="page-header">
+                <h1>Your Wallet</h1>
+                <p>Manage your earnings and withdraw money to your bank account</p>
+            </div>
+            <div class="wallet-balance">
+                <h2>Current Balance</h2>
+                <div class="balance-amount" id="wallet-balance">₹0.00</div>
+                <p>Available for withdrawal</p>
+                <div class="wallet-actions">
+                    <a class="btn btn-success" href="#" id="add-money-btn"><i class="fas fa-plus"></i> Add Money</a>
+                    <a class="btn" href="#" id="withdraw-btn"><i class="fas fa-download"></i> Withdraw</a>
+                    <a class="btn btn-warning" href="#" id="transaction-history-btn"><i class="fas fa-exchange-alt"></i> Transaction History</a>
+                </div>
+            </div>
+            <div class="card">
+                <h2><i class="fas fa-clock-rotate-left"></i> Recent Transactions</h2>
+                <ul class="transaction-list" id="transaction-list">
+                    <!-- Transactions will be loaded here -->
+                </ul>
+            </div>
+        </section>
+
+        <section class="page" id="referral">
+            <div class="page-header">
+                <h1>Refer & Earn</h1>
+                <p>Invite your friends and earn ₹50 for each successful referral</p>
+            </div>
+            <div class="referral-card">
+                <h2>Your Referral Code</h2>
+                <div class="referral-code" id="referral-code">PMT2023XYZ</div>
+                <p>Share this code with your friends and earn when they complete tasks</p>
+                <a class="btn" href="#" id="share-btn"><i class="fas fa-share-alt"></i> Share Code</a>
+            </div>
+            <div class="referral-stats">
+                <div class="stat-card">
+                    <div class="stat-value" id="total-referrals">0</div>
+                    <div class="stat-label">Total Referrals</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="referral-earnings">₹0</div>
+                    <div class="stat-label">Earned from Referrals</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">₹50</div>
+                    <div class="stat-label">Per Referral</div>
+                </div>
+            </div>
+            <div class="card">
+                <h2><i class="fas fa-users"></i> Referred Friends</h2>
+                <div id="referred-friends">
+                    <p style="text-align: center; padding: 20px; color: var(--gray);">You haven't referred anyone yet. Share your code to start earning!</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="page" id="profile">
+            <div class="page-header">
+                <h1>Your Profile</h1>
+                <p>Manage your account and track your progress</p>
+            </div>
+            <div class="card">
+                <div class="profile-header">
+                    <div class="profile-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="profile-info">
+                        <div class="profile-name" id="user-name">User Name</div>
+                        <div class="profile-detail">
+                            <i class="fas fa-phone"></i>
+                            <span id="user-phone">+91 9876543210</span>
+                        </div>
+                        <div class="profile-detail">
+                            <i class="fas fa-envelope"></i>
+                            <span id="user-email">user@example.com</span>
+                        </div>
+                        <div style="margin-top: 15px;">
+                            <a class="btn" href="#" id="edit-profile-btn"><i class="fas fa-edit"></i> Edit Profile</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-stats">
+                    <div class="profile-stat">
+                        <div class="profile-stat-value" id="completed-tasks">0</div>
+                        <div class="profile-stat-label">Tasks Completed</div>
+                    </div>
+                    <div class="profile-stat">
+                        <div class="profile-stat-value" id="total-earnings">₹0</div>
+                        <div class="profile-stat-label">Total Earned</div>
+                    </div>
+                    <div class="profile-stat">
+                        <div class="profile-stat-value" id="user-referrals">0</div>
+                        <div class="profile-stat-label">Referrals</div>
+                    </div>
+                    <div class="profile-stat">
+                        <div class="profile-stat-value" id="member-since">0</div>
+                        <div class="profile-stat-label">Days</div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <h2><i class="fas fa-cog"></i> Account Settings</h2>
+                <div style="margin-top: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid var(--border);">
+                        <div>
+                            <div style="font-weight: 600;">Notification Settings</div>
+                            <div style="color: var(--gray); font-size: 0.9rem;">Manage how we contact you</div>
+                        </div>
+                        <a class="btn" href="#" style="padding: 8px 15px;">Edit</a>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid var(--border);">
+                        <div>
+                            <div style="font-weight: 600;">Payment Methods</div>
+                            <div style="color: var(--gray); font-size: 0.9rem;">Manage your withdrawal options</div>
+                        </div>
+                        <a class="btn" href="#" style="padding: 8px 15px;">Manage</a>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid var(--border);">
+                        <div>
+                            <div style="font-weight: 600;">Privacy Policy</div>
+                            <div style="color: var(--gray); font-size: 0.9rem;">How we protect your data</div>
+                        </div>
+                        <a class="btn" href="#" style="padding: 8px 15px;">View</a>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0;">
+                        <div>
+                            <div style="font-weight: 600;">Terms of Service</div>
+                            <div style="color: var(--gray); font-size: 0.9rem;">Our terms and conditions</div>
+                        </div>
+                        <a class="btn" href="#" style="padding: 8px 15px;">View</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="page active" id="login">
+            <div class="login-container">
+                <div class="login-card">
+                    <div class="login-icon">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    <h1>Welcome to Pick My Task</h1>
+                    <p style="color: var(--gray); margin: 15px 0 30px;">Sign in to your account to start earning</p>
+                    <div id="login-alert" style="display: none;"></div>
+                    <div class="form-group">
+                        <label for="login-phone">Phone Number</label>
+                        <input class="form-control" id="login-phone" placeholder="Enter your phone number" type="tel"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input class="form-control" id="login-password" placeholder="Enter your password" type="password"/>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn" id="login-submit" style="width: 100%; padding: 12px;">
+                            <i class="fas fa-sign-in-alt"></i> Login
+                        </button>
+                    </div>
+                    <div style="text-align: center; margin-top: 20px;">
+                        <p>Don't have an account? <a href="#" id="signup-link" style="color: var(--primary); font-weight: 600;">Sign up here</a></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="page" id="signup">
+            <div class="login-container">
+                <div class="login-card">
+                    <div class="login-icon">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <h1>Create Account</h1>
+                    <p style="color: var(--gray); margin: 15px 0 30px;">Sign up to start earning with Pick My Task</p>
+                    <div id="signup-alert" style="display: none;"></div>
+                    <div class="form-group">
+                        <label for="signup-name">Full Name</label>
+                        <input class="form-control" id="signup-name" placeholder="Enter your full name" type="text"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-phone">Phone Number</label>
+                        <input class="form-control" id="signup-phone" placeholder="Enter your phone number" type="tel"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-email">Email Address</label>
+                        <input class="form-control" id="signup-email" placeholder="Enter your email address" type="email"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-password">Password</label>
+                        <input class="form-control" id="signup-password" placeholder="Create a password" type="password"/>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn" id="signup-submit" style="width: 100%; padding: 12px;">
+                            <i class="fas fa-user-plus"></i> Sign Up
+                        </button>
+                    </div>
+                    <div style="text-align: center; margin-top: 20px;">
+                        <p>Already have an account? <a href="#" id="login-link" style="color: var(--primary); font-weight: 600;">Login here</a></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modals -->
+    <div class="modal" id="task-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="task-modal-title">Task Details</h2>
+                <button class="modal-close" id="task-modal-close">&times;</button>
+            </div>
+            <div id="task-modal-body">
+                <!-- Task details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="withdraw-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Withdraw Funds</h2>
+                <button class="modal-close" id="withdraw-modal-close">&times;</button>
+            </div>
+            <div class="form-group">
+                <label for="withdraw-amount">Amount (₹)</label>
+                <input class="form-control" id="withdraw-amount" placeholder="Enter amount to withdraw" type="number"/>
+            </div>
+            <div class="form-group">
+                <label for="bank-account">Bank Account</label>
+                <select class="form-control" id="bank-account">
+                    <option value="">Select bank account</option>
+                    <!-- Bank accounts will be loaded here -->
+                </select>
+            </div>
+            <button class="btn" id="withdraw-submit" style="width: 100%; margin-top: 20px;">
+                <i class="fas fa-download"></i> Withdraw
+            </button>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Pick My Task</h3>
+                    <p>Earn money by completing simple tasks like opening bank accounts, applying for credit cards, and more.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <a data-page="home" href="#">Home</a>
+                    <a data-page="tasks" href="#">Tasks</a>
+                    <a data-page="wallet" href="#">Wallet</a>
+                    <a data-page="referral" href="#">Referral Program</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Support</h3>
+                    <a href="#">Help Center</a>
+                    <a href="#">FAQs</a>
+                    <a href="#">Contact Us</a>
+                    <a href="#">Privacy Policy</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Info</h3>
+                    <p><i class="fas fa-envelope"></i> ishwarchinna8@gmail.com</p>
+                    <p><i class="fas fa-globe"></i> www.pickmytask.com</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>© 2023 Pick My Task. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+
+    <script>
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCxZDhz-UaVkKmGAxRGYXLVnDARvdowS9M",
+            authDomain: "pickmytask-ce779.firebaseapp.com",
+            databaseURL: "https://pickmytask-ce779-default-rtdb.firebaseio.com",
+            projectId: "pickmytask-ce779",
+            storageBucket: "pickmytask-ce779.firebasestorage.app",
+            messagingSenderId: "896001628856",
+            appId: "1:896001628856:web:63cb19143be6792c21724d"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const auth = firebase.auth();
+
+        // DOM Elements
+        const pages = document.querySelectorAll('.page');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+        const modals = document.querySelectorAll('.modal');
+
+        // Current User State
+        let currentUser = null;
+        let userData = null;
+
+        // Navigation between pages
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Remove active class from all links
+                navLinks.forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                // Add active class to clicked link
+                this.classList.add('active');
+                
+                // Hide all pages
+                pages.forEach(page => {
+                    page.classList.remove('active');
+                });
+                
+                // Show the selected page
+                const pageId = this.getAttribute('data-page');
+                document.getElementById(pageId).classList.add('active');
+            });
+        });
+
+        // Tab functionality
+        tabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                const tabId = this.getAttribute('data-tab');
+                
+                // Remove active class from all tabs
+                tabs.forEach(t => t.classList.remove('active'));
+                // Add active class to clicked tab
+                this.classList.add('active');
+                
+                // Hide all tab contents
+                tabContents.forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                // Show the selected tab content
+                document.getElementById(`tab-${tabId}`).classList.add('active');
+            });
+        });
+
+        // Modal functionality
+        document.querySelectorAll('.modal-close').forEach(closeBtn => {
+            closeBtn.addEventListener('click', function() {
+                this.closest('.modal').classList.remove('active');
+            });
+        });
+
+        // Login/Signup navigation
+        document.getElementById('signup-link').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('login').classList.remove('active');
+            document.getElementById('signup').classList.add('active');
+        });
+
+        document.getElementById('login-link').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('signup').classList.remove('active');
+            document.getElementById('login').classList.add('active');
+        });
+
+        // Login functionality
+        document.getElementById('login-submit').addEventListener('click', function() {
+            const phone = document.getElementById('login-phone').value;
+            const password = document.getElementById('login-password').value;
+            
+            if(phone && password) {
+                // Show loading state
+                this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging in...';
+                this.disabled = true;
+                
+                // For demo, we'll simulate login since we don't have actual auth setup
+                simulateLogin();
+            } else {
+                showAlert('login-alert', 'Please enter both phone number and password.', 'error');
+            }
+        });
+
+        // Signup functionality
+        document.getElementById('signup-submit').addEventListener('click', function() {
+            const name = document.getElementById('signup-name').value;
+            const phone = document.getElementById('signup-phone').value;
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+            
+            if(name && phone && email && password) {
+                // Show loading state
+                this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating account...';
+                this.disabled = true;
+                
+                // For demo, we'll simulate signup
+                simulateSignup(name, phone, email);
+            } else {
+                showAlert('signup-alert', 'Please fill in all fields.', 'error');
+            }
+        });
+
+        // Logout functionality
+        document.getElementById('logout-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            logout();
+        });
+
+        // Share referral code
+        document.getElementById('share-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            const referralCode = document.getElementById('referral-code').textContent;
+            
+            // In a real app, this would use the Web Share API or copy to clipboard
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Pick My Task',
+                    text: `Use my referral code ${referralCode} to sign up for Pick My Task and earn money!`,
+                    url: 'https://pickmytask.com'
+                });
+            } else {
+                // Fallback: copy to clipboard
+                navigator.clipboard.writeText(referralCode).then(function() {
+                    showAlert('referral-alert', 'Referral code copied to clipboard!', 'success');
+                }, function() {
+                    alert(`Share this code with your friends: ${referralCode}`);
+                });
+            }
+        });
+
+        // Withdraw functionality
+        document.getElementById('withdraw-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            if (!currentUser) {
+                showAlert('wallet-alert', 'Please login to withdraw funds.', 'error');
+                return;
+            }
+            
+            document.getElementById('withdraw-modal').classList.add('active');
+        });
+
+        // Task modal functionality
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('task-details-btn')) {
+                e.preventDefault();
+                const taskId = e.target.getAttribute('data-task-id');
+                showTaskDetails(taskId);
+            }
+        });
+
+        // Show alert function
+        function showAlert(containerId, message, type) {
+            const alertContainer = document.getElementById(containerId);
+            alertContainer.innerHTML = `
+                <div class="alert alert-${type}">
+                    <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+                    ${message}
+                </div>
+            `;
+            alertContainer.style.display = 'block';
+            
+            // Auto-hide after 5 seconds
+            setTimeout(() => {
+                alertContainer.style.display = 'none';
+            }, 5000);
+        }
+
+        // Simulate login (for demo purposes)
+        function simulateLogin() {
+            // Hide login page
+            document.getElementById('login').classList.remove('active');
+            
+            // Show home page
+            document.getElementById('home').classList.add('active');
+            
+            // Update nav
+            navLinks.forEach(item => {
+                item.classList.remove('active');
+                if(item.getAttribute('data-page') === 'home') {
+                    item.classList.add('active');
+                }
+            });
+            
+            // Hide login button, show user info
+            document.getElementById('login-btn').style.display = 'none';
+            document.getElementById('logout-btn').style.display = 'inline-flex';
+            document.getElementById('user-balance').style.display = 'inline';
+            
+            // Set current user
+            currentUser = {
+                uid: 'demo-user-123',
+                phone: document.getElementById('login-phone').value
+            };
+            
+            // Load user data
+            loadUserData();
+            loadTasks();
+            loadTransactions();
+            
+            // Reset login form
+            document.getElementById('login-submit').innerHTML = '<i class="fas fa-sign-in-alt"></i> Login';
+            document.getElementById('login-submit').disabled = false;
+            
+            showAlert('home-alert', 'Login successful! Welcome to Pick My Task.', 'success');
+        }
+
+        // Simulate signup (for demo purposes)
+        function simulateSignup(name, phone, email) {
+            // Hide signup page
+            document.getElementById('signup').classList.remove('active');
+            
+            // Show home page
+            document.getElementById('home').classList.add('active');
+            
+            // Update nav
+            navLinks.forEach(item => {
+                item.classList.remove('active');
+                if(item.getAttribute('data-page') === 'home') {
+                    item.classList.add('active');
+                }
+            });
+            
+            // Hide login button, show user info
+            document.getElementById('login-btn').style.display = 'none';
+            document.getElementById('logout-btn').style.display = 'inline-flex';
+            document.getElementById('user-balance').style.display = 'inline';
+            
+            // Set current user
+            currentUser = {
+                uid: 'demo-user-' + Date.now(),
+                phone: phone
+            };
+            
+            // Generate referral code
+            const referralCode = 'PMT' + Math.random().toString(36).substring(2, 8).toUpperCase();
+            
+            // Create user data
+            userData = {
+                name: name,
+                phone: phone,
+                email: email,
+                balance: 0,
+                completedTasks: 0,
+                totalEarnings: 0,
+                referrals: 0,
+                referralEarnings: 0,
+                referralCode: referralCode,
+                memberSince: new Date(),
+                bankAccounts: []
+            };
+            
+            // Save user data to localStorage (in a real app, this would be in Firebase)
+            localStorage.setItem('userData', JSON.stringify(userData));
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            
+            // Load user data
+            loadUserData();
+            loadTasks();
+            loadTransactions();
+            
+            // Reset signup form
+            document.getElementById('signup-submit').innerHTML = '<i class="fas fa-user-plus"></i> Sign Up';
+            document.getElementById('signup-submit').disabled = false;
+            
+            showAlert('home-alert', 'Account created successfully! Welcome to Pick My Task.', 'success');
+        }
+
+        // Logout function
+        function logout() {
+            // Show login page
+            document.getElementById('login').classList.add('active');
+            document.getElementById('home').classList.remove('active');
+            
+            // Update nav
+            navLinks.forEach(item => {
+                item.classList.remove('active');
+                if(item.getAttribute('data-page') === 'home') {
+                    item.classList.add('active');
+                }
+            });
+            
+            // Show login button, hide user info
+            document.getElementById('login-btn').style.display = 'inline-flex';
+            document.getElementById('logout-btn').style.display = 'none';
+            document.getElementById('user-balance').style.display = 'none';
+            
+            // Reset current user
+            currentUser = null;
+            userData = null;
+            
+            // Clear forms
+            document.getElementById('login-phone').value = '';
+            document.getElementById('login-password').value = '';
+            
+            showAlert('login-alert', 'You have been logged out successfully.', 'success');
+        }
+
+        // Load user data
+        function loadUserData() {
+            // In a real app, this would come from Firebase
+            // For demo, we'll use localStorage or default data
+            const savedUserData = localStorage.getItem('userData');
+            const savedCurrentUser = localStorage.getItem('currentUser');
+            
+            if (savedUserData && savedCurrentUser) {
+                userData = JSON.parse(savedUserData);
+                currentUser = JSON.parse(savedCurrentUser);
+            } else {
+                // Default demo data
+                userData = {
+                    name: 'Rajesh Kumar',
+                    phone: '+91 9876543210',
+                    email: 'rajesh@example.com',
+                    balance: 450,
+                    completedTasks: 5,
+                    totalEarnings: 450,
+                    referrals: 3,
+                    referralEarnings: 150,
+                    referralCode: 'PMT2023XYZ',
+                    memberSince: new Date(Date.now() - 45 * 24 * 60 * 60 * 1000), // 45 days ago
+                    bankAccounts: [
+                        { id: 1, bankName: 'HDFC Bank', accountNumber: 'XXXXXX1234' },
+                        { id: 2, bankName: 'SBI', accountNumber: 'XXXXXX5678' }
+                    ]
+                };
+            }
+            
+            // Calculate days since member
+            const daysSinceMember = Math.floor((new Date() - new Date(userData.memberSince)) / (1000 * 60 * 60 * 24));
+            
+            // Update UI with user data
+            document.getElementById('user-name').textContent = userData.name;
+            document.getElementById('user-phone').textContent = userData.phone;
+            document.getElementById('user-email').textContent = userData.email;
+            document.getElementById('user-balance').textContent = `₹${userData.balance}.00`;
+            document.getElementById('wallet-balance').textContent = `₹${userData.balance}.00`;
+            document.getElementById('completed-tasks').textContent = userData.completedTasks;
+            document.getElementById('total-earnings').textContent = `₹${userData.totalEarnings}`;
+            document.getElementById('user-referrals').textContent = userData.referrals;
+            document.getElementById('member-since').textContent = daysSinceMember;
+            document.getElementById('total-referrals').textContent = userData.referrals;
+            document.getElementById('referral-earnings').textContent = `₹${userData.referralEarnings}`;
+            document.getElementById('referral-code').textContent = userData.referralCode;
+            
+            // Update bank accounts in withdraw modal
+            const bankAccountSelect = document.getElementById('bank-account');
+            bankAccountSelect.innerHTML = '<option value="">Select bank account</option>';
+            userData.bankAccounts.forEach(account => {
+                const option = document.createElement('option');
+                option.value = account.id;
+                option.textContent = `${account.bankName} - ${account.accountNumber}`;
+                bankAccountSelect.appendChild(option);
+            });
+        }
+
+        // Load tasks from Firebase
+        function loadTasks() {
+            const featuredContainer = document.getElementById('featured-tasks');
+            const allTasksContainer = document.getElementById('all-tasks');
+            const bankingContainer = document.getElementById('banking-tasks');
+            const financeContainer = document.getElementById('finance-tasks');
+            const otherContainer = document.getElementById('other-tasks');
+            
+            // Clear existing content
+            featuredContainer.innerHTML = '';
+            allTasksContainer.innerHTML = '';
+            bankingContainer.innerHTML = '';
+            financeContainer.innerHTML = '';
+            otherContainer.innerHTML = '';
+            
+            // Load tasks from Firebase
+            db.collection('tasks').where('status', '==', 'active').get()
+                .then((querySnapshot) => {
+                    if (querySnapshot.empty) {
+                        // If no tasks exist, add sample tasks
+                        addSampleTasks();
+                        return;
+                    }
+                    
+                    querySnapshot.forEach((doc) => {
+                        const task = doc.data();
+                        const taskId = doc.id;
+                        
+                        const taskHTML = `
+                            <div class="task-card">
+                                <div class="task-category">${task.category}</div>
+                                <h3>${task.title}</h3>
+                                <p>${task.description}</p>
+                                <div class="task-meta">
+                                    <div class="task-reward">₹${task.reward}</div>
+                                    <a href="#" class="btn task-details-btn" data-task-id="${taskId}">View Details</a>
+                                </div>
+                            </div>
+                        `;
+                        
+                        // Add to all tasks
+                        allTasksContainer.innerHTML += taskHTML;
+                        
+                        // Add to featured tasks if marked as featured
+                        if (task.featured) {
+                            featuredContainer.innerHTML += taskHTML;
+                        }
+                        
+                        // Add to category-specific containers
+                        if (task.category === 'banking') {
+                            bankingContainer.innerHTML += taskHTML;
+                        } else if (task.category === 'finance') {
+                            financeContainer.innerHTML += taskHTML;
+                        } else if (task.category === 'other') {
+                            otherContainer.innerHTML += taskHTML;
+                        }
+                    });
+                })
+                .catch((error) => {
+                    console.error('Error loading tasks: ', error);
+                    // If there's an error, show sample tasks
+                    showSampleTasks();
+                });
+        }
+
+        // Show task details in modal
+        function showTaskDetails(taskId) {
+            // In a real app, this would fetch task details from Firebase
+            // For demo, we'll use sample data
+            const task = {
+                title: "Airtel Payments Bank Account",
+                category: "banking",
+                description: "Open an Airtel Payments Bank account through our link and earn ₹100 upon successful verification.",
+                reward: 100,
+                requirements: "Aadhaar Card, PAN Card",
+                duration: "7 days",
+                steps: [
+                    "Click on the 'Start Task' button",
+                    "Complete the Airtel Payments Bank account opening process",
+                    "Submit your application ID for verification",
+                    "Receive ₹100 after successful verification"
+                ],
+                link: "https://airtelbank.com"
+            };
+            
+            document.getElementById('task-modal-title').textContent = task.title;
+            document.getElementById('task-modal-body').innerHTML = `
+                <div class="task-category">${task.category}</div>
+                <p>${task.description}</p>
+                <div style="margin: 20px 0;">
+                    <h3 style="margin-bottom: 10px;">Requirements:</h3>
+                    <p>${task.requirements}</p>
+                </div>
+                <div style="margin: 20px 0;">
+                    <h3 style="margin-bottom: 10px;">Steps to Complete:</h3>
+                    <ol style="padding-left: 20px;">
+                        ${task.steps.map(step => `<li>${step}</li>`).join('')}
+                    </ol>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px;">
+                    <div class="task-reward">₹${task.reward}</div>
+                    <a href="${task.link}" target="_blank" class="btn">Start Task</a>
+                </div>
+            `;
+            
+            document.getElementById('task-modal').classList.add('active');
+        }
+
+        // Add sample tasks to Firebase (for first-time setup)
+        function addSampleTasks() {
+            const sampleTasks = [
+                {
+                    title: "Airtel Payments Bank Account",
+                    category: "banking",
+                    description: "Open an Airtel Payments Bank account through our link and earn ₹100 upon successful verification.",
+                    reward: 100,
+                    link: "https://airtelbank.com",
+                    requirements: "Aadhaar Card, PAN Card",
+                    duration: 7,
+                    featured: true,
+                    status: "active",
+                    createdAt: new Date()
+                },
+                {
+                    title: "Credit Card Application", 
+                    category: "finance",
+                    description: "Apply for a credit card through our partner bank and earn ₹150 upon approval.",
+                    reward: 150,
+                    link: "https://bank.com/credit-card",
+                    requirements: "Income Proof, Address Proof",
+                    duration: 14,
+                    featured: true,
+                    status: "active",
+                    createdAt: new Date()
+                },
+                {
+                    title: "Trading Account Opening",
+                    category: "finance", 
+                    description: "Open a trading account with our broker partner and earn ₹200 after your first trade.",
+                    reward: 200,
+                    link: "https://tradingplatform.com",
+                    requirements: "PAN Card, Bank Account",
+                    duration: 3,
+                    featured: true,
+                    status: "active",
+                    createdAt: new Date()
+                },
+                {
+                    title: "Paytm Wallet KYC",
+                    category: "banking",
+                    description: "Complete your Paytm Wallet KYC and earn ₹50 instantly.",
+                    reward: 50,
+                    link: "https://paytm.com",
+                    requirements: "Aadhaar Card",
+                    duration: 1,
+                    featured: false,
+                    status: "active",
+                    createdAt: new Date()
+                },
+                {
+                    title: "Insurance Policy Purchase",
+                    category: "finance",
+                    description: "Purchase a health insurance policy through our partner and earn ₹300.",
+                    reward: 300,
+                    link: "https://insurance.com",
+                    requirements: "Basic personal details",
+                    duration: 30,
+                    featured: false,
+                    status: "active",
+                    createdAt: new Date()
+                },
+                {
+                    title: "Mobile Recharge Offer",
+                    category: "other",
+                    description: "Recharge your mobile with ₹100 or more and get ₹20 cashback.",
+                    reward: 20,
+                    link: "https://recharge.com",
+                    requirements: "Mobile number",
+                    duration: 1,
+                    featured: false,
+                    status: "active",
+                    createdAt: new Date()
+                }
+            ];
+            
+            sampleTasks.forEach(task => {
+                db.collection('tasks').add(task)
+                    .then((docRef) => {
+                        console.log('Sample task added with ID: ', docRef.id);
+                    })
+                    .catch((error) => {
+                        console.error('Error adding sample task: ', error);
+                    });
+            });
+            
+            // Reload tasks after adding samples
+            setTimeout(loadTasks, 1000);
+        }
+
+        // Show sample tasks (fallback if Firebase fails)
+        function showSampleTasks() {
+            const sampleTasks = [
+                {
+                    title: "Airtel Payments Bank Account",
+                    category: "banking",
+                    description: "Open an Airtel Payments Bank account through our link and earn ₹100 upon successful verification.",
+                    reward: 100,
+                    link: "https://airtelbank.com"
+                },
+                {
+                    title: "Credit Card Application",
+                    category: "finance", 
+                    description: "Apply for a credit card through our partner bank and earn ₹150 upon approval.",
+                    reward: 150,
+                    link: "https://bank.com/credit-card"
+                },
+                {
+                    title: "Trading Account Opening",
+                    category: "finance",
+                    description: "Open a trading account with our broker partner and earn ₹200 after your first trade.",
+                    reward: 200,
+                    link: "https://tradingplatform.com"
+                },
+                {
+                    title: "Paytm Wallet KYC",
+                    category: "banking",
+                    description: "Complete your Paytm Wallet KYC and earn ₹50 instantly.",
+                    reward: 50,
+                    link: "https://paytm.com"
+                },
+                {
+                    title: "Insurance Policy Purchase",
+                    category: "finance",
+                    description: "Purchase a health insurance policy through our partner and earn ₹300.",
+                    reward: 300,
+                    link: "https://insurance.com"
+                },
+                {
+                    title: "Mobile Recharge Offer",
+                    category: "other",
+                    description: "Recharge your mobile with ₹100 or more and get ₹20 cashback.",
+                    reward: 20,
+                    link: "https://recharge.com"
+                }
+            ];
+            
+            const featuredContainer = document.getElementById('featured-tasks');
+            const allTasksContainer = document.getElementById('all-tasks');
+            const bankingContainer = document.getElementById('banking-tasks');
+            const financeContainer = document.getElementById('finance-tasks');
+            const otherContainer = document.getElementById('other-tasks');
+            
+            sampleTasks.forEach((task, index) => {
+                const taskHTML = `
+                    <div class="task-card">
+                        <div class="task-category">${task.category}</div>
+                        <h3>${task.title}</h3>
+                        <p>${task.description}</p>
+                        <div class="task-meta">
+                            <div class="task-reward">₹${task.reward}</div>
+                            <a href="#" class="btn task-details-btn" data-task-id="${index}">View Details</a>
+                        </div>
+                    </div>
+                `;
+                
+                // Add to all tasks
+                allTasksContainer.innerHTML += taskHTML;
+                
+                // Add first 3 tasks as featured
+                if (index < 3) {
+                    featuredContainer.innerHTML += taskHTML;
+                }
+                
+                // Add to category-specific containers
+                if (task.category === 'banking') {
+                    bankingContainer.innerHTML += taskHTML;
+                } else if (task.category === 'finance') {
+                    financeContainer.innerHTML += taskHTML;
+                } else if (task.category === 'other') {
+                    otherContainer.innerHTML += taskHTML;
+                }
+            });
+        }
+
+        // Load transactions
+        function loadTransactions() {
+            // In a real app, this would come from Firebase
+            const transactions = [
+                { description: "Task Completion: Airtel Bank", date: "15 Oct 2023", amount: 100, type: "positive" },
+                { description: "Task Completion: Credit Card", date: "12 Oct 2023", amount: 150, type: "positive" },
+                { description: "Referral Bonus", date: "10 Oct 2023", amount: 50, type: "positive" },
+                { description: "Withdrawal to Bank", date: "5 Oct 2023", amount: 200, type: "negative" }
+            ];
+            
+            const transactionList = document.getElementById('transaction-list');
+            transactionList.innerHTML = '';
+            
+            transactions.forEach(transaction => {
+                const transactionHTML = `
+                    <li class="transaction-item">
+                        <div class="transaction-details">
+                            <div>${transaction.description}</div>
+                            <div style="font-size: 0.8rem; color: var(--gray);">${transaction.date}</div>
+                        </div>
+                        <div class="transaction-amount ${transaction.type}">
+                            ${transaction.type === 'positive' ? '+' : '-'}₹${transaction.amount}
+                        </div>
+                    </li>
+                `;
+                transactionList.innerHTML += transactionHTML;
+            });
+        }
+
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is already logged in
+            const savedCurrentUser = localStorage.getItem('currentUser');
+            const savedUserData = localStorage.getItem('userData');
+            
+            if (savedCurrentUser && savedUserData) {
+                currentUser = JSON.parse(savedCurrentUser);
+                userData = JSON.parse(savedUserData);
+                
+                // User is logged in, show home page
+                document.getElementById('login').classList.remove('active');
+                document.getElementById('home').classList.add('active');
+                
+                // Update UI for logged in user
+                document.getElementById('login-btn').style.display = 'none';
+                document.getElementById('logout-btn').style.display = 'inline-flex';
+                document.getElementById('user-balance').style.display = 'inline';
+                
+                // Load user data
+                loadUserData();
+                loadTasks();
+                loadTransactions();
+            } else {
+                // User is not logged in, show login page
+                document.getElementById('login').classList.add('active');
+                document.getElementById('home').classList.remove('active');
+            }
+            
+            // Load tasks and transactions
+            loadTasks();
+            loadTransactions();
+        });
+
+        // Footer navigation
+        document.querySelectorAll('.footer-section a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                if (this.getAttribute('data-page')) {
+                    e.preventDefault();
+                    
+                    // Remove active class from all links
+                    navLinks.forEach(item => {
+                        item.classList.remove('active');
+                    });
+                    
+                    // Hide all pages
+                    pages.forEach(page => {
+                        page.classList.remove('active');
+                    });
+                    
+                    // Show the selected page
+                    const pageId = this.getAttribute('data-page');
+                    document.getElementById(pageId).classList.add('active');
+                    
+                    // Find and activate the corresponding nav link
+                    navLinks.forEach(item => {
+                        if (item.getAttribute('data-page') === pageId) {
+                            item.classList.add('active');
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
