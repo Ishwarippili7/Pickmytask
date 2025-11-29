@@ -3,8 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pick My Task - Earn Money Completing Tasks</title>
+    <title>Pick My Task - Earn Money by Completing Simple Tasks</title>
+    <meta name="description" content="Earn real money by completing simple tasks like opening bank accounts, applying for credit cards, and more. Join Pick My Task today!">
+    <meta property="og:title" content="Pick My Task - Earn Money Completing Tasks">
+    <meta property="og:description" content="Earn real money by completing simple tasks. Join thousands of users making money online.">
+    <meta property="og:image" content="https://pickmytask.com/og-image.jpg">
+    <meta property="og:url" content="https://pickmytask.com">
+    <meta name="twitter:card" content="summary_large_image">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💰</text></svg>">
     <style>
         :root {
             --primary: #0088cc;
@@ -66,6 +73,8 @@
             gap: 10px;
             font-size: 1.5rem;
             font-weight: 700;
+            text-decoration: none;
+            color: white;
         }
 
         .logo i {
@@ -88,6 +97,7 @@
             align-items: center;
             gap: 5px;
             font-weight: 500;
+            white-space: nowrap;
         }
 
         nav ul li a:hover, nav ul li a.active {
@@ -115,6 +125,7 @@
             font-weight: 600;
             font-size: 0.9rem;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            white-space: nowrap;
         }
 
         .btn:hover {
@@ -227,6 +238,14 @@
             box-shadow: 0 10px 20px rgba(0,0,0,0.15);
         }
 
+        .task-image {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            border-radius: var(--radius);
+            margin-bottom: 15px;
+        }
+
         .task-category {
             display: inline-block;
             background: var(--light);
@@ -262,6 +281,21 @@
             font-weight: 700;
             font-size: 1.2rem;
             color: var(--success);
+        }
+
+        .task-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin: 15px 0;
+            font-size: 0.9rem;
+        }
+
+        .task-detail {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--gray);
         }
 
         .wallet-balance {
@@ -482,6 +516,13 @@
             outline: none;
         }
 
+        .error-message {
+            color: var(--danger);
+            font-size: 0.85rem;
+            margin-top: 5px;
+            display: none;
+        }
+
         footer {
             background: var(--dark);
             color: white;
@@ -525,6 +566,7 @@
             display: flex;
             border-bottom: 1px solid var(--border);
             margin-bottom: 20px;
+            overflow-x: auto;
         }
 
         .tab {
@@ -534,6 +576,7 @@
             color: var(--gray);
             border-bottom: 3px solid transparent;
             transition: var(--transition);
+            white-space: nowrap;
         }
 
         .tab.active {
@@ -590,27 +633,6 @@
             font-size: 1.5rem;
             cursor: pointer;
             color: var(--gray);
-        }
-
-        .alert {
-            padding: 15px;
-            border-radius: var(--radius);
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .alert-success {
-            background: rgba(40, 167, 69, 0.1);
-            border: 1px solid var(--success);
-            color: var(--success);
-        }
-
-        .alert-error {
-            background: rgba(220, 53, 69, 0.1);
-            border: 1px solid var(--danger);
-            color: var(--danger);
         }
 
         .notification {
@@ -719,6 +741,104 @@
             background: var(--success);
         }
 
+        .hero-section {
+            text-align: center;
+            padding: 60px 0;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border-radius: var(--radius);
+            margin-bottom: 40px;
+        }
+
+        .hero-section h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .hero-section p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .content-section {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .content-section h2 {
+            color: var(--primary);
+            margin: 30px 0 15px;
+        }
+
+        .content-section h3 {
+            color: var(--dark);
+            margin: 20px 0 10px;
+        }
+
+        .content-section p {
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+
+        .content-section ul, .content-section ol {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+
+        .content-section li {
+            margin-bottom: 8px;
+        }
+
+        .withdrawal-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .info-card {
+            background: white;
+            padding: 25px;
+            border-radius: var(--radius);
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .info-card i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .info-card h3 {
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .contact-card {
+            background: white;
+            padding: 25px;
+            border-radius: var(--radius);
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .contact-card i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
         @media (max-width: 768px) {
             .header-content {
                 flex-direction: column;
@@ -748,6 +868,37 @@
                 width: 100%;
                 max-width: 250px;
             }
+
+            .hero-section h1 {
+                font-size: 2rem;
+            }
+
+            .hero-section p {
+                font-size: 1rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .modal-content {
+                width: 95%;
+                padding: 20px;
+            }
+
+            .task-details {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-section {
+                padding: 40px 20px;
+            }
+
+            .hero-section h1 {
+                font-size: 1.8rem;
+            }
         }
     </style>
 </head>
@@ -755,10 +906,10 @@
     <header>
         <div class="container">
             <div class="header-content">
-                <div class="logo">
+                <a href="#" class="logo" data-page="home">
                     <i class="fas fa-tasks"></i>
                     <span>Pick My Task</span>
-                </div>
+                </a>
                 <nav>
                     <ul>
                         <li><a class="nav-link active" data-page="home" href="#"><i class="fas fa-home"></i> Home</a></li>
@@ -766,6 +917,8 @@
                         <li><a class="nav-link" data-page="wallet" href="#"><i class="fas fa-wallet"></i> Wallet</a></li>
                         <li><a class="nav-link" data-page="referral" href="#"><i class="fas fa-user-friends"></i> Referral</a></li>
                         <li><a class="nav-link" data-page="profile" href="#"><i class="fas fa-user"></i> Profile</a></li>
+                        <li><a class="nav-link" data-page="about" href="#"><i class="fas fa-info-circle"></i> About</a></li>
+                        <li><a class="nav-link" data-page="contact" href="#"><i class="fas fa-envelope"></i> Contact</a></li>
                     </ul>
                 </nav>
                 <div class="user-actions">
@@ -778,10 +931,19 @@
     </header>
 
     <main class="container">
+        <!-- Home Page -->
         <section class="page active" id="home">
-            <div class="page-header">
+            <div class="hero-section">
                 <h1>Earn Money Completing Simple Tasks</h1>
-                <p>Complete tasks like opening bank accounts, applying for credit cards, and more to earn real money!</p>
+                <p>Join thousands of users who are earning real money by completing simple tasks like opening bank accounts, applying for credit cards, and more!</p>
+                <div class="wallet-actions">
+                    <a class="btn btn-accent" href="#" data-page="signup" id="join-now-btn">
+                        <i class="fas fa-user-plus"></i> Join Now
+                    </a>
+                    <a class="btn" href="#" data-page="tasks" id="start-task-btn">
+                        <i class="fas fa-play"></i> Start Task
+                    </a>
+                </div>
             </div>
             <div class="card">
                 <h2><i class="fas fa-bolt"></i> Featured Tasks</h2>
@@ -817,6 +979,7 @@
             </div>
         </section>
 
+        <!-- Tasks Page -->
         <section class="page" id="tasks">
             <div class="page-header">
                 <h1>Available Tasks</h1>
@@ -850,6 +1013,7 @@
             </div>
         </section>
 
+        <!-- Wallet Page -->
         <section class="page" id="wallet">
             <div class="page-header">
                 <h1>Your Wallet</h1>
@@ -872,14 +1036,15 @@
             </div>
         </section>
 
+        <!-- Referral Page -->
         <section class="page" id="referral">
             <div class="page-header">
                 <h1>Refer & Earn</h1>
-                <p>Invite your friends and earn ₹50 for each successful referral</p>
+                <p>Invite your friends and earn ₹10 for each successful referral</p>
             </div>
             <div class="referral-card">
                 <h2>Your Referral Code</h2>
-                <div class="referral-code" id="referral-code">PMT2023XYZ</div>
+                <div class="referral-code" id="referral-code">PMT2025XYZ</div>
                 <p>Share this code with your friends and earn when they complete tasks</p>
                 <a class="btn" href="#" id="share-btn"><i class="fas fa-share-alt"></i> Share Code</a>
             </div>
@@ -893,7 +1058,7 @@
                     <div class="stat-label">Earned from Referrals</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-value">₹50</div>
+                    <div class="stat-value">₹10</div>
                     <div class="stat-label">Per Referral</div>
                 </div>
             </div>
@@ -905,6 +1070,7 @@
             </div>
         </section>
 
+        <!-- Profile Page -->
         <section class="page" id="profile">
             <div class="page-header">
                 <h1>Your Profile</h1>
@@ -971,19 +1137,277 @@
                             <div style="font-weight: 600;">Privacy Policy</div>
                             <div style="color: var(--gray); font-size: 0.9rem;">How we protect your data</div>
                         </div>
-                        <a class="btn" href="#" style="padding: 8px 15px;">View</a>
+                        <a class="btn" href="#" data-page="privacy" style="padding: 8px 15px;">View</a>
                     </div>
                     <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0;">
                         <div>
                             <div style="font-weight: 600;">Terms of Service</div>
                             <div style="color: var(--gray); font-size: 0.9rem;">Our terms and conditions</div>
                         </div>
-                        <a class="btn" href="#" style="padding: 8px 15px;">View</a>
+                        <a class="btn" href="#" data-page="terms" style="padding: 8px 15px;">View</a>
                     </div>
                 </div>
             </div>
         </section>
 
+        <!-- About Us Page -->
+        <section class="page" id="about">
+            <div class="page-header">
+                <h1>About Us</h1>
+                <p>Learn more about Pick My Task and our mission</p>
+            </div>
+            <div class="card">
+                <div class="content-section">
+                    <h2>Our Story</h2>
+                    <p>Pick My Task was founded with a simple mission: to create a platform where anyone can earn money by completing simple, verified tasks. We believe that everyone should have the opportunity to earn extra income, regardless of their background or location.</p>
+                    
+                    <h2>What We Do</h2>
+                    <p>We partner with various companies and financial institutions to provide our users with legitimate earning opportunities. These tasks include opening bank accounts, applying for credit cards, completing KYC processes, and more.</p>
+                    
+                    <h2>Our Values</h2>
+                    <ul>
+                        <li><strong>Transparency:</strong> We're open about how our platform works and what users can expect to earn.</li>
+                        <li><strong>Trust:</strong> We verify all tasks and partners to ensure they're legitimate and safe.</li>
+                        <li><strong>Accessibility:</strong> Our platform is designed to be easy to use for everyone.</li>
+                        <li><strong>Fairness:</strong> We ensure all users have equal opportunities to earn.</li>
+                    </ul>
+                    
+                    <h2>Why Choose Us?</h2>
+                    <p>With thousands of satisfied users and a track record of timely payments, Pick My Task has established itself as a trusted platform for earning extra income. We're constantly adding new tasks and improving our platform to provide the best experience for our users.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Page -->
+        <section class="page" id="contact">
+            <div class="page-header">
+                <h1>Contact Us</h1>
+                <p>Get in touch with us for any questions or support</p>
+            </div>
+            <div class="contact-info">
+                <div class="contact-card">
+                    <i class="fas fa-user"></i>
+                    <h3>IPPILI ESWARA RAO</h3>
+                    <p>Founder & CEO</p>
+                </div>
+                <div class="contact-card">
+                    <i class="fas fa-envelope"></i>
+                    <h3>Email</h3>
+                    <p>ishwarchinna8@gmail.com</p>
+                </div>
+                <div class="contact-card">
+                    <i class="fas fa-clock"></i>
+                    <h3>Response Time</h3>
+                    <p>Within 24 hours</p>
+                </div>
+            </div>
+            <div class="card">
+                <h2><i class="fas fa-comments"></i> Send us a Message</h2>
+                <div class="form-group">
+                    <label for="contact-name">Your Name</label>
+                    <input class="form-control" id="contact-name" placeholder="Enter your name" type="text"/>
+                    <div class="error-message" id="contact-name-error">దయచేసి మీ పేరు నమోదు చేయండి</div>
+                </div>
+                <div class="form-group">
+                    <label for="contact-email">Your Email</label>
+                    <input class="form-control" id="contact-email" placeholder="Enter your email" type="email"/>
+                    <div class="error-message" id="contact-email-error">దయచేసి సరైన ఇమెయిల్ నమోదు చేయండి</div>
+                </div>
+                <div class="form-group">
+                    <label for="contact-message">Message</label>
+                    <textarea class="form-control" id="contact-message" placeholder="Enter your message" rows="5"></textarea>
+                    <div class="error-message" id="contact-message-error">దయచేసి సందేశం నమోదు చేయండి</div>
+                </div>
+                <button class="btn" id="contact-submit" style="width: 100%;">
+                    <i class="fas fa-paper-plane"></i> Send Message
+                </button>
+            </div>
+        </section>
+
+        <!-- Withdrawal Info Page -->
+        <section class="page" id="withdrawal-info">
+            <div class="page-header">
+                <h1>Withdrawal Information</h1>
+                <p>Everything you need to know about withdrawing your earnings</p>
+            </div>
+            <div class="withdrawal-info">
+                <div class="info-card">
+                    <i class="fas fa-rupee-sign"></i>
+                    <h3>Minimum Payout</h3>
+                    <p>₹100</p>
+                </div>
+                <div class="info-card">
+                    <i class="fas fa-wallet"></i>
+                    <h3>Withdrawal Methods</h3>
+                    <p>UPI or Bank Transfer</p>
+                </div>
+                <div class="info-card">
+                    <i class="fas fa-clock"></i>
+                    <h3>Processing Time</h3>
+                    <p>24 to 48 hours</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="content-section">
+                    <h2>Withdrawal Process</h2>
+                    <ol>
+                        <li>Ensure your balance is at least ₹100</li>
+                        <li>Go to the Wallet page and click "Withdraw"</li>
+                        <li>Select your preferred withdrawal method (UPI or Bank Transfer)</li>
+                        <li>Enter the required details</li>
+                        <li>Submit your withdrawal request</li>
+                        <li>Wait for processing (24-48 hours)</li>
+                        <li>Receive your payment</li>
+                    </ol>
+                    
+                    <h2>Important Notes</h2>
+                    <ul>
+                        <li>All withdrawals are subject to verification</li>
+                        <li>You must have completed at least one task successfully</li>
+                        <li>Withdrawal requests are processed on business days only</li>
+                        <li>There are no hidden fees for withdrawals</li>
+                    </ul>
+                    
+                    <h2>Need Help?</h2>
+                    <p>If you encounter any issues with withdrawals, please contact our support team through the <a href="#" data-page="contact">Contact page</a>.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Referral Terms Page -->
+        <section class="page" id="referral-terms">
+            <div class="page-header">
+                <h1>Referral Program Terms</h1>
+                <p>Rules and conditions for our referral program</p>
+            </div>
+            <div class="card">
+                <div class="content-section">
+                    <h2>Referral Program Overview</h2>
+                    <p>Our referral program allows you to earn ₹10 for each friend you refer who successfully signs up and completes at least one task on Pick My Task.</p>
+                    
+                    <h2>How It Works</h2>
+                    <ol>
+                        <li>Share your unique referral code with friends</li>
+                        <li>Your friend signs up using your referral code</li>
+                        <li>Your friend completes at least one task</li>
+                        <li>You receive ₹10 in your wallet</li>
+                    </ol>
+                    
+                    <h2>Terms & Conditions</h2>
+                    <ul>
+                        <li>You can refer unlimited friends</li>
+                        <li>Each referral must be a new user who hasn't previously signed up for Pick My Task</li>
+                        <li>The referred user must complete at least one task for you to receive the bonus</li>
+                        <li>Referral bonuses are credited within 24 hours of task completion</li>
+                        <li>We reserve the right to revoke referral bonuses in cases of suspected fraud</li>
+                        <li>You cannot refer yourself using different email addresses</li>
+                        <li>Referral bonuses are subject to the same withdrawal terms as task earnings</li>
+                    </ul>
+                    
+                    <h2>Fair Usage Policy</h2>
+                    <p>We monitor our referral program to prevent abuse. Any attempts to manipulate the system, create fake accounts, or engage in fraudulent activities will result in immediate termination of your account and forfeiture of all earnings.</p>
+                    
+                    <h2>Questions?</h2>
+                    <p>If you have any questions about our referral program, please contact us through the <a href="#" data-page="contact">Contact page</a>.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Privacy Policy Page -->
+        <section class="page" id="privacy">
+            <div class="page-header">
+                <h1>Privacy Policy</h1>
+                <p>How we protect and use your personal information</p>
+            </div>
+            <div class="card">
+                <div class="content-section">
+                    <h2>Information We Collect</h2>
+                    <p>We collect information that you provide directly to us, including:</p>
+                    <ul>
+                        <li>Name, email address, and phone number</li>
+                        <li>Bank account details for withdrawals</li>
+                        <li>Task completion information</li>
+                        <li>Device and usage information</li>
+                    </ul>
+                    
+                    <h2>How We Use Your Information</h2>
+                    <p>We use the information we collect to:</p>
+                    <ul>
+                        <li>Provide, maintain, and improve our services</li>
+                        <li>Process payments and send you earnings</li>
+                        <li>Communicate with you about tasks and updates</li>
+                        <li>Detect and prevent fraud</li>
+                    </ul>
+                    
+                    <h2>Information Sharing</h2>
+                    <p>We do not sell your personal information. We may share your information with:</p>
+                    <ul>
+                        <li>Service providers who assist in our operations</li>
+                        <li>Law enforcement when required by law</li>
+                        <li>Third parties with your consent</li>
+                    </ul>
+                    
+                    <h2>Data Security</h2>
+                    <p>We implement appropriate security measures to protect your personal information from unauthorized access, alteration, or disclosure.</p>
+                    
+                    <h2>Your Rights</h2>
+                    <p>You have the right to access, correct, or delete your personal information. You can also object to or restrict certain processing of your data.</p>
+                    
+                    <h2>Contact Us</h2>
+                    <p>If you have questions about this privacy policy, please contact us through the <a href="#" data-page="contact">Contact page</a>.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Terms of Service Page -->
+        <section class="page" id="terms">
+            <div class="page-header">
+                <h1>Terms of Service</h1>
+                <p>Rules and guidelines for using Pick My Task</p>
+            </div>
+            <div class="card">
+                <div class="content-section">
+                    <h2>Acceptance of Terms</h2>
+                    <p>By accessing or using Pick My Task, you agree to be bound by these Terms of Service and our Privacy Policy.</p>
+                    
+                    <h2>Eligibility</h2>
+                    <p>You must be at least 18 years old and have the legal capacity to enter into contracts to use our services.</p>
+                    
+                    <h2>User Accounts</h2>
+                    <p>You are responsible for maintaining the confidentiality of your account credentials and for all activities that occur under your account.</p>
+                    
+                    <h2>Task Completion</h2>
+                    <p>You agree to complete tasks honestly and in accordance with the provided instructions. We reserve the right to reject task submissions that don't meet our requirements.</p>
+                    
+                    <h2>Payments</h2>
+                    <p>Payments are made after successful verification of completed tasks. We reserve the right to withhold payments in cases of suspected fraud.</p>
+                    
+                    <h2>Prohibited Activities</h2>
+                    <p>You agree not to:</p>
+                    <ul>
+                        <li>Create multiple accounts</li>
+                        <li>Use automated tools to complete tasks</li>
+                        <li>Provide false information</li>
+                        <li>Attempt to hack or disrupt our services</li>
+                        <li>Engage in any fraudulent activities</li>
+                    </ul>
+                    
+                    <h2>Termination</h2>
+                    <p>We may terminate or suspend your account at any time for violations of these terms.</p>
+                    
+                    <h2>Limitation of Liability</h2>
+                    <p>We are not liable for any indirect, incidental, or consequential damages arising from your use of our services.</p>
+                    
+                    <h2>Changes to Terms</h2>
+                    <p>We may modify these terms at any time. Continued use of our services constitutes acceptance of the modified terms.</p>
+                    
+                    <h2>Contact Information</h2>
+                    <p>For questions about these terms, please contact us through the <a href="#" data-page="contact">Contact page</a>.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Login Page -->
         <section class="page active" id="login">
             <div class="login-container">
                 <div class="login-card">
@@ -996,10 +1420,12 @@
                     <div class="form-group">
                         <label for="login-email">Email Address</label>
                         <input class="form-control" id="login-email" placeholder="Enter your email address" type="email"/>
+                        <div class="error-message" id="login-email-error">దయచేసి సరైన ఇమెయిల్ నమోదు చేయండి</div>
                     </div>
                     <div class="form-group">
                         <label for="login-password">Password</label>
                         <input class="form-control" id="login-password" placeholder="Enter your password" type="password"/>
+                        <div class="error-message" id="login-password-error">దయచేసి పాస్వర్డ్ నమోదు చేయండి</div>
                     </div>
                     <div class="form-group">
                         <button class="btn" id="login-submit" style="width: 100%; padding: 12px;">
@@ -1013,6 +1439,7 @@
             </div>
         </section>
 
+        <!-- Signup Page -->
         <section class="page" id="signup">
             <div class="login-container">
                 <div class="login-card">
@@ -1025,18 +1452,22 @@
                     <div class="form-group">
                         <label for="signup-name">Full Name</label>
                         <input class="form-control" id="signup-name" placeholder="Enter your full name" type="text"/>
+                        <div class="error-message" id="signup-name-error">దయచేసి మీ పూర్తి పేరు నమోదు చేయండి</div>
                     </div>
                     <div class="form-group">
                         <label for="signup-email">Email Address</label>
                         <input class="form-control" id="signup-email" placeholder="Enter your email address" type="email"/>
+                        <div class="error-message" id="signup-email-error">దయచేసి సరైన ఇమెయిల్ నమోదు చేయండి</div>
                     </div>
                     <div class="form-group">
                         <label for="signup-phone">Phone Number</label>
                         <input class="form-control" id="signup-phone" placeholder="Enter your phone number" type="tel"/>
+                        <div class="error-message" id="signup-phone-error">దయచేసి సరైన ఫోన్ నంబర్ నమోదు చేయండి</div>
                     </div>
                     <div class="form-group">
                         <label for="signup-password">Password</label>
                         <input class="form-control" id="signup-password" placeholder="Create a password" type="password"/>
+                        <div class="error-message" id="signup-password-error">పాస్వర్డ్ కనీసం 6 అక్షరాలు ఉండాలి</div>
                     </div>
                     <div class="form-group">
                         <button class="btn" id="signup-submit" style="width: 100%; padding: 12px;">
@@ -1075,7 +1506,8 @@
             </div>
             <div class="form-group">
                 <label for="withdraw-amount">Amount (₹)</label>
-                <input class="form-control" id="withdraw-amount" placeholder="Enter amount to withdraw" type="number" min="1"/>
+                <input class="form-control" id="withdraw-amount" placeholder="Enter amount to withdraw" type="number" min="100"/>
+                <div class="error-message" id="withdraw-amount-error">కనీసం ₹100 ఉండాలి</div>
             </div>
             <div class="form-group">
                 <label>Withdrawal Method</label>
@@ -1090,24 +1522,29 @@
                     <select class="form-control" id="bank-account">
                         <option value="">Select bank account</option>
                     </select>
+                    <div class="error-message" id="bank-account-error">దయచేసి బ్యాంక్ ఖాతాను ఎంచుకోండి</div>
                 </div>
                 <div class="form-group">
                     <label for="account-holder">Account Holder Name</label>
                     <input class="form-control" id="account-holder" placeholder="Enter account holder name" type="text"/>
+                    <div class="error-message" id="account-holder-error">దయచేసి ఖాతా యజమాని పేరు నమోదు చేయండి</div>
                 </div>
                 <div class="form-group">
                     <label for="account-number">Account Number</label>
                     <input class="form-control" id="account-number" placeholder="Enter account number" type="text"/>
+                    <div class="error-message" id="account-number-error">దయచేసి సరైన ఖాతా నంబర్ నమోదు చేయండి</div>
                 </div>
                 <div class="form-group">
                     <label for="ifsc-code">IFSC Code</label>
                     <input class="form-control" id="ifsc-code" placeholder="Enter IFSC code" type="text"/>
+                    <div class="error-message" id="ifsc-code-error">దయచేసి సరైన IFSC కోడ్ నమోదు చేయండి</div>
                 </div>
             </div>
             <div id="upi-details" class="withdrawal-method" style="display: none;">
                 <div class="form-group">
                     <label for="upi-id">UPI ID</label>
                     <input class="form-control" id="upi-id" placeholder="Enter your UPI ID" type="text"/>
+                    <div class="error-message" id="upi-id-error">దయచేసి సరైన UPI ID నమోదు చేయండి</div>
                 </div>
             </div>
             <button class="btn" id="withdraw-submit" style="width: 100%; margin-top: 20px;">
@@ -1125,14 +1562,17 @@
             <div class="form-group">
                 <label for="edit-name">Full Name</label>
                 <input class="form-control" id="edit-name" placeholder="Enter your full name" type="text"/>
+                <div class="error-message" id="edit-name-error">దయచేసి మీ పూర్తి పేరు నమోదు చేయండి</div>
             </div>
             <div class="form-group">
                 <label for="edit-phone">Phone Number</label>
                 <input class="form-control" id="edit-phone" placeholder="Enter your phone number" type="tel"/>
+                <div class="error-message" id="edit-phone-error">దయచేసి సరైన ఫోన్ నంబర్ నమోదు చేయండి</div>
             </div>
             <div class="form-group">
                 <label for="edit-email">Email Address</label>
                 <input class="form-control" id="edit-email" placeholder="Enter your email address" type="email"/>
+                <div class="error-message" id="edit-email-error">దయచేసి సరైన ఇమెయిల్ నమోదు చేయండి</div>
             </div>
             <button class="btn" id="save-profile-btn" style="width: 100%; margin-top: 20px;">
                 <i class="fas fa-save"></i> Save Changes
@@ -1154,18 +1594,22 @@
                 <div class="form-group">
                     <label for="new-bank-name">Bank Name</label>
                     <input class="form-control" id="new-bank-name" placeholder="Enter bank name" type="text"/>
+                    <div class="error-message" id="new-bank-name-error">దయచేసి బ్యాంక్ పేరు నమోదు చేయండి</div>
                 </div>
                 <div class="form-group">
                     <label for="new-account-holder">Account Holder Name</label>
                     <input class="form-control" id="new-account-holder" placeholder="Enter account holder name" type="text"/>
+                    <div class="error-message" id="new-account-holder-error">దయచేసి ఖాతా యజమాని పేరు నమోదు చేయండి</div>
                 </div>
                 <div class="form-group">
                     <label for="new-account-number">Account Number</label>
                     <input class="form-control" id="new-account-number" placeholder="Enter account number" type="text"/>
+                    <div class="error-message" id="new-account-number-error">దయచేసి సరైన ఖాతా నంబర్ నమోదు చేయండి</div>
                 </div>
                 <div class="form-group">
                     <label for="new-ifsc-code">IFSC Code</label>
                     <input class="form-control" id="new-ifsc-code" placeholder="Enter IFSC code" type="text"/>
+                    <div class="error-message" id="new-ifsc-code-error">దయచేసి సరైన IFSC కోడ్ నమోదు చేయండి</div>
                 </div>
                 <button class="btn" id="add-bank-account-btn" style="width: 100%;">
                     <i class="fas fa-plus"></i> Add Bank Account
@@ -1187,22 +1631,25 @@
                     <a data-page="tasks" href="#">Tasks</a>
                     <a data-page="wallet" href="#">Wallet</a>
                     <a data-page="referral" href="#">Referral Program</a>
+                    <a data-page="withdrawal-info" href="#">Withdrawal Info</a>
                 </div>
                 <div class="footer-section">
-                    <h3>Support</h3>
-                    <a href="#">Help Center</a>
-                    <a href="#">FAQs</a>
-                    <a href="#">Contact Us</a>
-                    <a href="#">Privacy Policy</a>
+                    <h3>Legal</h3>
+                    <a data-page="privacy" href="#">Privacy Policy</a>
+                    <a data-page="terms" href="#">Terms of Service</a>
+                    <a data-page="referral-terms" href="#">Referral Terms</a>
+                    <a data-page="about" href="#">About Us</a>
+                    <a data-page="contact" href="#">Contact Us</a>
                 </div>
                 <div class="footer-section">
                     <h3>Contact Info</h3>
+                    <p><i class="fas fa-user"></i> IPPILI ESWARA RAO</p>
                     <p><i class="fas fa-envelope"></i> ishwarchinna8@gmail.com</p>
                     <p><i class="fas fa-globe"></i> www.pickmytask.com</p>
                 </div>
             </div>
             <div class="copyright">
-                <p>© 2023 Pick My Task. All rights reserved.</p>
+                <p>© 2025 Pick My Task. All rights reserved.</p>
             </div>
         </div>
     </footer>
@@ -1211,6 +1658,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
 
     <script>
         // Firebase Configuration
@@ -1228,6 +1676,7 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
         const auth = firebase.auth();
+        const storage = firebase.storage();
 
         // DOM Elements
         const pages = document.querySelectorAll('.page');
@@ -1264,27 +1713,64 @@
             }, 4000);
         }
 
+        // Form Validation Functions
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        function validatePhone(phone) {
+            const re = /^[6-9]\d{9}$/;
+            return re.test(phone.replace(/\D/g, ''));
+        }
+
+        function validateRequired(value) {
+            return value && value.trim().length > 0;
+        }
+
+        function validateMinLength(value, minLength) {
+            return value && value.length >= minLength;
+        }
+
+        function showError(elementId, message) {
+            const errorElement = document.getElementById(elementId);
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+        }
+
+        function hideError(elementId) {
+            const errorElement = document.getElementById(elementId);
+            errorElement.style.display = 'none';
+        }
+
         // Navigation between pages
+        function navigateToPage(pageId) {
+            // Remove active class from all links
+            navLinks.forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Hide all pages
+            pages.forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show the selected page
+            document.getElementById(pageId).classList.add('active');
+            
+            // Find and activate the corresponding nav link
+            navLinks.forEach(item => {
+                if (item.getAttribute('data-page') === pageId) {
+                    item.classList.add('active');
+                }
+            });
+        }
+
         navLinks.forEach(link => {
             link.addEventListener('click', function(e) {
                 e.preventDefault();
-                
-                // Remove active class from all links
-                navLinks.forEach(item => {
-                    item.classList.remove('active');
-                });
-                
-                // Add active class to clicked link
-                this.classList.add('active');
-                
-                // Hide all pages
-                pages.forEach(page => {
-                    page.classList.remove('active');
-                });
-                
-                // Show the selected page
                 const pageId = this.getAttribute('data-page');
-                document.getElementById(pageId).classList.add('active');
+                navigateToPage(pageId);
             });
         });
 
@@ -1360,6 +1846,21 @@
             document.getElementById('login').classList.add('active');
         });
 
+        // Join Now and Start Task buttons
+        document.getElementById('join-now-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            navigateToPage('signup');
+        });
+
+        document.getElementById('start-task-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            if (currentUser) {
+                navigateToPage('tasks');
+            } else {
+                navigateToPage('login');
+            }
+        });
+
         // Signup functionality
         document.getElementById('signup-submit').addEventListener('click', function() {
             const name = document.getElementById('signup-name').value;
@@ -1367,71 +1868,107 @@
             const phone = document.getElementById('signup-phone').value;
             const password = document.getElementById('signup-password').value;
             
-            if(name && email && phone && password) {
-                // Show loading state
-                const originalText = this.innerHTML;
-                this.innerHTML = '<div class="loader"></div> Creating account...';
-                this.disabled = true;
-                
-                // Create user with Firebase Auth
-                auth.createUserWithEmailAndPassword(email, password)
-                    .then((userCredential) => {
-                        const user = userCredential.user;
+            // Reset errors
+            hideError('signup-name-error');
+            hideError('signup-email-error');
+            hideError('signup-phone-error');
+            hideError('signup-password-error');
+            
+            let isValid = true;
+            
+            // Validate form
+            if (!validateRequired(name)) {
+                showError('signup-name-error', 'దయచేసి మీ పూర్తి పేరు నమోదు చేయండి');
+                isValid = false;
+            }
+            
+            if (!validateEmail(email)) {
+                showError('signup-email-error', 'దయచేసి సరైన ఇమెయిల్ నమోదు చేయండి');
+                isValid = false;
+            }
+            
+            if (!validatePhone(phone)) {
+                showError('signup-phone-error', 'దయచేసి సరైన ఫోన్ నంబర్ నమోదు చేయండి');
+                isValid = false;
+            }
+            
+            if (!validateMinLength(password, 6)) {
+                showError('signup-password-error', 'పాస్వర్డ్ కనీసం 6 అక్షరాలు ఉండాలి');
+                isValid = false;
+            }
+            
+            if (!isValid) return;
+            
+            // Show loading state
+            const originalText = this.innerHTML;
+            this.innerHTML = '<div class="loader"></div> Creating account...';
+            this.disabled = true;
+            
+            // Create user with Firebase Auth
+            auth.createUserWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    
+                    // Generate referral code
+                    const referralCode = 'PMT' + Math.random().toString(36).substring(2, 8).toUpperCase();
+                    
+                    // Create user data
+                    const userData = {
+                        name: name,
+                        email: email,
+                        phone: phone,
+                        balance: 0,
+                        completedTasks: 0,
+                        totalEarnings: 0,
+                        referrals: 0,
+                        referralEarnings: 0,
+                        referralCode: referralCode,
+                        memberSince: new Date(),
+                        bankAccounts: [],
+                        upiIds: [],
+                        completedTaskIds: [],
+                        activeTasks: [],
+                        transactions: []
+                    };
+                    
+                    // Save user data to Firestore in users/{uid}
+                    return db.collection('users').doc(user.uid).set(userData);
+                })
+                .then(() => {
+                    showNotification('Account created successfully!', 'success');
+                    
+                    // Redirect to login after a short delay
+                    setTimeout(() => {
+                        document.getElementById('signup').classList.remove('active');
+                        document.getElementById('login').classList.add('active');
                         
-                        // Generate referral code
-                        const referralCode = 'PMT' + Math.random().toString(36).substring(2, 8).toUpperCase();
-                        
-                        // Create user data
-                        const userData = {
-                            name: name,
-                            email: email,
-                            phone: phone,
-                            balance: 0,
-                            completedTasks: 0,
-                            totalEarnings: 0,
-                            referrals: 0,
-                            referralEarnings: 0,
-                            referralCode: referralCode,
-                            memberSince: new Date(),
-                            bankAccounts: [],
-                            upiIds: [],
-                            completedTaskIds: [],
-                            activeTasks: []
-                        };
-                        
-                        // Save user data to Firestore
-                        return db.collection('users').doc(user.uid).set(userData);
-                    })
-                    .then(() => {
-                        showNotification('Account created successfully!', 'success');
-                        
-                        // Redirect to login after a short delay
-                        setTimeout(() => {
-                            document.getElementById('signup').classList.remove('active');
-                            document.getElementById('login').classList.add('active');
-                            
-                            // Reset form
-                            document.getElementById('signup-name').value = '';
-                            document.getElementById('signup-email').value = '';
-                            document.getElementById('signup-phone').value = '';
-                            document.getElementById('signup-password').value = '';
-                            
-                            // Reset button
-                            this.innerHTML = originalText;
-                            this.disabled = false;
-                        }, 1500);
-                    })
-                    .catch((error) => {
-                        console.error('Error creating account:', error);
-                        showNotification(error.message, 'error');
+                        // Reset form
+                        document.getElementById('signup-name').value = '';
+                        document.getElementById('signup-email').value = '';
+                        document.getElementById('signup-phone').value = '';
+                        document.getElementById('signup-password').value = '';
                         
                         // Reset button
                         this.innerHTML = originalText;
                         this.disabled = false;
-                    });
-            } else {
-                showNotification('Please fill in all fields.', 'error');
-            }
+                    }, 1500);
+                })
+                .catch((error) => {
+                    console.error('Error creating account:', error);
+                    let errorMessage = 'Error creating account. Please try again.';
+                    
+                    if (error.code === 'auth/email-already-in-use') {
+                        errorMessage = 'This email is already registered. Please use a different email.';
+                    } else if (error.code === 'auth/weak-password') {
+                        errorMessage = 'Password is too weak. Please use a stronger password.';
+                    }
+                    
+                    showNotification(errorMessage, 'error');
+                    
+                    // Reset button
+                    this.innerHTML = originalText;
+                    this.disabled = false;
+                });
         });
 
         // Login functionality
@@ -1439,45 +1976,68 @@
             const email = document.getElementById('login-email').value;
             const password = document.getElementById('login-password').value;
             
-            if(email && password) {
-                // Show loading state
-                const originalText = this.innerHTML;
-                this.innerHTML = '<div class="loader"></div> Logging in...';
-                this.disabled = true;
-                
-                // Sign in with Firebase Auth
-                auth.signInWithEmailAndPassword(email, password)
-                    .then((userCredential) => {
-                        // Signed in
-                        const user = userCredential.user;
-                        currentUser = user;
-                        
-                        // Load user data from Firestore
-                        return db.collection('users').doc(user.uid).get();
-                    })
-                    .then((doc) => {
-                        if (doc.exists) {
-                            userData = doc.data();
-                            userData.uid = doc.id;
-                            
-                            // Update UI for logged in user
-                            updateUIForLoggedInUser();
-                            showNotification('Login successful!', 'success');
-                        } else {
-                            showNotification('User data not found.', 'error');
-                        }
-                    })
-                    .catch((error) => {
-                        console.error('Error signing in:', error);
-                        showNotification(error.message, 'error');
-                        
-                        // Reset button
-                        this.innerHTML = originalText;
-                        this.disabled = false;
-                    });
-            } else {
-                showNotification('Please enter both email and password.', 'error');
+            // Reset errors
+            hideError('login-email-error');
+            hideError('login-password-error');
+            
+            let isValid = true;
+            
+            // Validate form
+            if (!validateEmail(email)) {
+                showError('login-email-error', 'దయచేసి సరైన ఇమెయిల్ నమోదు చేయండి');
+                isValid = false;
             }
+            
+            if (!validateRequired(password)) {
+                showError('login-password-error', 'దయచేసి పాస్వర్డ్ నమోదు చేయండి');
+                isValid = false;
+            }
+            
+            if (!isValid) return;
+            
+            // Show loading state
+            const originalText = this.innerHTML;
+            this.innerHTML = '<div class="loader"></div> Logging in...';
+            this.disabled = true;
+            
+            // Sign in with Firebase Auth
+            auth.signInWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    // Signed in
+                    const user = userCredential.user;
+                    currentUser = user;
+                    
+                    // Load user data from Firestore
+                    return db.collection('users').doc(user.uid).get();
+                })
+                .then((doc) => {
+                    if (doc.exists) {
+                        userData = doc.data();
+                        userData.uid = doc.id;
+                        
+                        // Update UI for logged in user
+                        updateUIForLoggedInUser();
+                        showNotification('Login successful!', 'success');
+                    } else {
+                        showNotification('User data not found.', 'error');
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error signing in:', error);
+                    let errorMessage = 'Error signing in. Please try again.';
+                    
+                    if (error.code === 'auth/user-not-found') {
+                        errorMessage = 'No account found with this email.';
+                    } else if (error.code === 'auth/wrong-password') {
+                        errorMessage = 'Incorrect password. Please try again.';
+                    }
+                    
+                    showNotification(errorMessage, 'error');
+                    
+                    // Reset button
+                    this.innerHTML = originalText;
+                    this.disabled = false;
+                });
         });
 
         // Logout functionality
@@ -1508,10 +2068,30 @@
             const phone = document.getElementById('edit-phone').value;
             const email = document.getElementById('edit-email').value;
             
-            if (!name || !phone || !email) {
-                showNotification('Please fill in all fields.', 'error');
-                return;
+            // Reset errors
+            hideError('edit-name-error');
+            hideError('edit-phone-error');
+            hideError('edit-email-error');
+            
+            let isValid = true;
+            
+            // Validate form
+            if (!validateRequired(name)) {
+                showError('edit-name-error', 'దయచేసి మీ పూర్తి పేరు నమోదు చేయండి');
+                isValid = false;
             }
+            
+            if (!validatePhone(phone)) {
+                showError('edit-phone-error', 'దయచేసి సరైన ఫోన్ నంబర్ నమోదు చేయండి');
+                isValid = false;
+            }
+            
+            if (!validateEmail(email)) {
+                showError('edit-email-error', 'దయచేసి సరైన ఇమెయిల్ నమోదు చేయండి');
+                isValid = false;
+            }
+            
+            if (!isValid) return;
             
             // Show loading state
             const originalText = this.innerHTML;
@@ -1571,10 +2151,36 @@
             const accountNumber = document.getElementById('new-account-number').value;
             const ifscCode = document.getElementById('new-ifsc-code').value;
             
-            if (!bankName || !accountHolder || !accountNumber || !ifscCode) {
-                showNotification('Please fill in all bank account details.', 'error');
-                return;
+            // Reset errors
+            hideError('new-bank-name-error');
+            hideError('new-account-holder-error');
+            hideError('new-account-number-error');
+            hideError('new-ifsc-code-error');
+            
+            let isValid = true;
+            
+            // Validate form
+            if (!validateRequired(bankName)) {
+                showError('new-bank-name-error', 'దయచేసి బ్యాంక్ పేరు నమోదు చేయండి');
+                isValid = false;
             }
+            
+            if (!validateRequired(accountHolder)) {
+                showError('new-account-holder-error', 'దయచేసి ఖాతా యజమాని పేరు నమోదు చేయండి');
+                isValid = false;
+            }
+            
+            if (!validateRequired(accountNumber) || accountNumber.length < 9) {
+                showError('new-account-number-error', 'దయచేసి సరైన ఖాతా నంబర్ నమోదు చేయండి');
+                isValid = false;
+            }
+            
+            if (!validateRequired(ifscCode) || ifscCode.length !== 11) {
+                showError('new-ifsc-code-error', 'దయచేసి సరైన IFSC కోడ్ నమోదు చేయండి');
+                isValid = false;
+            }
+            
+            if (!isValid) return;
             
             // Show loading state
             const originalText = this.innerHTML;
@@ -1587,7 +2193,7 @@
                 bankName: bankName,
                 accountHolder: accountHolder,
                 accountNumber: accountNumber,
-                ifscCode: ifscCode,
+                ifscCode: ifscCode.toUpperCase(),
                 addedAt: new Date()
             };
             
@@ -1662,8 +2268,8 @@
                 return;
             }
             
-            if (userData.balance <= 0) {
-                showNotification('You have no funds to withdraw.', 'error');
+            if (userData.balance < 100) {
+                showNotification('Minimum withdrawal amount is ₹100.', 'error');
                 return;
             }
             
@@ -1688,49 +2294,82 @@
             const amount = parseFloat(document.getElementById('withdraw-amount').value);
             const method = document.querySelector('.tab-method.active').getAttribute('data-method');
             
-            if (!amount || amount <= 0) {
-                showNotification('Please enter a valid amount.', 'error');
-                return;
+            // Reset errors
+            hideError('withdraw-amount-error');
+            hideError('bank-account-error');
+            hideError('account-holder-error');
+            hideError('account-number-error');
+            hideError('ifsc-code-error');
+            hideError('upi-id-error');
+            
+            let isValid = true;
+            
+            // Validate amount
+            if (!amount || amount < 100) {
+                showError('withdraw-amount-error', 'కనీసం ₹100 ఉండాలి');
+                isValid = false;
             }
             
             if (amount > userData.balance) {
-                showNotification('Insufficient balance for this withdrawal.', 'error');
-                return;
+                showError('withdraw-amount-error', 'Insufficient balance');
+                isValid = false;
             }
             
             let withdrawalDetails = {};
             
             if (method === 'bank') {
                 const bankAccountId = document.getElementById('bank-account').value;
+                const accountHolder = document.getElementById('account-holder').value;
+                const accountNumber = document.getElementById('account-number').value;
+                const ifscCode = document.getElementById('ifsc-code').value;
+                
                 if (!bankAccountId) {
-                    showNotification('Please select a bank account.', 'error');
-                    return;
+                    showError('bank-account-error', 'దయచేసి బ్యాంక్ ఖాతాను ఎంచుకోండి');
+                    isValid = false;
                 }
                 
-                const bankAccount = userData.bankAccounts.find(acc => acc.id === bankAccountId);
-                if (!bankAccount) {
-                    showNotification('Invalid bank account selected.', 'error');
-                    return;
+                if (!validateRequired(accountHolder)) {
+                    showError('account-holder-error', 'దయచేసి ఖాతా యజమాని పేరు నమోదు చేయండి');
+                    isValid = false;
                 }
                 
-                withdrawalDetails = {
-                    method: 'bank',
-                    bankName: bankAccount.bankName,
-                    accountNumber: bankAccount.accountNumber,
-                    ifscCode: bankAccount.ifscCode
-                };
+                if (!validateRequired(accountNumber) || accountNumber.length < 9) {
+                    showError('account-number-error', 'దయచేసి సరైన ఖాతా నంబర్ నమోదు చేయండి');
+                    isValid = false;
+                }
+                
+                if (!validateRequired(ifscCode) || ifscCode.length !== 11) {
+                    showError('ifsc-code-error', 'దయచేసి సరైన IFSC కోడ్ నమోదు చేయండి');
+                    isValid = false;
+                }
+                
+                if (isValid) {
+                    const bankAccount = userData.bankAccounts.find(acc => acc.id === bankAccountId);
+                    withdrawalDetails = {
+                        method: 'bank',
+                        bankName: bankAccount ? bankAccount.bankName : '',
+                        accountHolder: accountHolder,
+                        accountNumber: accountNumber,
+                        ifscCode: ifscCode.toUpperCase()
+                    };
+                }
             } else if (method === 'upi') {
                 const upiId = document.getElementById('upi-id').value;
-                if (!upiId) {
-                    showNotification('Please enter your UPI ID.', 'error');
-                    return;
+                
+                if (!validateRequired(upiId) || !upiId.includes('@')) {
+                    showError('upi-id-error', 'దయచేసి సరైన UPI ID నమోదు చేయండి');
+                    isValid = false;
                 }
                 
-                withdrawalDetails = {
-                    method: 'upi',
-                    upiId: upiId
-                };
+                if (isValid) {
+                    withdrawalDetails = {
+                        method: 'upi',
+                        upiId: upiId
+                    };
+                }
             }
+            
+            if (!isValid) return;
             
             // Show loading state
             const originalText = this.innerHTML;
@@ -1769,9 +2408,12 @@
                 // Close modal and reset form
                 document.getElementById('withdraw-modal').classList.remove('active');
                 document.getElementById('withdraw-amount').value = '';
+                document.getElementById('account-holder').value = '';
+                document.getElementById('account-number').value = '';
+                document.getElementById('ifsc-code').value = '';
                 document.getElementById('upi-id').value = '';
                 
-                showNotification(`Withdrawal request of ₹${amount} submitted successfully!`, 'success');
+                showNotification(`Withdrawal request of ₹${amount} submitted successfully! It will be processed within 24-48 hours.`, 'success');
                 
                 // Reset button
                 this.innerHTML = originalText;
@@ -1785,6 +2427,58 @@
                 this.innerHTML = originalText;
                 this.disabled = false;
             });
+        });
+
+        // Contact form submission
+        document.getElementById('contact-submit').addEventListener('click', function() {
+            const name = document.getElementById('contact-name').value;
+            const email = document.getElementById('contact-email').value;
+            const message = document.getElementById('contact-message').value;
+            
+            // Reset errors
+            hideError('contact-name-error');
+            hideError('contact-email-error');
+            hideError('contact-message-error');
+            
+            let isValid = true;
+            
+            // Validate form
+            if (!validateRequired(name)) {
+                showError('contact-name-error', 'దయచేసి మీ పేరు నమోదు చేయండి');
+                isValid = false;
+            }
+            
+            if (!validateEmail(email)) {
+                showError('contact-email-error', 'దయచేసి సరైన ఇమెయిల్ నమోదు చేయండి');
+                isValid = false;
+            }
+            
+            if (!validateRequired(message)) {
+                showError('contact-message-error', 'దయచేసి సందేశం నమోదు చేయండి');
+                isValid = false;
+            }
+            
+            if (!isValid) return;
+            
+            // Show loading state
+            const originalText = this.innerHTML;
+            this.innerHTML = '<div class="loader"></div> Sending...';
+            this.disabled = true;
+            
+            // In a real app, this would send the message to a server
+            // For now, we'll just show a success message
+            setTimeout(() => {
+                // Reset form
+                document.getElementById('contact-name').value = '';
+                document.getElementById('contact-email').value = '';
+                document.getElementById('contact-message').value = '';
+                
+                showNotification('Message sent successfully! We will respond within 24 hours.', 'success');
+                
+                // Reset button
+                this.innerHTML = originalText;
+                this.disabled = false;
+            }, 1500);
         });
 
         // Task modal functionality
@@ -1811,6 +2505,13 @@
                 e.preventDefault();
                 const accountId = e.target.getAttribute('data-account-id');
                 removeBankAccount(accountId);
+            }
+            
+            // Footer navigation
+            if (e.target.hasAttribute('data-page')) {
+                e.preventDefault();
+                const pageId = e.target.getAttribute('data-page');
+                navigateToPage(pageId);
             }
         });
 
@@ -1922,7 +2623,7 @@
             document.getElementById('member-since').textContent = daysSinceMember;
             document.getElementById('total-referrals').textContent = userData.referrals || 0;
             document.getElementById('referral-earnings').textContent = `₹${userData.referralEarnings || 0}`;
-            document.getElementById('referral-code').textContent = userData.referralCode || 'PMT2023XYZ';
+            document.getElementById('referral-code').textContent = userData.referralCode || 'PMT2025XYZ';
         }
 
         // Update user balance UI
@@ -2006,6 +2707,10 @@
             financeContainer.innerHTML = '';
             otherContainer.innerHTML = '';
             
+            // Show loading state
+            featuredContainer.innerHTML = '<p style="text-align: center; padding: 20px; color: var(--gray);">Loading tasks...</p>';
+            allTasksContainer.innerHTML = '<p style="text-align: center; padding: 20px; color: var(--gray);">Loading tasks...</p>';
+            
             // Load tasks from Firebase
             db.collection('tasks').where('status', '==', 'active').get()
                 .then((querySnapshot) => {
@@ -2040,6 +2745,11 @@
                             otherContainer.innerHTML += taskHTML;
                         }
                     });
+                    
+                    // If no featured tasks, show message
+                    if (featuredContainer.innerHTML === '') {
+                        featuredContainer.innerHTML = '<p style="text-align: center; padding: 20px; color: var(--gray);">No featured tasks available at the moment.</p>';
+                    }
                 })
                 .catch((error) => {
                     console.error('Error loading tasks: ', error);
@@ -2064,11 +2774,42 @@
                 buttonHTML = `<a href="#" class="btn task-details-btn" data-task-id="${task.id}">View Details</a>`;
             }
             
+            // Create task details (payout, time, proof)
+            const taskDetailsHTML = `
+                <div class="task-details">
+                    <div class="task-detail">
+                        <i class="fas fa-rupee-sign"></i>
+                        <span>₹${task.reward}</span>
+                    </div>
+                    <div class="task-detail">
+                        <i class="fas fa-clock"></i>
+                        <span>${task.duration || '1-7'} days</span>
+                    </div>
+                    <div class="task-detail">
+                        <i class="fas fa-file-alt"></i>
+                        <span>${task.proof || 'Screenshot'}</span>
+                    </div>
+                    <div class="task-detail">
+                        <i class="fas fa-tag"></i>
+                        <span>${task.category}</span>
+                    </div>
+                </div>
+            `;
+            
+            // Add task image if available
+            const taskImageHTML = task.imageUrl ? 
+                `<img src="${task.imageUrl}" alt="${task.title}" class="task-image">` : 
+                `<div class="task-image" style="background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem;">
+                    <i class="fas fa-tasks"></i>
+                </div>`;
+            
             return `
                 <div class="task-card">
+                    ${taskImageHTML}
                     <div class="task-category">${task.category} ${statusHTML}</div>
                     <h3>${task.title}</h3>
                     <p>${task.description}</p>
+                    ${taskDetailsHTML}
                     <div class="task-meta">
                         <div class="task-reward">₹${task.reward}</div>
                         ${buttonHTML}
@@ -2096,6 +2837,23 @@
             document.getElementById('task-modal-body').innerHTML = `
                 <div class="task-category">${task.category}</div>
                 <p>${task.description}</p>
+                <div style="margin: 20px 0;">
+                    <h3 style="margin-bottom: 10px;">Task Details:</h3>
+                    <div class="task-details">
+                        <div class="task-detail">
+                            <i class="fas fa-rupee-sign"></i>
+                            <span><strong>Payout:</strong> ₹${task.reward}</span>
+                        </div>
+                        <div class="task-detail">
+                            <i class="fas fa-clock"></i>
+                            <span><strong>Time:</strong> ${task.duration || '1-7'} days</span>
+                        </div>
+                        <div class="task-detail">
+                            <i class="fas fa-file-alt"></i>
+                            <span><strong>Proof Required:</strong> ${task.proof || 'Screenshot'}</span>
+                        </div>
+                    </div>
+                </div>
                 <div style="margin: 20px 0;">
                     <h3 style="margin-bottom: 10px;">Requirements:</h3>
                     <p>${task.requirements}</p>
@@ -2251,7 +3009,8 @@
                     reward: 100,
                     link: "https://airtelbank.com",
                     requirements: "Aadhaar Card, PAN Card",
-                    duration: 7,
+                    duration: "7 days",
+                    proof: "Application ID Screenshot",
                     featured: true,
                     status: "active",
                     createdAt: new Date(),
@@ -2269,7 +3028,8 @@
                     reward: 150,
                     link: "https://bank.com/credit-card",
                     requirements: "Income Proof, Address Proof",
-                    duration: 14,
+                    duration: "14 days",
+                    proof: "Application Reference Number",
                     featured: true,
                     status: "active",
                     createdAt: new Date(),
@@ -2287,7 +3047,8 @@
                     reward: 200,
                     link: "https://tradingplatform.com",
                     requirements: "PAN Card, Bank Account",
-                    duration: 3,
+                    duration: "3 days",
+                    proof: "Trading Account Screenshot",
                     featured: true,
                     status: "active",
                     createdAt: new Date(),
@@ -2306,7 +3067,8 @@
                     reward: 50,
                     link: "https://paytm.com",
                     requirements: "Aadhaar Card",
-                    duration: 1,
+                    duration: "1 day",
+                    proof: "KYC Completion Screenshot",
                     featured: false,
                     status: "active",
                     createdAt: new Date(),
@@ -2324,7 +3086,8 @@
                     reward: 300,
                     link: "https://insurance.com",
                     requirements: "Basic personal details",
-                    duration: 30,
+                    duration: "30 days",
+                    proof: "Policy Details",
                     featured: false,
                     status: "active",
                     createdAt: new Date(),
@@ -2342,7 +3105,8 @@
                     reward: 20,
                     link: "https://recharge.com",
                     requirements: "Mobile number",
-                    duration: 1,
+                    duration: "1 day",
+                    proof: "Recharge Screenshot",
                     featured: false,
                     status: "active",
                     createdAt: new Date(),
@@ -2378,7 +3142,8 @@
                     category: "banking",
                     description: "Open an Airtel Payments Bank account through our link and earn ₹100 upon successful verification.",
                     reward: 100,
-                    link: "https://airtelbank.com",
+                    duration: "7 days",
+                    proof: "Application ID Screenshot",
                     featured: true
                 },
                 {
@@ -2387,7 +3152,8 @@
                     category: "finance", 
                     description: "Apply for a credit card through our partner bank and earn ₹150 upon approval.",
                     reward: 150,
-                    link: "https://bank.com/credit-card",
+                    duration: "14 days",
+                    proof: "Application Reference Number",
                     featured: true
                 },
                 {
@@ -2396,7 +3162,8 @@
                     category: "finance",
                     description: "Open a trading account with our broker partner and earn ₹200 after your first trade.",
                     reward: 200,
-                    link: "https://tradingplatform.com",
+                    duration: "3 days",
+                    proof: "Trading Account Screenshot",
                     featured: true
                 },
                 {
@@ -2405,7 +3172,8 @@
                     category: "banking",
                     description: "Complete your Paytm Wallet KYC and earn ₹50 instantly.",
                     reward: 50,
-                    link: "https://paytm.com",
+                    duration: "1 day",
+                    proof: "KYC Completion Screenshot",
                     featured: false
                 },
                 {
@@ -2414,7 +3182,8 @@
                     category: "finance",
                     description: "Purchase a health insurance policy through our partner and earn ₹300.",
                     reward: 300,
-                    link: "https://insurance.com",
+                    duration: "30 days",
+                    proof: "Policy Details",
                     featured: false
                 },
                 {
@@ -2423,7 +3192,8 @@
                     category: "other",
                     description: "Recharge your mobile with ₹100 or more and get ₹20 cashback.",
                     reward: 20,
-                    link: "https://recharge.com",
+                    duration: "1 day",
+                    proof: "Recharge Screenshot",
                     featured: false
                 }
             ];
@@ -2525,36 +3295,6 @@
             
             // Load tasks
             loadTasks();
-        });
-
-        // Footer navigation
-        document.querySelectorAll('.footer-section a').forEach(link => {
-            link.addEventListener('click', function(e) {
-                if (this.getAttribute('data-page')) {
-                    e.preventDefault();
-                    
-                    // Remove active class from all links
-                    navLinks.forEach(item => {
-                        item.classList.remove('active');
-                    });
-                    
-                    // Hide all pages
-                    pages.forEach(page => {
-                        page.classList.remove('active');
-                    });
-                    
-                    // Show the selected page
-                    const pageId = this.getAttribute('data-page');
-                    document.getElementById(pageId).classList.add('active');
-                    
-                    // Find and activate the corresponding nav link
-                    navLinks.forEach(item => {
-                        if (item.getAttribute('data-page') === pageId) {
-                            item.classList.add('active');
-                        }
-                    });
-                }
-            });
         });
     </script>
 </body>
