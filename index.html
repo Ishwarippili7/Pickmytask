@@ -6,7 +6,6 @@
     <title>Pick My Task - Earn Money Completing Tasks</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        /* CSS Styles */
         :root {
             --primary: #0088cc;
             --primary-dark: #006699;
@@ -139,6 +138,13 @@
 
         .btn-accent {
             background: var(--accent);
+        }
+
+        .btn:disabled {
+            background: var(--gray);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
         }
 
         .page {
@@ -567,6 +573,8 @@
             max-width: 500px;
             width: 90%;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            max-height: 90vh;
+            overflow-y: auto;
         }
 
         .modal-header {
@@ -603,6 +611,112 @@
             background: rgba(220, 53, 69, 0.1);
             border: 1px solid var(--danger);
             color: var(--danger);
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            z-index: 1200;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            max-width: 400px;
+            transform: translateX(150%);
+            transition: transform 0.3s ease;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification-success {
+            background: white;
+            border-left: 4px solid var(--success);
+            color: var(--success);
+        }
+        
+        .notification-error {
+            background: white;
+            border-left: 4px solid var(--danger);
+            color: var(--danger);
+        }
+        
+        .notification-info {
+            background: white;
+            border-left: 4px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .loader {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .task-status {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        
+        .status-completed {
+            background: rgba(40, 167, 69, 0.1);
+            color: var(--success);
+        }
+        
+        .status-pending {
+            background: rgba(255, 193, 7, 0.1);
+            color: var(--warning);
+        }
+        
+        .status-available {
+            background: rgba(0, 136, 204, 0.1);
+            color: var(--primary);
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: var(--radius);
+            background: var(--light);
+        }
+        
+        .step.completed {
+            background: rgba(40, 167, 69, 0.1);
+        }
+        
+        .step-number {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            font-weight: 600;
+        }
+        
+        .step.completed .step-number {
+            background: var(--success);
         }
 
         @media (max-width: 768px) {
@@ -746,7 +860,6 @@
                 <div class="balance-amount" id="wallet-balance">₹0.00</div>
                 <p>Available for withdrawal</p>
                 <div class="wallet-actions">
-                    <a class="btn btn-success" href="#" id="add-money-btn"><i class="fas fa-plus"></i> Add Money</a>
                     <a class="btn" href="#" id="withdraw-btn"><i class="fas fa-download"></i> Withdraw</a>
                     <a class="btn btn-warning" href="#" id="transaction-history-btn"><i class="fas fa-exchange-alt"></i> Transaction History</a>
                 </div>
@@ -841,17 +954,17 @@
                 <div style="margin-top: 20px;">
                     <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid var(--border);">
                         <div>
-                            <div style="font-weight: 600;">Notification Settings</div>
-                            <div style="color: var(--gray); font-size: 0.9rem;">Manage how we contact you</div>
+                            <div style="font-weight: 600;">Bank Account Details</div>
+                            <div style="color: var(--gray); font-size: 0.9rem;">Manage your withdrawal accounts</div>
                         </div>
-                        <a class="btn" href="#" style="padding: 8px 15px;">Edit</a>
+                        <a class="btn" href="#" id="manage-bank-btn" style="padding: 8px 15px;">Manage</a>
                     </div>
                     <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid var(--border);">
                         <div>
-                            <div style="font-weight: 600;">Payment Methods</div>
-                            <div style="color: var(--gray); font-size: 0.9rem;">Manage your withdrawal options</div>
+                            <div style="font-weight: 600;">UPI Details</div>
+                            <div style="color: var(--gray); font-size: 0.9rem;">Manage your UPI withdrawal options</div>
                         </div>
-                        <a class="btn" href="#" style="padding: 8px 15px;">Manage</a>
+                        <a class="btn" href="#" id="manage-upi-btn" style="padding: 8px 15px;">Manage</a>
                     </div>
                     <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid var(--border);">
                         <div>
@@ -881,8 +994,8 @@
                     <p style="color: var(--gray); margin: 15px 0 30px;">Sign in to your account to start earning</p>
                     <div id="login-alert" style="display: none;"></div>
                     <div class="form-group">
-                        <label for="login-phone">Phone Number</label>
-                        <input class="form-control" id="login-phone" placeholder="Enter your phone number" type="tel"/>
+                        <label for="login-email">Email Address</label>
+                        <input class="form-control" id="login-email" placeholder="Enter your email address" type="email"/>
                     </div>
                     <div class="form-group">
                         <label for="login-password">Password</label>
@@ -914,12 +1027,12 @@
                         <input class="form-control" id="signup-name" placeholder="Enter your full name" type="text"/>
                     </div>
                     <div class="form-group">
-                        <label for="signup-phone">Phone Number</label>
-                        <input class="form-control" id="signup-phone" placeholder="Enter your phone number" type="tel"/>
-                    </div>
-                    <div class="form-group">
                         <label for="signup-email">Email Address</label>
                         <input class="form-control" id="signup-email" placeholder="Enter your email address" type="email"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-phone">Phone Number</label>
+                        <input class="form-control" id="signup-phone" placeholder="Enter your phone number" type="tel"/>
                     </div>
                     <div class="form-group">
                         <label for="signup-password">Password</label>
@@ -937,6 +1050,9 @@
             </div>
         </section>
     </main>
+
+    <!-- Notification Container -->
+    <div id="notification-container"></div>
 
     <!-- Modals -->
     <div class="modal" id="task-modal">
@@ -959,18 +1075,102 @@
             </div>
             <div class="form-group">
                 <label for="withdraw-amount">Amount (₹)</label>
-                <input class="form-control" id="withdraw-amount" placeholder="Enter amount to withdraw" type="number"/>
+                <input class="form-control" id="withdraw-amount" placeholder="Enter amount to withdraw" type="number" min="1"/>
             </div>
             <div class="form-group">
-                <label for="bank-account">Bank Account</label>
-                <select class="form-control" id="bank-account">
-                    <option value="">Select bank account</option>
-                    <!-- Bank accounts will be loaded here -->
-                </select>
+                <label>Withdrawal Method</label>
+                <div style="display: flex; gap: 10px; margin-top: 10px;">
+                    <button class="btn tab-method active" data-method="bank">Bank Transfer</button>
+                    <button class="btn tab-method" data-method="upi">UPI</button>
+                </div>
+            </div>
+            <div id="bank-details" class="withdrawal-method">
+                <div class="form-group">
+                    <label for="bank-account">Bank Account</label>
+                    <select class="form-control" id="bank-account">
+                        <option value="">Select bank account</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="account-holder">Account Holder Name</label>
+                    <input class="form-control" id="account-holder" placeholder="Enter account holder name" type="text"/>
+                </div>
+                <div class="form-group">
+                    <label for="account-number">Account Number</label>
+                    <input class="form-control" id="account-number" placeholder="Enter account number" type="text"/>
+                </div>
+                <div class="form-group">
+                    <label for="ifsc-code">IFSC Code</label>
+                    <input class="form-control" id="ifsc-code" placeholder="Enter IFSC code" type="text"/>
+                </div>
+            </div>
+            <div id="upi-details" class="withdrawal-method" style="display: none;">
+                <div class="form-group">
+                    <label for="upi-id">UPI ID</label>
+                    <input class="form-control" id="upi-id" placeholder="Enter your UPI ID" type="text"/>
+                </div>
             </div>
             <button class="btn" id="withdraw-submit" style="width: 100%; margin-top: 20px;">
                 <i class="fas fa-download"></i> Withdraw
             </button>
+        </div>
+    </div>
+
+    <div class="modal" id="edit-profile-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Edit Profile</h2>
+                <button class="modal-close" id="edit-profile-modal-close">&times;</button>
+            </div>
+            <div class="form-group">
+                <label for="edit-name">Full Name</label>
+                <input class="form-control" id="edit-name" placeholder="Enter your full name" type="text"/>
+            </div>
+            <div class="form-group">
+                <label for="edit-phone">Phone Number</label>
+                <input class="form-control" id="edit-phone" placeholder="Enter your phone number" type="tel"/>
+            </div>
+            <div class="form-group">
+                <label for="edit-email">Email Address</label>
+                <input class="form-control" id="edit-email" placeholder="Enter your email address" type="email"/>
+            </div>
+            <button class="btn" id="save-profile-btn" style="width: 100%; margin-top: 20px;">
+                <i class="fas fa-save"></i> Save Changes
+            </button>
+        </div>
+    </div>
+
+    <div class="modal" id="bank-account-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Bank Account Details</h2>
+                <button class="modal-close" id="bank-account-modal-close">&times;</button>
+            </div>
+            <div id="bank-accounts-list">
+                <!-- Bank accounts will be listed here -->
+            </div>
+            <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border);">
+                <h3 style="margin-bottom: 15px;">Add New Bank Account</h3>
+                <div class="form-group">
+                    <label for="new-bank-name">Bank Name</label>
+                    <input class="form-control" id="new-bank-name" placeholder="Enter bank name" type="text"/>
+                </div>
+                <div class="form-group">
+                    <label for="new-account-holder">Account Holder Name</label>
+                    <input class="form-control" id="new-account-holder" placeholder="Enter account holder name" type="text"/>
+                </div>
+                <div class="form-group">
+                    <label for="new-account-number">Account Number</label>
+                    <input class="form-control" id="new-account-number" placeholder="Enter account number" type="text"/>
+                </div>
+                <div class="form-group">
+                    <label for="new-ifsc-code">IFSC Code</label>
+                    <input class="form-control" id="new-ifsc-code" placeholder="Enter IFSC code" type="text"/>
+                </div>
+                <button class="btn" id="add-bank-account-btn" style="width: 100%;">
+                    <i class="fas fa-plus"></i> Add Bank Account
+                </button>
+            </div>
         </div>
     </div>
 
@@ -1039,6 +1239,30 @@
         // Current User State
         let currentUser = null;
         let userData = null;
+        let tasks = [];
+
+        // Notification System
+        function showNotification(message, type = 'info') {
+            const container = document.getElementById('notification-container');
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+                <span>${message}</span>
+            `;
+            container.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 100);
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    container.removeChild(notification);
+                }, 300);
+            }, 4000);
+        }
 
         // Navigation between pages
         navLinks.forEach(link => {
@@ -1091,6 +1315,38 @@
             });
         });
 
+        // Close modal when clicking outside
+        modals.forEach(modal => {
+            modal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.classList.remove('active');
+                }
+            });
+        });
+
+        // Withdrawal method tabs
+        document.querySelectorAll('.tab-method').forEach(tab => {
+            tab.addEventListener('click', function() {
+                const method = this.getAttribute('data-method');
+                
+                // Remove active class from all method tabs
+                document.querySelectorAll('.tab-method').forEach(t => {
+                    t.classList.remove('active');
+                });
+                
+                // Add active class to clicked tab
+                this.classList.add('active');
+                
+                // Hide all method contents
+                document.querySelectorAll('.withdrawal-method').forEach(content => {
+                    content.style.display = 'none';
+                });
+                
+                // Show the selected method content
+                document.getElementById(`${method}-details`).style.display = 'block';
+            });
+        });
+
         // Login/Signup navigation
         document.getElementById('signup-link').addEventListener('click', function(e) {
             e.preventDefault();
@@ -1104,39 +1360,123 @@
             document.getElementById('login').classList.add('active');
         });
 
-        // Login functionality
-        document.getElementById('login-submit').addEventListener('click', function() {
-            const phone = document.getElementById('login-phone').value;
-            const password = document.getElementById('login-password').value;
-            
-            if(phone && password) {
-                // Show loading state
-                this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging in...';
-                this.disabled = true;
-                
-                // For demo, we'll simulate login since we don't have actual auth setup
-                simulateLogin();
-            } else {
-                showAlert('login-alert', 'Please enter both phone number and password.', 'error');
-            }
-        });
-
         // Signup functionality
         document.getElementById('signup-submit').addEventListener('click', function() {
             const name = document.getElementById('signup-name').value;
-            const phone = document.getElementById('signup-phone').value;
             const email = document.getElementById('signup-email').value;
+            const phone = document.getElementById('signup-phone').value;
             const password = document.getElementById('signup-password').value;
             
-            if(name && phone && email && password) {
+            if(name && email && phone && password) {
                 // Show loading state
-                this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating account...';
+                const originalText = this.innerHTML;
+                this.innerHTML = '<div class="loader"></div> Creating account...';
                 this.disabled = true;
                 
-                // For demo, we'll simulate signup
-                simulateSignup(name, phone, email);
+                // Create user with Firebase Auth
+                auth.createUserWithEmailAndPassword(email, password)
+                    .then((userCredential) => {
+                        const user = userCredential.user;
+                        
+                        // Generate referral code
+                        const referralCode = 'PMT' + Math.random().toString(36).substring(2, 8).toUpperCase();
+                        
+                        // Create user data
+                        const userData = {
+                            name: name,
+                            email: email,
+                            phone: phone,
+                            balance: 0,
+                            completedTasks: 0,
+                            totalEarnings: 0,
+                            referrals: 0,
+                            referralEarnings: 0,
+                            referralCode: referralCode,
+                            memberSince: new Date(),
+                            bankAccounts: [],
+                            upiIds: [],
+                            completedTaskIds: [],
+                            activeTasks: []
+                        };
+                        
+                        // Save user data to Firestore
+                        return db.collection('users').doc(user.uid).set(userData);
+                    })
+                    .then(() => {
+                        showNotification('Account created successfully!', 'success');
+                        
+                        // Redirect to login after a short delay
+                        setTimeout(() => {
+                            document.getElementById('signup').classList.remove('active');
+                            document.getElementById('login').classList.add('active');
+                            
+                            // Reset form
+                            document.getElementById('signup-name').value = '';
+                            document.getElementById('signup-email').value = '';
+                            document.getElementById('signup-phone').value = '';
+                            document.getElementById('signup-password').value = '';
+                            
+                            // Reset button
+                            this.innerHTML = originalText;
+                            this.disabled = false;
+                        }, 1500);
+                    })
+                    .catch((error) => {
+                        console.error('Error creating account:', error);
+                        showNotification(error.message, 'error');
+                        
+                        // Reset button
+                        this.innerHTML = originalText;
+                        this.disabled = false;
+                    });
             } else {
-                showAlert('signup-alert', 'Please fill in all fields.', 'error');
+                showNotification('Please fill in all fields.', 'error');
+            }
+        });
+
+        // Login functionality
+        document.getElementById('login-submit').addEventListener('click', function() {
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            
+            if(email && password) {
+                // Show loading state
+                const originalText = this.innerHTML;
+                this.innerHTML = '<div class="loader"></div> Logging in...';
+                this.disabled = true;
+                
+                // Sign in with Firebase Auth
+                auth.signInWithEmailAndPassword(email, password)
+                    .then((userCredential) => {
+                        // Signed in
+                        const user = userCredential.user;
+                        currentUser = user;
+                        
+                        // Load user data from Firestore
+                        return db.collection('users').doc(user.uid).get();
+                    })
+                    .then((doc) => {
+                        if (doc.exists) {
+                            userData = doc.data();
+                            userData.uid = doc.id;
+                            
+                            // Update UI for logged in user
+                            updateUIForLoggedInUser();
+                            showNotification('Login successful!', 'success');
+                        } else {
+                            showNotification('User data not found.', 'error');
+                        }
+                    })
+                    .catch((error) => {
+                        console.error('Error signing in:', error);
+                        showNotification(error.message, 'error');
+                        
+                        // Reset button
+                        this.innerHTML = originalText;
+                        this.disabled = false;
+                    });
+            } else {
+                showNotification('Please enter both email and password.', 'error');
             }
         });
 
@@ -1146,10 +1486,156 @@
             logout();
         });
 
+        // Edit Profile functionality
+        document.getElementById('edit-profile-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            if (!currentUser) {
+                showNotification('Please login to edit profile.', 'error');
+                return;
+            }
+            
+            // Populate form with current data
+            document.getElementById('edit-name').value = userData.name || '';
+            document.getElementById('edit-phone').value = userData.phone || '';
+            document.getElementById('edit-email').value = userData.email || '';
+            
+            document.getElementById('edit-profile-modal').classList.add('active');
+        });
+
+        // Save Profile functionality
+        document.getElementById('save-profile-btn').addEventListener('click', function() {
+            const name = document.getElementById('edit-name').value;
+            const phone = document.getElementById('edit-phone').value;
+            const email = document.getElementById('edit-email').value;
+            
+            if (!name || !phone || !email) {
+                showNotification('Please fill in all fields.', 'error');
+                return;
+            }
+            
+            // Show loading state
+            const originalText = this.innerHTML;
+            this.innerHTML = '<div class="loader"></div> Saving...';
+            this.disabled = true;
+            
+            // Update user data in Firestore
+            db.collection('users').doc(currentUser.uid).update({
+                name: name,
+                phone: phone,
+                email: email
+            })
+            .then(() => {
+                // Update local user data
+                userData.name = name;
+                userData.phone = phone;
+                userData.email = email;
+                
+                // Update UI
+                updateUserProfileUI();
+                
+                // Close modal
+                document.getElementById('edit-profile-modal').classList.remove('active');
+                
+                showNotification('Profile updated successfully!', 'success');
+                
+                // Reset button
+                this.innerHTML = originalText;
+                this.disabled = false;
+            })
+            .catch((error) => {
+                console.error('Error updating profile:', error);
+                showNotification('Error updating profile. Please try again.', 'error');
+                
+                // Reset button
+                this.innerHTML = originalText;
+                this.disabled = false;
+            });
+        });
+
+        // Manage Bank Accounts
+        document.getElementById('manage-bank-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            if (!currentUser) {
+                showNotification('Please login to manage bank accounts.', 'error');
+                return;
+            }
+            
+            loadBankAccounts();
+            document.getElementById('bank-account-modal').classList.add('active');
+        });
+
+        // Add Bank Account
+        document.getElementById('add-bank-account-btn').addEventListener('click', function() {
+            const bankName = document.getElementById('new-bank-name').value;
+            const accountHolder = document.getElementById('new-account-holder').value;
+            const accountNumber = document.getElementById('new-account-number').value;
+            const ifscCode = document.getElementById('new-ifsc-code').value;
+            
+            if (!bankName || !accountHolder || !accountNumber || !ifscCode) {
+                showNotification('Please fill in all bank account details.', 'error');
+                return;
+            }
+            
+            // Show loading state
+            const originalText = this.innerHTML;
+            this.innerHTML = '<div class="loader"></div> Adding...';
+            this.disabled = true;
+            
+            // Create new bank account object
+            const newBankAccount = {
+                id: 'bank_' + Date.now(),
+                bankName: bankName,
+                accountHolder: accountHolder,
+                accountNumber: accountNumber,
+                ifscCode: ifscCode,
+                addedAt: new Date()
+            };
+            
+            // Add to user's bank accounts
+            const updatedBankAccounts = [...(userData.bankAccounts || []), newBankAccount];
+            
+            // Update in Firestore
+            db.collection('users').doc(currentUser.uid).update({
+                bankAccounts: updatedBankAccounts
+            })
+            .then(() => {
+                // Update local user data
+                userData.bankAccounts = updatedBankAccounts;
+                
+                // Reset form
+                document.getElementById('new-bank-name').value = '';
+                document.getElementById('new-account-holder').value = '';
+                document.getElementById('new-account-number').value = '';
+                document.getElementById('new-ifsc-code').value = '';
+                
+                // Reload bank accounts list
+                loadBankAccounts();
+                
+                showNotification('Bank account added successfully!', 'success');
+                
+                // Reset button
+                this.innerHTML = originalText;
+                this.disabled = false;
+            })
+            .catch((error) => {
+                console.error('Error adding bank account:', error);
+                showNotification('Error adding bank account. Please try again.', 'error');
+                
+                // Reset button
+                this.innerHTML = originalText;
+                this.disabled = false;
+            });
+        });
+
         // Share referral code
         document.getElementById('share-btn').addEventListener('click', function(e) {
             e.preventDefault();
-            const referralCode = document.getElementById('referral-code').textContent;
+            if (!currentUser) {
+                showNotification('Please login to share referral code.', 'error');
+                return;
+            }
+            
+            const referralCode = userData.referralCode;
             
             // In a real app, this would use the Web Share API or copy to clipboard
             if (navigator.share) {
@@ -1161,7 +1647,7 @@
             } else {
                 // Fallback: copy to clipboard
                 navigator.clipboard.writeText(referralCode).then(function() {
-                    showAlert('referral-alert', 'Referral code copied to clipboard!', 'success');
+                    showNotification('Referral code copied to clipboard!', 'success');
                 }, function() {
                     alert(`Share this code with your friends: ${referralCode}`);
                 });
@@ -1172,11 +1658,133 @@
         document.getElementById('withdraw-btn').addEventListener('click', function(e) {
             e.preventDefault();
             if (!currentUser) {
-                showAlert('wallet-alert', 'Please login to withdraw funds.', 'error');
+                showNotification('Please login to withdraw funds.', 'error');
                 return;
             }
             
+            if (userData.balance <= 0) {
+                showNotification('You have no funds to withdraw.', 'error');
+                return;
+            }
+            
+            // Populate bank accounts in dropdown
+            const bankAccountSelect = document.getElementById('bank-account');
+            bankAccountSelect.innerHTML = '<option value="">Select bank account</option>';
+            
+            if (userData.bankAccounts && userData.bankAccounts.length > 0) {
+                userData.bankAccounts.forEach(account => {
+                    const option = document.createElement('option');
+                    option.value = account.id;
+                    option.textContent = `${account.bankName} - ${account.accountNumber}`;
+                    bankAccountSelect.appendChild(option);
+                });
+            }
+            
             document.getElementById('withdraw-modal').classList.add('active');
+        });
+
+        // Withdraw submit
+        document.getElementById('withdraw-submit').addEventListener('click', function() {
+            const amount = parseFloat(document.getElementById('withdraw-amount').value);
+            const method = document.querySelector('.tab-method.active').getAttribute('data-method');
+            
+            if (!amount || amount <= 0) {
+                showNotification('Please enter a valid amount.', 'error');
+                return;
+            }
+            
+            if (amount > userData.balance) {
+                showNotification('Insufficient balance for this withdrawal.', 'error');
+                return;
+            }
+            
+            let withdrawalDetails = {};
+            
+            if (method === 'bank') {
+                const bankAccountId = document.getElementById('bank-account').value;
+                if (!bankAccountId) {
+                    showNotification('Please select a bank account.', 'error');
+                    return;
+                }
+                
+                const bankAccount = userData.bankAccounts.find(acc => acc.id === bankAccountId);
+                if (!bankAccount) {
+                    showNotification('Invalid bank account selected.', 'error');
+                    return;
+                }
+                
+                withdrawalDetails = {
+                    method: 'bank',
+                    bankName: bankAccount.bankName,
+                    accountNumber: bankAccount.accountNumber,
+                    ifscCode: bankAccount.ifscCode
+                };
+            } else if (method === 'upi') {
+                const upiId = document.getElementById('upi-id').value;
+                if (!upiId) {
+                    showNotification('Please enter your UPI ID.', 'error');
+                    return;
+                }
+                
+                withdrawalDetails = {
+                    method: 'upi',
+                    upiId: upiId
+                };
+            }
+            
+            // Show loading state
+            const originalText = this.innerHTML;
+            this.innerHTML = '<div class="loader"></div> Processing...';
+            this.disabled = true;
+            
+            // Create withdrawal transaction
+            const transaction = {
+                id: 'txn_' + Date.now(),
+                type: 'withdrawal',
+                description: `Withdrawal via ${method.toUpperCase()}`,
+                amount: amount,
+                date: new Date(),
+                status: 'pending',
+                details: withdrawalDetails
+            };
+            
+            // Update user balance and add transaction
+            const updatedBalance = userData.balance - amount;
+            const updatedTransactions = [...(userData.transactions || []), transaction];
+            
+            // Update in Firestore
+            db.collection('users').doc(currentUser.uid).update({
+                balance: updatedBalance,
+                transactions: updatedTransactions
+            })
+            .then(() => {
+                // Update local user data
+                userData.balance = updatedBalance;
+                userData.transactions = updatedTransactions;
+                
+                // Update UI
+                updateUserBalanceUI();
+                loadTransactions();
+                
+                // Close modal and reset form
+                document.getElementById('withdraw-modal').classList.remove('active');
+                document.getElementById('withdraw-amount').value = '';
+                document.getElementById('upi-id').value = '';
+                
+                showNotification(`Withdrawal request of ₹${amount} submitted successfully!`, 'success');
+                
+                // Reset button
+                this.innerHTML = originalText;
+                this.disabled = false;
+            })
+            .catch((error) => {
+                console.error('Error processing withdrawal:', error);
+                showNotification('Error processing withdrawal. Please try again.', 'error');
+                
+                // Reset button
+                this.innerHTML = originalText;
+                this.disabled = false;
+            });
         });
 
         // Task modal functionality
@@ -1186,31 +1794,49 @@
                 const taskId = e.target.getAttribute('data-task-id');
                 showTaskDetails(taskId);
             }
+            
+            if (e.target.classList.contains('start-task-btn')) {
+                e.preventDefault();
+                const taskId = e.target.getAttribute('data-task-id');
+                startTask(taskId);
+            }
+            
+            if (e.target.classList.contains('complete-task-btn')) {
+                e.preventDefault();
+                const taskId = e.target.getAttribute('data-task-id');
+                completeTask(taskId);
+            }
+            
+            if (e.target.classList.contains('remove-bank-account')) {
+                e.preventDefault();
+                const accountId = e.target.getAttribute('data-account-id');
+                removeBankAccount(accountId);
+            }
         });
 
-        // Show alert function
-        function showAlert(containerId, message, type) {
-            const alertContainer = document.getElementById(containerId);
-            alertContainer.innerHTML = `
-                <div class="alert alert-${type}">
-                    <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
-                    ${message}
-                </div>
-            `;
-            alertContainer.style.display = 'block';
-            
-            // Auto-hide after 5 seconds
-            setTimeout(() => {
-                alertContainer.style.display = 'none';
-            }, 5000);
+        // Logout function
+        function logout() {
+            auth.signOut()
+                .then(() => {
+                    // Reset user state
+                    currentUser = null;
+                    userData = null;
+                    
+                    // Update UI for logged out user
+                    updateUIForLoggedOutUser();
+                    
+                    showNotification('You have been logged out successfully.', 'success');
+                })
+                .catch((error) => {
+                    console.error('Error signing out:', error);
+                    showNotification('Error logging out. Please try again.', 'error');
+                });
         }
 
-        // Simulate login (for demo purposes)
-        function simulateLogin() {
-            // Hide login page
+        // Update UI for logged in user
+        function updateUIForLoggedInUser() {
+            // Hide login page and show home page
             document.getElementById('login').classList.remove('active');
-            
-            // Show home page
             document.getElementById('home').classList.add('active');
             
             // Update nav
@@ -1226,87 +1852,21 @@
             document.getElementById('logout-btn').style.display = 'inline-flex';
             document.getElementById('user-balance').style.display = 'inline';
             
-            // Set current user
-            currentUser = {
-                uid: 'demo-user-123',
-                phone: document.getElementById('login-phone').value
-            };
-            
             // Load user data
-            loadUserData();
+            updateUserProfileUI();
+            updateUserBalanceUI();
             loadTasks();
             loadTransactions();
             
             // Reset login form
+            document.getElementById('login-email').value = '';
+            document.getElementById('login-password').value = '';
             document.getElementById('login-submit').innerHTML = '<i class="fas fa-sign-in-alt"></i> Login';
             document.getElementById('login-submit').disabled = false;
-            
-            showAlert('home-alert', 'Login successful! Welcome to Pick My Task.', 'success');
         }
 
-        // Simulate signup (for demo purposes)
-        function simulateSignup(name, phone, email) {
-            // Hide signup page
-            document.getElementById('signup').classList.remove('active');
-            
-            // Show home page
-            document.getElementById('home').classList.add('active');
-            
-            // Update nav
-            navLinks.forEach(item => {
-                item.classList.remove('active');
-                if(item.getAttribute('data-page') === 'home') {
-                    item.classList.add('active');
-                }
-            });
-            
-            // Hide login button, show user info
-            document.getElementById('login-btn').style.display = 'none';
-            document.getElementById('logout-btn').style.display = 'inline-flex';
-            document.getElementById('user-balance').style.display = 'inline';
-            
-            // Set current user
-            currentUser = {
-                uid: 'demo-user-' + Date.now(),
-                phone: phone
-            };
-            
-            // Generate referral code
-            const referralCode = 'PMT' + Math.random().toString(36).substring(2, 8).toUpperCase();
-            
-            // Create user data
-            userData = {
-                name: name,
-                phone: phone,
-                email: email,
-                balance: 0,
-                completedTasks: 0,
-                totalEarnings: 0,
-                referrals: 0,
-                referralEarnings: 0,
-                referralCode: referralCode,
-                memberSince: new Date(),
-                bankAccounts: []
-            };
-            
-            // Save user data to localStorage (in a real app, this would be in Firebase)
-            localStorage.setItem('userData', JSON.stringify(userData));
-            localStorage.setItem('currentUser', JSON.stringify(currentUser));
-            
-            // Load user data
-            loadUserData();
-            loadTasks();
-            loadTransactions();
-            
-            // Reset signup form
-            document.getElementById('signup-submit').innerHTML = '<i class="fas fa-user-plus"></i> Sign Up';
-            document.getElementById('signup-submit').disabled = false;
-            
-            showAlert('home-alert', 'Account created successfully! Welcome to Pick My Task.', 'success');
-        }
-
-        // Logout function
-        function logout() {
+        // Update UI for logged out user
+        function updateUIForLoggedOutUser() {
             // Show login page
             document.getElementById('login').classList.add('active');
             document.getElementById('home').classList.remove('active');
@@ -1324,72 +1884,110 @@
             document.getElementById('logout-btn').style.display = 'none';
             document.getElementById('user-balance').style.display = 'none';
             
-            // Reset current user
-            currentUser = null;
-            userData = null;
+            // Clear user data from UI
+            document.getElementById('user-name').textContent = 'User Name';
+            document.getElementById('user-phone').textContent = '+91 9876543210';
+            document.getElementById('user-email').textContent = 'user@example.com';
+            document.getElementById('wallet-balance').textContent = '₹0.00';
+            document.getElementById('completed-tasks').textContent = '0';
+            document.getElementById('total-earnings').textContent = '₹0';
+            document.getElementById('user-referrals').textContent = '0';
+            document.getElementById('member-since').textContent = '0';
             
-            // Clear forms
-            document.getElementById('login-phone').value = '';
-            document.getElementById('login-password').value = '';
+            // Clear tasks
+            document.getElementById('featured-tasks').innerHTML = '';
+            document.getElementById('all-tasks').innerHTML = '';
+            document.getElementById('banking-tasks').innerHTML = '';
+            document.getElementById('finance-tasks').innerHTML = '';
+            document.getElementById('other-tasks').innerHTML = '';
             
-            showAlert('login-alert', 'You have been logged out successfully.', 'success');
+            // Clear transactions
+            document.getElementById('transaction-list').innerHTML = '';
         }
 
-        // Load user data
-        function loadUserData() {
-            // In a real app, this would come from Firebase
-            // For demo, we'll use localStorage or default data
-            const savedUserData = localStorage.getItem('userData');
-            const savedCurrentUser = localStorage.getItem('currentUser');
-            
-            if (savedUserData && savedCurrentUser) {
-                userData = JSON.parse(savedUserData);
-                currentUser = JSON.parse(savedCurrentUser);
-            } else {
-                // Default demo data
-                userData = {
-                    name: 'Rajesh Kumar',
-                    phone: '+91 9876543210',
-                    email: 'rajesh@example.com',
-                    balance: 450,
-                    completedTasks: 5,
-                    totalEarnings: 450,
-                    referrals: 3,
-                    referralEarnings: 150,
-                    referralCode: 'PMT2023XYZ',
-                    memberSince: new Date(Date.now() - 45 * 24 * 60 * 60 * 1000), // 45 days ago
-                    bankAccounts: [
-                        { id: 1, bankName: 'HDFC Bank', accountNumber: 'XXXXXX1234' },
-                        { id: 2, bankName: 'SBI', accountNumber: 'XXXXXX5678' }
-                    ]
-                };
-            }
+        // Update user profile UI
+        function updateUserProfileUI() {
+            if (!userData) return;
             
             // Calculate days since member
-            const daysSinceMember = Math.floor((new Date() - new Date(userData.memberSince)) / (1000 * 60 * 60 * 24));
+            const daysSinceMember = Math.floor((new Date() - new Date(userData.memberSince).getTime()) / (1000 * 60 * 60 * 24));
             
             // Update UI with user data
-            document.getElementById('user-name').textContent = userData.name;
-            document.getElementById('user-phone').textContent = userData.phone;
-            document.getElementById('user-email').textContent = userData.email;
-            document.getElementById('user-balance').textContent = `₹${userData.balance}.00`;
-            document.getElementById('wallet-balance').textContent = `₹${userData.balance}.00`;
-            document.getElementById('completed-tasks').textContent = userData.completedTasks;
-            document.getElementById('total-earnings').textContent = `₹${userData.totalEarnings}`;
-            document.getElementById('user-referrals').textContent = userData.referrals;
+            document.getElementById('user-name').textContent = userData.name || 'User Name';
+            document.getElementById('user-phone').textContent = userData.phone || '+91 9876543210';
+            document.getElementById('user-email').textContent = userData.email || 'user@example.com';
+            document.getElementById('completed-tasks').textContent = userData.completedTasks || 0;
+            document.getElementById('total-earnings').textContent = `₹${userData.totalEarnings || 0}`;
+            document.getElementById('user-referrals').textContent = userData.referrals || 0;
             document.getElementById('member-since').textContent = daysSinceMember;
-            document.getElementById('total-referrals').textContent = userData.referrals;
-            document.getElementById('referral-earnings').textContent = `₹${userData.referralEarnings}`;
-            document.getElementById('referral-code').textContent = userData.referralCode;
+            document.getElementById('total-referrals').textContent = userData.referrals || 0;
+            document.getElementById('referral-earnings').textContent = `₹${userData.referralEarnings || 0}`;
+            document.getElementById('referral-code').textContent = userData.referralCode || 'PMT2023XYZ';
+        }
+
+        // Update user balance UI
+        function updateUserBalanceUI() {
+            if (!userData) return;
             
-            // Update bank accounts in withdraw modal
-            const bankAccountSelect = document.getElementById('bank-account');
-            bankAccountSelect.innerHTML = '<option value="">Select bank account</option>';
+            document.getElementById('user-balance').textContent = `₹${userData.balance || 0}.00`;
+            document.getElementById('wallet-balance').textContent = `₹${userData.balance || 0}.00`;
+        }
+
+        // Load bank accounts
+        function loadBankAccounts() {
+            const bankAccountsList = document.getElementById('bank-accounts-list');
+            
+            if (!userData.bankAccounts || userData.bankAccounts.length === 0) {
+                bankAccountsList.innerHTML = '<p style="text-align: center; padding: 20px; color: var(--gray);">No bank accounts added yet.</p>';
+                return;
+            }
+            
+            bankAccountsList.innerHTML = '<h3 style="margin-bottom: 15px;">Your Bank Accounts</h3>';
+            
             userData.bankAccounts.forEach(account => {
-                const option = document.createElement('option');
-                option.value = account.id;
-                option.textContent = `${account.bankName} - ${account.accountNumber}`;
-                bankAccountSelect.appendChild(option);
+                const accountHTML = `
+                    <div class="card" style="margin-bottom: 15px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <div style="font-weight: 600;">${account.bankName}</div>
+                                <div style="color: var(--gray); font-size: 0.9rem;">${account.accountNumber} • ${account.ifscCode}</div>
+                                <div style="color: var(--gray); font-size: 0.9rem;">${account.accountHolder}</div>
+                            </div>
+                            <button class="btn btn-danger remove-bank-account" data-account-id="${account.id}" style="padding: 5px 10px;">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                bankAccountsList.innerHTML += accountHTML;
+            });
+        }
+
+        // Remove bank account
+        function removeBankAccount(accountId) {
+            if (!confirm('Are you sure you want to remove this bank account?')) {
+                return;
+            }
+            
+            // Filter out the account to remove
+            const updatedBankAccounts = userData.bankAccounts.filter(account => account.id !== accountId);
+            
+            // Update in Firestore
+            db.collection('users').doc(currentUser.uid).update({
+                bankAccounts: updatedBankAccounts
+            })
+            .then(() => {
+                // Update local user data
+                userData.bankAccounts = updatedBankAccounts;
+                
+                // Reload bank accounts list
+                loadBankAccounts();
+                
+                showNotification('Bank account removed successfully!', 'success');
+            })
+            .catch((error) => {
+                console.error('Error removing bank account:', error);
+                showNotification('Error removing bank account. Please try again.', 'error');
             });
         }
 
@@ -1417,21 +2015,13 @@
                         return;
                     }
                     
+                    tasks = [];
                     querySnapshot.forEach((doc) => {
                         const task = doc.data();
-                        const taskId = doc.id;
+                        task.id = doc.id;
+                        tasks.push(task);
                         
-                        const taskHTML = `
-                            <div class="task-card">
-                                <div class="task-category">${task.category}</div>
-                                <h3>${task.title}</h3>
-                                <p>${task.description}</p>
-                                <div class="task-meta">
-                                    <div class="task-reward">₹${task.reward}</div>
-                                    <a href="#" class="btn task-details-btn" data-task-id="${taskId}">View Details</a>
-                                </div>
-                            </div>
-                        `;
+                        const taskHTML = createTaskHTML(task);
                         
                         // Add to all tasks
                         allTasksContainer.innerHTML += taskHTML;
@@ -1458,25 +2048,49 @@
                 });
         }
 
+        // Create task HTML based on task status
+        function createTaskHTML(task) {
+            let statusHTML = '';
+            let buttonHTML = '';
+            
+            if (userData && userData.completedTaskIds && userData.completedTaskIds.includes(task.id)) {
+                statusHTML = '<span class="task-status status-completed">Completed</span>';
+                buttonHTML = `<a href="#" class="btn btn-success" disabled><i class="fas fa-check"></i> Completed</a>`;
+            } else if (userData && userData.activeTasks && userData.activeTasks.find(t => t.id === task.id)) {
+                statusHTML = '<span class="task-status status-pending">In Progress</span>';
+                buttonHTML = `<a href="#" class="btn btn-warning complete-task-btn" data-task-id="${task.id}"><i class="fas fa-flag-checkered"></i> Mark Complete</a>`;
+            } else {
+                statusHTML = '<span class="task-status status-available">Available</span>';
+                buttonHTML = `<a href="#" class="btn task-details-btn" data-task-id="${task.id}">View Details</a>`;
+            }
+            
+            return `
+                <div class="task-card">
+                    <div class="task-category">${task.category} ${statusHTML}</div>
+                    <h3>${task.title}</h3>
+                    <p>${task.description}</p>
+                    <div class="task-meta">
+                        <div class="task-reward">₹${task.reward}</div>
+                        ${buttonHTML}
+                    </div>
+                </div>
+            `;
+        }
+
         // Show task details in modal
         function showTaskDetails(taskId) {
-            // In a real app, this would fetch task details from Firebase
-            // For demo, we'll use sample data
-            const task = {
-                title: "Airtel Payments Bank Account",
-                category: "banking",
-                description: "Open an Airtel Payments Bank account through our link and earn ₹100 upon successful verification.",
-                reward: 100,
-                requirements: "Aadhaar Card, PAN Card",
-                duration: "7 days",
-                steps: [
-                    "Click on the 'Start Task' button",
-                    "Complete the Airtel Payments Bank account opening process",
-                    "Submit your application ID for verification",
-                    "Receive ₹100 after successful verification"
-                ],
-                link: "https://airtelbank.com"
-            };
+            const task = tasks.find(t => t.id === taskId);
+            if (!task) return;
+            
+            let actionButton = '';
+            
+            if (userData && userData.completedTaskIds && userData.completedTaskIds.includes(taskId)) {
+                actionButton = `<button class="btn btn-success" disabled><i class="fas fa-check"></i> Task Completed</button>`;
+            } else if (userData && userData.activeTasks && userData.activeTasks.find(t => t.id === taskId)) {
+                actionButton = `<a href="#" class="btn btn-warning complete-task-btn" data-task-id="${taskId}"><i class="fas fa-flag-checkered"></i> Mark Complete</a>`;
+            } else {
+                actionButton = `<a href="#" class="btn btn-accent start-task-btn" data-task-id="${taskId}"><i class="fas fa-play"></i> Start Task</a>`;
+            }
             
             document.getElementById('task-modal-title').textContent = task.title;
             document.getElementById('task-modal-body').innerHTML = `
@@ -1488,17 +2102,143 @@
                 </div>
                 <div style="margin: 20px 0;">
                     <h3 style="margin-bottom: 10px;">Steps to Complete:</h3>
-                    <ol style="padding-left: 20px;">
-                        ${task.steps.map(step => `<li>${step}</li>`).join('')}
-                    </ol>
+                    <div class="task-steps">
+                        ${task.steps ? task.steps.map((step, index) => `
+                            <div class="step">
+                                <div class="step-number">${index + 1}</div>
+                                <div>${step}</div>
+                            </div>
+                        `).join('') : `
+                            <div class="step">
+                                <div class="step-number">1</div>
+                                <div>Click on the 'Start Task' button</div>
+                            </div>
+                            <div class="step">
+                                <div class="step-number">2</div>
+                                <div>Complete the application process</div>
+                            </div>
+                            <div class="step">
+                                <div class="step-number">3</div>
+                                <div>Submit your application ID for verification</div>
+                            </div>
+                            <div class="step">
+                                <div class="step-number">4</div>
+                                <div>Receive your reward after successful verification</div>
+                            </div>
+                        `}
+                    </div>
                 </div>
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px;">
                     <div class="task-reward">₹${task.reward}</div>
-                    <a href="${task.link}" target="_blank" class="btn">Start Task</a>
+                    ${actionButton}
                 </div>
             `;
             
             document.getElementById('task-modal').classList.add('active');
+        }
+
+        // Start a task
+        function startTask(taskId) {
+            if (!currentUser) {
+                showNotification('Please login to start tasks.', 'error');
+                return;
+            }
+            
+            const task = tasks.find(t => t.id === taskId);
+            if (!task) return;
+            
+            // Add task to user's active tasks
+            const updatedActiveTasks = [...(userData.activeTasks || []), {
+                id: taskId,
+                startedAt: new Date(),
+                task: task
+            }];
+            
+            // Update in Firestore
+            db.collection('users').doc(currentUser.uid).update({
+                activeTasks: updatedActiveTasks
+            })
+            .then(() => {
+                // Update local user data
+                userData.activeTasks = updatedActiveTasks;
+                
+                // Close modal and show notification
+                document.getElementById('task-modal').classList.remove('active');
+                showNotification(`You've started the "${task.title}" task!`, 'success');
+                
+                // Reload tasks to update UI
+                loadTasks();
+            })
+            .catch((error) => {
+                console.error('Error starting task:', error);
+                showNotification('Error starting task. Please try again.', 'error');
+            });
+        }
+
+        // Complete a task
+        function completeTask(taskId) {
+            if (!currentUser) {
+                showNotification('Please login to complete tasks.', 'error');
+                return;
+            }
+            
+            const task = tasks.find(t => t.id === taskId);
+            if (!task) return;
+            
+            // Remove from active tasks
+            const updatedActiveTasks = userData.activeTasks.filter(t => t.id !== taskId);
+            
+            // Add to completed tasks
+            const updatedCompletedTaskIds = [...(userData.completedTaskIds || []), taskId];
+            
+            // Update user stats
+            const updatedCompletedTasks = (userData.completedTasks || 0) + 1;
+            const updatedBalance = (userData.balance || 0) + task.reward;
+            const updatedTotalEarnings = (userData.totalEarnings || 0) + task.reward;
+            
+            // Add transaction
+            const transaction = {
+                id: 'txn_' + Date.now(),
+                type: 'task',
+                description: `Task Completion: ${task.title}`,
+                amount: task.reward,
+                date: new Date(),
+                status: 'completed'
+            };
+            
+            const updatedTransactions = [...(userData.transactions || []), transaction];
+            
+            // Update in Firestore
+            db.collection('users').doc(currentUser.uid).update({
+                activeTasks: updatedActiveTasks,
+                completedTaskIds: updatedCompletedTaskIds,
+                completedTasks: updatedCompletedTasks,
+                balance: updatedBalance,
+                totalEarnings: updatedTotalEarnings,
+                transactions: updatedTransactions
+            })
+            .then(() => {
+                // Update local user data
+                userData.activeTasks = updatedActiveTasks;
+                userData.completedTaskIds = updatedCompletedTaskIds;
+                userData.completedTasks = updatedCompletedTasks;
+                userData.balance = updatedBalance;
+                userData.totalEarnings = updatedTotalEarnings;
+                userData.transactions = updatedTransactions;
+                
+                // Update UI
+                updateUserProfileUI();
+                updateUserBalanceUI();
+                loadTasks();
+                loadTransactions();
+                
+                // Show notification
+                showNotification(`Congratulations! You've earned ₹${task.reward} for completing "${task.title}"`, 'success');
+            })
+            .catch((error) => {
+                console.error('Error completing task:', error);
+                showNotification('Error completing task. Please try again.', 'error');
+            });
         }
 
         // Add sample tasks to Firebase (for first-time setup)
@@ -1514,7 +2254,13 @@
                     duration: 7,
                     featured: true,
                     status: "active",
-                    createdAt: new Date()
+                    createdAt: new Date(),
+                    steps: [
+                        "Click on the 'Start Task' button",
+                        "Complete the Airtel Payments Bank account opening process",
+                        "Submit your application ID for verification",
+                        "Receive ₹100 after successful verification"
+                    ]
                 },
                 {
                     title: "Credit Card Application", 
@@ -1526,7 +2272,13 @@
                     duration: 14,
                     featured: true,
                     status: "active",
-                    createdAt: new Date()
+                    createdAt: new Date(),
+                    steps: [
+                        "Click on the 'Start Task' button",
+                        "Apply for a credit card through our partner link",
+                        "Submit your application reference number",
+                        "Receive ₹150 after card approval"
+                    ]
                 },
                 {
                     title: "Trading Account Opening",
@@ -1538,7 +2290,14 @@
                     duration: 3,
                     featured: true,
                     status: "active",
-                    createdAt: new Date()
+                    createdAt: new Date(),
+                    steps: [
+                        "Click on the 'Start Task' button",
+                        "Open a trading account with our broker partner",
+                        "Complete your first trade",
+                        "Submit trade details for verification",
+                        "Receive ₹200 after verification"
+                    ]
                 },
                 {
                     title: "Paytm Wallet KYC",
@@ -1550,7 +2309,13 @@
                     duration: 1,
                     featured: false,
                     status: "active",
-                    createdAt: new Date()
+                    createdAt: new Date(),
+                    steps: [
+                        "Click on the 'Start Task' button",
+                        "Complete your Paytm Wallet KYC",
+                        "Submit screenshot of completed KYC",
+                        "Receive ₹50 instantly after verification"
+                    ]
                 },
                 {
                     title: "Insurance Policy Purchase",
@@ -1562,7 +2327,13 @@
                     duration: 30,
                     featured: false,
                     status: "active",
-                    createdAt: new Date()
+                    createdAt: new Date(),
+                    steps: [
+                        "Click on the 'Start Task' button",
+                        "Purchase a health insurance policy",
+                        "Submit policy details",
+                        "Receive ₹300 after verification"
+                    ]
                 },
                 {
                     title: "Mobile Recharge Offer",
@@ -1574,7 +2345,13 @@
                     duration: 1,
                     featured: false,
                     status: "active",
-                    createdAt: new Date()
+                    createdAt: new Date(),
+                    steps: [
+                        "Click on the 'Start Task' button",
+                        "Recharge your mobile with ₹100 or more",
+                        "Submit screenshot of successful recharge",
+                        "Receive ₹20 cashback"
+                    ]
                 }
             ];
             
@@ -1596,48 +2373,62 @@
         function showSampleTasks() {
             const sampleTasks = [
                 {
+                    id: "task1",
                     title: "Airtel Payments Bank Account",
                     category: "banking",
                     description: "Open an Airtel Payments Bank account through our link and earn ₹100 upon successful verification.",
                     reward: 100,
-                    link: "https://airtelbank.com"
+                    link: "https://airtelbank.com",
+                    featured: true
                 },
                 {
+                    id: "task2",
                     title: "Credit Card Application",
                     category: "finance", 
                     description: "Apply for a credit card through our partner bank and earn ₹150 upon approval.",
                     reward: 150,
-                    link: "https://bank.com/credit-card"
+                    link: "https://bank.com/credit-card",
+                    featured: true
                 },
                 {
+                    id: "task3",
                     title: "Trading Account Opening",
                     category: "finance",
                     description: "Open a trading account with our broker partner and earn ₹200 after your first trade.",
                     reward: 200,
-                    link: "https://tradingplatform.com"
+                    link: "https://tradingplatform.com",
+                    featured: true
                 },
                 {
+                    id: "task4",
                     title: "Paytm Wallet KYC",
                     category: "banking",
                     description: "Complete your Paytm Wallet KYC and earn ₹50 instantly.",
                     reward: 50,
-                    link: "https://paytm.com"
+                    link: "https://paytm.com",
+                    featured: false
                 },
                 {
+                    id: "task5",
                     title: "Insurance Policy Purchase",
                     category: "finance",
                     description: "Purchase a health insurance policy through our partner and earn ₹300.",
                     reward: 300,
-                    link: "https://insurance.com"
+                    link: "https://insurance.com",
+                    featured: false
                 },
                 {
+                    id: "task6",
                     title: "Mobile Recharge Offer",
                     category: "other",
                     description: "Recharge your mobile with ₹100 or more and get ₹20 cashback.",
                     reward: 20,
-                    link: "https://recharge.com"
+                    link: "https://recharge.com",
+                    featured: false
                 }
             ];
+            
+            tasks = sampleTasks;
             
             const featuredContainer = document.getElementById('featured-tasks');
             const allTasksContainer = document.getElementById('all-tasks');
@@ -1645,24 +2436,14 @@
             const financeContainer = document.getElementById('finance-tasks');
             const otherContainer = document.getElementById('other-tasks');
             
-            sampleTasks.forEach((task, index) => {
-                const taskHTML = `
-                    <div class="task-card">
-                        <div class="task-category">${task.category}</div>
-                        <h3>${task.title}</h3>
-                        <p>${task.description}</p>
-                        <div class="task-meta">
-                            <div class="task-reward">₹${task.reward}</div>
-                            <a href="#" class="btn task-details-btn" data-task-id="${index}">View Details</a>
-                        </div>
-                    </div>
-                `;
+            sampleTasks.forEach((task) => {
+                const taskHTML = createTaskHTML(task);
                 
                 // Add to all tasks
                 allTasksContainer.innerHTML += taskHTML;
                 
-                // Add first 3 tasks as featured
-                if (index < 3) {
+                // Add featured tasks
+                if (task.featured) {
                     featuredContainer.innerHTML += taskHTML;
                 }
                 
@@ -1679,26 +2460,30 @@
 
         // Load transactions
         function loadTransactions() {
-            // In a real app, this would come from Firebase
-            const transactions = [
-                { description: "Task Completion: Airtel Bank", date: "15 Oct 2023", amount: 100, type: "positive" },
-                { description: "Task Completion: Credit Card", date: "12 Oct 2023", amount: 150, type: "positive" },
-                { description: "Referral Bonus", date: "10 Oct 2023", amount: 50, type: "positive" },
-                { description: "Withdrawal to Bank", date: "5 Oct 2023", amount: 200, type: "negative" }
-            ];
-            
             const transactionList = document.getElementById('transaction-list');
+            
+            if (!userData.transactions || userData.transactions.length === 0) {
+                transactionList.innerHTML = '<p style="text-align: center; padding: 20px; color: var(--gray);">No transactions yet</p>';
+                return;
+            }
+            
+            // Sort transactions by date (newest first)
+            const sortedTransactions = userData.transactions.sort((a, b) => new Date(b.date) - new Date(a.date));
+            
             transactionList.innerHTML = '';
             
-            transactions.forEach(transaction => {
+            sortedTransactions.forEach(transaction => {
                 const transactionHTML = `
                     <li class="transaction-item">
                         <div class="transaction-details">
                             <div>${transaction.description}</div>
-                            <div style="font-size: 0.8rem; color: var(--gray);">${transaction.date}</div>
+                            <div style="font-size: 0.8rem; color: var(--gray);">
+                                ${new Date(transaction.date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
+                                ${transaction.status ? ` • ${transaction.status}` : ''}
+                            </div>
                         </div>
-                        <div class="transaction-amount ${transaction.type}">
-                            ${transaction.type === 'positive' ? '+' : '-'}₹${transaction.amount}
+                        <div class="transaction-amount ${transaction.type === 'withdrawal' ? 'negative' : 'positive'}">
+                            ${transaction.type === 'withdrawal' ? '-' : '+'}₹${transaction.amount}
                         </div>
                     </li>
                 `;
@@ -1709,35 +2494,37 @@
         // Initialize the app
         document.addEventListener('DOMContentLoaded', function() {
             // Check if user is already logged in
-            const savedCurrentUser = localStorage.getItem('currentUser');
-            const savedUserData = localStorage.getItem('userData');
+            auth.onAuthStateChanged((user) => {
+                if (user) {
+                    // User is signed in
+                    currentUser = user;
+                    
+                    // Load user data from Firestore
+                    db.collection('users').doc(user.uid).get()
+                        .then((doc) => {
+                            if (doc.exists) {
+                                userData = doc.data();
+                                userData.uid = doc.id;
+                                
+                                // Update UI for logged in user
+                                updateUIForLoggedInUser();
+                            } else {
+                                console.error('No user data found');
+                                showNotification('Error loading user data.', 'error');
+                            }
+                        })
+                        .catch((error) => {
+                            console.error('Error loading user data:', error);
+                            showNotification('Error loading user data.', 'error');
+                        });
+                } else {
+                    // User is signed out
+                    updateUIForLoggedOutUser();
+                }
+            });
             
-            if (savedCurrentUser && savedUserData) {
-                currentUser = JSON.parse(savedCurrentUser);
-                userData = JSON.parse(savedUserData);
-                
-                // User is logged in, show home page
-                document.getElementById('login').classList.remove('active');
-                document.getElementById('home').classList.add('active');
-                
-                // Update UI for logged in user
-                document.getElementById('login-btn').style.display = 'none';
-                document.getElementById('logout-btn').style.display = 'inline-flex';
-                document.getElementById('user-balance').style.display = 'inline';
-                
-                // Load user data
-                loadUserData();
-                loadTasks();
-                loadTransactions();
-            } else {
-                // User is not logged in, show login page
-                document.getElementById('login').classList.add('active');
-                document.getElementById('home').classList.remove('active');
-            }
-            
-            // Load tasks and transactions
+            // Load tasks
             loadTasks();
-            loadTransactions();
         });
 
         // Footer navigation
