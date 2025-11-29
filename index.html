@@ -1,15 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="te">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pick My Task - Earn Money by Completing Simple Tasks</title>
-    <meta name="description" content="Earn real money by completing simple tasks like opening bank accounts, applying for credit cards, and more. Join Pick My Task today!">
-    <meta property="og:title" content="Pick My Task - Earn Money Completing Tasks">
-    <meta property="og:description" content="Earn real money by completing simple tasks. Join thousands of users making money online.">
-    <meta property="og:image" content="https://pickmytask.com/og-image.jpg">
-    <meta property="og:url" content="https://pickmytask.com">
-    <meta name="twitter:card" content="summary_large_image">
+    <title>EarnPe - Earn Money Completing Tasks</title>
+    <meta name="description" content="Earn money by completing simple tasks like opening bank accounts, applying for credit cards, and more. Join EarnPe today!">
+    <meta property="og:title" content="EarnPe - Earn Money Completing Tasks">
+    <meta property="og:description" content="Earn money by completing simple tasks on EarnPe">
+    <meta property="og:image" content="https://earnpe.com/logo.png">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💰</text></svg>">
     <style>
@@ -73,8 +71,6 @@
             gap: 10px;
             font-size: 1.5rem;
             font-weight: 700;
-            text-decoration: none;
-            color: white;
         }
 
         .logo i {
@@ -97,7 +93,6 @@
             align-items: center;
             gap: 5px;
             font-weight: 500;
-            white-space: nowrap;
         }
 
         nav ul li a:hover, nav ul li a.active {
@@ -125,7 +120,6 @@
             font-weight: 600;
             font-size: 0.9rem;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            white-space: nowrap;
         }
 
         .btn:hover {
@@ -149,13 +143,6 @@
 
         .btn-accent {
             background: var(--accent);
-        }
-
-        .btn:disabled {
-            background: var(--gray);
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
         }
 
         .page {
@@ -238,14 +225,6 @@
             box-shadow: 0 10px 20px rgba(0,0,0,0.15);
         }
 
-        .task-image {
-            width: 100%;
-            height: 160px;
-            object-fit: cover;
-            border-radius: var(--radius);
-            margin-bottom: 15px;
-        }
-
         .task-category {
             display: inline-block;
             background: var(--light);
@@ -281,21 +260,6 @@
             font-weight: 700;
             font-size: 1.2rem;
             color: var(--success);
-        }
-
-        .task-details {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin: 15px 0;
-            font-size: 0.9rem;
-        }
-
-        .task-detail {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            color: var(--gray);
         }
 
         .wallet-balance {
@@ -516,13 +480,6 @@
             outline: none;
         }
 
-        .error-message {
-            color: var(--danger);
-            font-size: 0.85rem;
-            margin-top: 5px;
-            display: none;
-        }
-
         footer {
             background: var(--dark);
             color: white;
@@ -566,7 +523,6 @@
             display: flex;
             border-bottom: 1px solid var(--border);
             margin-bottom: 20px;
-            overflow-x: auto;
         }
 
         .tab {
@@ -576,7 +532,6 @@
             color: var(--gray);
             border-bottom: 3px solid transparent;
             transition: var(--transition);
-            white-space: nowrap;
         }
 
         .tab.active {
@@ -616,8 +571,6 @@
             max-width: 500px;
             width: 90%;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            max-height: 90vh;
-            overflow-y: auto;
         }
 
         .modal-header {
@@ -635,110 +588,50 @@
             color: var(--gray);
         }
 
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 15px 20px;
+        .alert {
+            padding: 15px;
             border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            z-index: 1200;
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
             gap: 10px;
-            max-width: 400px;
-            transform: translateX(150%);
-            transition: transform 0.3s ease;
         }
-        
-        .notification.show {
-            transform: translateX(0);
-        }
-        
-        .notification-success {
-            background: white;
-            border-left: 4px solid var(--success);
+
+        .alert-success {
+            background: rgba(40, 167, 69, 0.1);
+            border: 1px solid var(--success);
             color: var(--success);
         }
-        
-        .notification-error {
-            background: white;
-            border-left: 4px solid var(--danger);
+
+        .alert-error {
+            background: rgba(220, 53, 69, 0.1);
+            border: 1px solid var(--danger);
             color: var(--danger);
         }
-        
-        .notification-info {
-            background: white;
-            border-left: 4px solid var(--primary);
-            color: var(--primary);
-        }
-        
-        .loader {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255,255,255,.3);
-            border-radius: 50%;
-            border-top-color: #fff;
-            animation: spin 1s ease-in-out infinite;
-        }
-        
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+
+        .task-details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
         }
 
-        .task-status {
-            display: inline-block;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            margin-left: 10px;
-        }
-        
-        .status-completed {
-            background: rgba(40, 167, 69, 0.1);
-            color: var(--success);
-        }
-        
-        .status-pending {
-            background: rgba(255, 193, 7, 0.1);
-            color: var(--warning);
-        }
-        
-        .status-available {
-            background: rgba(0, 136, 204, 0.1);
-            color: var(--primary);
-        }
-
-        .step {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-            padding: 10px;
-            border-radius: var(--radius);
+        .task-detail-item {
             background: var(--light);
+            padding: 15px;
+            border-radius: var(--radius);
+            text-align: center;
         }
-        
-        .step.completed {
-            background: rgba(40, 167, 69, 0.1);
+
+        .task-detail-label {
+            font-size: 0.8rem;
+            color: var(--gray);
+            margin-bottom: 5px;
         }
-        
-        .step-number {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background: var(--primary);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 10px;
+
+        .task-detail-value {
             font-weight: 600;
-        }
-        
-        .step.completed .step-number {
-            background: var(--success);
+            color: var(--dark);
         }
 
         .hero-section {
@@ -751,7 +644,7 @@
         }
 
         .hero-section h1 {
-            font-size: 2.5rem;
+            font-size: 3rem;
             margin-bottom: 20px;
         }
 
@@ -763,35 +656,6 @@
             margin-right: auto;
         }
 
-        .content-section {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .content-section h2 {
-            color: var(--primary);
-            margin: 30px 0 15px;
-        }
-
-        .content-section h3 {
-            color: var(--dark);
-            margin: 20px 0 10px;
-        }
-
-        .content-section p {
-            margin-bottom: 15px;
-            line-height: 1.7;
-        }
-
-        .content-section ul, .content-section ol {
-            margin: 15px 0;
-            padding-left: 20px;
-        }
-
-        .content-section li {
-            margin-bottom: 8px;
-        }
-
         .withdrawal-info {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -799,7 +663,7 @@
             margin: 30px 0;
         }
 
-        .info-card {
+        .withdrawal-info-card {
             background: white;
             padding: 25px;
             border-radius: var(--radius);
@@ -807,36 +671,22 @@
             box-shadow: var(--shadow);
         }
 
-        .info-card i {
+        .withdrawal-info-card i {
             font-size: 2.5rem;
             color: var(--primary);
             margin-bottom: 15px;
         }
 
-        .info-card h3 {
+        .withdrawal-info-card h3 {
             margin-bottom: 10px;
-            color: var(--dark);
-        }
-
-        .contact-info {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin: 30px 0;
-        }
-
-        .contact-card {
-            background: white;
-            padding: 25px;
-            border-radius: var(--radius);
-            text-align: center;
-            box-shadow: var(--shadow);
-        }
-
-        .contact-card i {
-            font-size: 2.5rem;
             color: var(--primary);
-            margin-bottom: 15px;
+        }
+
+        .error-message {
+            color: var(--danger);
+            font-size: 0.85rem;
+            margin-top: 5px;
+            display: none;
         }
 
         @media (max-width: 768px) {
@@ -876,29 +726,6 @@
             .hero-section p {
                 font-size: 1rem;
             }
-
-            .footer-content {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .modal-content {
-                width: 95%;
-                padding: 20px;
-            }
-
-            .task-details {
-                grid-template-columns: 1fr;
-            }
-
-            .hero-section {
-                padding: 40px 20px;
-            }
-
-            .hero-section h1 {
-                font-size: 1.8rem;
-            }
         }
     </style>
 </head>
@@ -906,90 +733,82 @@
     <header>
         <div class="container">
             <div class="header-content">
-                <a href="#" class="logo" data-page="home">
-                    <i class="fas fa-tasks"></i>
-                    <span>Pick My Task</span>
-                </a>
+                <div class="logo">
+                    <i class="fas fa-money-bill-wave"></i>
+                    <span>EarnPe</span>
+                </div>
                 <nav>
                     <ul>
-                        <li><a class="nav-link active" data-page="home" href="#"><i class="fas fa-home"></i> Home</a></li>
-                        <li><a class="nav-link" data-page="tasks" href="#"><i class="fas fa-list-check"></i> Tasks</a></li>
-                        <li><a class="nav-link" data-page="wallet" href="#"><i class="fas fa-wallet"></i> Wallet</a></li>
-                        <li><a class="nav-link" data-page="referral" href="#"><i class="fas fa-user-friends"></i> Referral</a></li>
-                        <li><a class="nav-link" data-page="profile" href="#"><i class="fas fa-user"></i> Profile</a></li>
-                        <li><a class="nav-link" data-page="about" href="#"><i class="fas fa-info-circle"></i> About</a></li>
-                        <li><a class="nav-link" data-page="contact" href="#"><i class="fas fa-envelope"></i> Contact</a></li>
+                        <li><a class="nav-link active" data-page="home" href="#"><i class="fas fa-home"></i> హోమ్</a></li>
+                        <li><a class="nav-link" data-page="tasks" href="#"><i class="fas fa-list-check"></i> టాస్క్స్</a></li>
+                        <li><a class="nav-link" data-page="wallet" href="#"><i class="fas fa-wallet"></i> వాలెట్</a></li>
+                        <li><a class="nav-link" data-page="withdrawal" href="#"><i class="fas fa-download"></i> విథ్డ్రావల్</a></li>
+                        <li><a class="nav-link" data-page="referral" href="#"><i class="fas fa-user-friends"></i> రెఫరల్</a></li>
+                        <li><a class="nav-link" data-page="profile" href="#"><i class="fas fa-user"></i> ప్రొఫైల్</a></li>
                     </ul>
                 </nav>
                 <div class="user-actions">
                     <span class="balance-preview" id="user-balance" style="display: none;">₹0.00</span>
-                    <a class="btn btn-accent" href="#" id="login-btn"><i class="fas fa-sign-in-alt"></i> Login</a>
-                    <a class="btn btn-danger" href="#" id="logout-btn" style="display: none;"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    <a class="btn btn-accent" href="#" id="login-btn"><i class="fas fa-sign-in-alt"></i> లాగిన్</a>
+                    <a class="btn btn-danger" href="#" id="logout-btn" style="display: none;"><i class="fas fa-sign-out-alt"></i> లాగ్అవుట్</a>
                 </div>
             </div>
         </div>
     </header>
 
     <main class="container">
-        <!-- Home Page -->
         <section class="page active" id="home">
             <div class="hero-section">
-                <h1>Earn Money Completing Simple Tasks</h1>
-                <p>Join thousands of users who are earning real money by completing simple tasks like opening bank accounts, applying for credit cards, and more!</p>
-                <div class="wallet-actions">
-                    <a class="btn btn-accent" href="#" data-page="signup" id="join-now-btn">
-                        <i class="fas fa-user-plus"></i> Join Now
-                    </a>
-                    <a class="btn" href="#" data-page="tasks" id="start-task-btn">
-                        <i class="fas fa-play"></i> Start Task
-                    </a>
-                </div>
+                <h1>సాధారణ పనులను పూర్తి చేసి డబ్బు సంపాదించండి</h1>
+                <p>బ్యాంకు ఖాతాలు తెరవడం, క్రెడిట్ కార్డులకు అప్లై చేయడం మరిన్ని పనులను పూర్తి చేసి నిజమైన డబ్బు సంపాదించండి!</p>
+                <a class="btn btn-accent" href="#" id="join-now-btn" style="font-size: 1.2rem; padding: 15px 30px;">
+                    <i class="fas fa-rocket"></i> ఇప్పుడే జాయిన్ అవ్వండి
+                </a>
             </div>
             <div class="card">
-                <h2><i class="fas fa-bolt"></i> Featured Tasks</h2>
+                <h2><i class="fas fa-bolt"></i> ప్రత్యేక టాస్క్స్</h2>
                 <div class="task-grid" id="featured-tasks">
                     <!-- Featured tasks will be loaded here -->
                 </div>
             </div>
             <div class="card">
-                <h2><i class="fas fa-chart-line"></i> How It Works</h2>
+                <h2><i class="fas fa-chart-line"></i> ఇది ఎలా పని చేస్తుంది</h2>
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top: 20px;">
                     <div style="text-align: center;">
                         <div style="background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); color: white; width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; font-size: 1.8rem;">
                             <i class="fas fa-user-plus"></i>
                         </div>
-                        <h3>1. Sign Up</h3>
-                        <p>Create your account in less than a minute</p>
+                        <h3>1. సైన్ అప్ చేయండి</h3>
+                        <p>ఒక నిమిషంలో మీ ఖాతాను సృష్టించుకోండి</p>
                     </div>
                     <div style="text-align: center;">
                         <div style="background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); color: white; width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; font-size: 1.8rem;">
                             <i class="fas fa-tasks"></i>
                         </div>
-                        <h3>2. Complete Tasks</h3>
-                        <p>Choose from various verified earning tasks</p>
+                        <h3>2. టాస్క్స్ పూర్తి చేయండి</h3>
+                        <p>వివిధ ధృవీకరించబడిన సంపాదన పనుల నుండి ఎంచుకోండి</p>
                     </div>
                     <div style="text-align: center;">
                         <div style="background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); color: white; width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; font-size: 1.8rem;">
                             <i class="fas fa-rupee-sign"></i>
                         </div>
-                        <h3>3. Get Paid</h3>
-                        <p>Receive money directly to your wallet</p>
+                        <h3>3. చెల్లింపు పొందండి</h3>
+                        <p>మీ వాలెట్కు నేరుగా డబ్బు స్వీకరించండి</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Tasks Page -->
         <section class="page" id="tasks">
             <div class="page-header">
-                <h1>Available Tasks</h1>
-                <p>Complete these tasks to earn money. New tasks added regularly!</p>
+                <h1>అందుబాటులో ఉన్న టాస్క్స్</h1>
+                <p>డబ్బు సంపాదించడానికి ఈ పనులను పూర్తి చేయండి. క్రొత్త టాస్క్స్ నియమితంగా జోడించబడతాయి!</p>
             </div>
             <div class="tabs">
-                <div class="tab active" data-tab="all">All Tasks</div>
-                <div class="tab" data-tab="banking">Banking</div>
-                <div class="tab" data-tab="finance">Finance</div>
-                <div class="tab" data-tab="other">Other</div>
+                <div class="tab active" data-tab="all">అన్ని టాస్క్స్</div>
+                <div class="tab" data-tab="banking">బ్యాంకింగ్</div>
+                <div class="tab" data-tab="finance">ఫైనాన్స్</div>
+                <div class="tab" data-tab="other">ఇతరాలు</div>
             </div>
             <div class="tab-content active" id="tab-all">
                 <div class="task-grid" id="all-tasks">
@@ -1013,68 +832,137 @@
             </div>
         </section>
 
-        <!-- Wallet Page -->
         <section class="page" id="wallet">
             <div class="page-header">
-                <h1>Your Wallet</h1>
-                <p>Manage your earnings and withdraw money to your bank account</p>
+                <h1>మీ వాలెట్</h1>
+                <p>మీ సంపాదనలను నిర్వహించండి మరియు మీ బ్యాంకు ఖాతాకు డబ్బు ఉపసంహరించుకోండి</p>
             </div>
             <div class="wallet-balance">
-                <h2>Current Balance</h2>
+                <h2>ప్రస్తుత బ్యాలెన్స్</h2>
                 <div class="balance-amount" id="wallet-balance">₹0.00</div>
-                <p>Available for withdrawal</p>
+                <p>ఉపసంహరణకు అందుబాటులో ఉంది</p>
                 <div class="wallet-actions">
-                    <a class="btn" href="#" id="withdraw-btn"><i class="fas fa-download"></i> Withdraw</a>
-                    <a class="btn btn-warning" href="#" id="transaction-history-btn"><i class="fas fa-exchange-alt"></i> Transaction History</a>
+                    <a class="btn btn-success" href="#" id="add-money-btn"><i class="fas fa-plus"></i> డబ్బు జోడించండి</a>
+                    <a class="btn" href="#" id="withdraw-btn"><i class="fas fa-download"></i> ఉపసంహరించండి</a>
+                    <a class="btn btn-warning" href="#" id="transaction-history-btn"><i class="fas fa-exchange-alt"></i> లావాదేవీల చరిత్ర</a>
                 </div>
             </div>
             <div class="card">
-                <h2><i class="fas fa-clock-rotate-left"></i> Recent Transactions</h2>
+                <h2><i class="fas fa-clock-rotate-left"></i> ఇటీవలి లావాదేవీలు</h2>
                 <ul class="transaction-list" id="transaction-list">
                     <!-- Transactions will be loaded here -->
                 </ul>
             </div>
         </section>
 
-        <!-- Referral Page -->
+        <section class="page" id="withdrawal">
+            <div class="page-header">
+                <h1>డబ్బు ఉపసంహరణ</h1>
+                <p>మీ సంపాదనలను మీ బ్యాంకు ఖాతాకు ఉపసంహరించుకోండి</p>
+            </div>
+            <div class="withdrawal-info">
+                <div class="withdrawal-info-card">
+                    <i class="fas fa-money-bill-wave"></i>
+                    <h3>కనీస ఉపసంహరణ</h3>
+                    <p>₹100</p>
+                </div>
+                <div class="withdrawal-info-card">
+                    <i class="fas fa-credit-card"></i>
+                    <h3>చెల్లింపు పద్ధతులు</h3>
+                    <p>UPI / బ్యాంక్ ట్రాన్స్ఫర్</p>
+                </div>
+                <div class="withdrawal-info-card">
+                    <i class="fas fa-clock"></i>
+                    <h3>ప్రాసెసింగ్ సమయం</h3>
+                    <p>24-48 గంటలు</p>
+                </div>
+            </div>
+            <div class="card">
+                <h2><i class="fas fa-download"></i> డబ్బు ఉపసంహరించండి</h2>
+                <div class="form-group">
+                    <label for="withdraw-amount">మొత్తం (₹)</label>
+                    <input class="form-control" id="withdraw-amount" placeholder="ఉపసంహరించాల్సిన మొత్తం నమోదు చేయండి" type="number" min="100"/>
+                    <div class="error-message" id="withdraw-amount-error">దయచేసి వైధ్యంగా మొత్తం నమోదు చేయండి (కనీసం ₹100)</div>
+                </div>
+                <div class="form-group">
+                    <label for="withdraw-method">చెల్లింపు పద్ధతి</label>
+                    <select class="form-control" id="withdraw-method">
+                        <option value="">చెల్లింపు పద్ధతి ఎంచుకోండి</option>
+                        <option value="upi">UPI</option>
+                        <option value="bank">బ్యాంక్ ట్రాన్స్ఫర్</option>
+                    </select>
+                    <div class="error-message" id="withdraw-method-error">దయచేసి చెల్లింపు పద్ధతి ఎంచుకోండి</div>
+                </div>
+                <div class="form-group" id="upi-details" style="display: none;">
+                    <label for="upi-id">UPI ID</label>
+                    <input class="form-control" id="upi-id" placeholder="మీ UPI ID నమోదు చేయండి" type="text"/>
+                    <div class="error-message" id="upi-id-error">దయచేసి వైధ్యంగా UPI ID నమోదు చేయండి</div>
+                </div>
+                <div class="form-group" id="bank-details" style="display: none;">
+                    <label for="account-number">ఖాతా సంఖ్య</label>
+                    <input class="form-control" id="account-number" placeholder="మీ బ్యాంకు ఖాతా సంఖ్య నమోదు చేయండి" type="text"/>
+                    <div class="error-message" id="account-number-error">దయచేసి వైధ్యంగా ఖాతా సంఖ్య నమోదు చేయండి</div>
+                    
+                    <label for="ifsc-code" style="margin-top: 15px;">IFSC కోడ్</label>
+                    <input class="form-control" id="ifsc-code" placeholder="మీ బ్యాంకు IFSC కోడ్ నమోదు చేయండి" type="text"/>
+                    <div class="error-message" id="ifsc-code-error">దయచేసి వైధ్యంగా IFSC కోడ్ నమోదు చేయండి</div>
+                </div>
+                <button class="btn" id="withdraw-submit" style="width: 100%; margin-top: 20px;">
+                    <i class="fas fa-download"></i> ఉపసంహరించండి
+                </button>
+            </div>
+        </section>
+
         <section class="page" id="referral">
             <div class="page-header">
-                <h1>Refer & Earn</h1>
-                <p>Invite your friends and earn ₹10 for each successful referral</p>
+                <h1>రెఫర్ & సంపాదించండి</h1>
+                <p>మీ స్నేహితులను ఆహ్వానించండి మరియు ప్రతి విజయవంతమైన రెఫరల్కు ₹10 సంపాదించండి</p>
             </div>
             <div class="referral-card">
-                <h2>Your Referral Code</h2>
-                <div class="referral-code" id="referral-code">PMT2025XYZ</div>
-                <p>Share this code with your friends and earn when they complete tasks</p>
-                <a class="btn" href="#" id="share-btn"><i class="fas fa-share-alt"></i> Share Code</a>
+                <h2>మీ రెఫరల్ కోడ్</h2>
+                <div class="referral-code" id="referral-code">EP2025XYZ</div>
+                <p>ఈ కోడ్ని మీ స్నేహితులతో షేర్ చేయండి మరియు వారు టాస్క్స్ పూర్తి చేసినప్పుడు సంపాదించండి</p>
+                <a class="btn" href="#" id="share-btn"><i class="fas fa-share-alt"></i> కోడ్ షేర్ చేయండి</a>
             </div>
             <div class="referral-stats">
                 <div class="stat-card">
                     <div class="stat-value" id="total-referrals">0</div>
-                    <div class="stat-label">Total Referrals</div>
+                    <div class="stat-label">మొత్తం రెఫరల్స్</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-value" id="referral-earnings">₹0</div>
-                    <div class="stat-label">Earned from Referrals</div>
+                    <div class="stat-label">రెఫరల్స్ నుండి సంపాదించారు</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-value">₹10</div>
-                    <div class="stat-label">Per Referral</div>
+                    <div class="stat-label">ప్రతి రెఫరల్కు</div>
                 </div>
             </div>
             <div class="card">
-                <h2><i class="fas fa-users"></i> Referred Friends</h2>
+                <h2><i class="fas fa-users"></i> రెఫర్ చేసిన స్నేహితులు</h2>
                 <div id="referred-friends">
-                    <p style="text-align: center; padding: 20px; color: var(--gray);">You haven't referred anyone yet. Share your code to start earning!</p>
+                    <p style="text-align: center; padding: 20px; color: var(--gray);">మీరు ఇంకా ఎవరినీ రెఫర్ చేయలేదు. సంపాదించడం ప్రారంభించడానికి మీ కోడ్ని షేర్ చేయండి!</p>
+                </div>
+            </div>
+            <div class="card">
+                <h2><i class="fas fa-info-circle"></i> రెఫరల్ నియమాలు</h2>
+                <div style="margin-top: 20px;">
+                    <ul style="padding-left: 20px; line-height: 1.8;">
+                        <li>ప్రతి విజయవంతమైన రెఫరల్కు మీరు ₹10 సంపాదిస్తారు</li>
+                        <li>మీ రెఫరల్ కోడ్ని ఉపయోగించి సైన్ అప్ చేసిన వారిని మాత్రమే రెఫరల్గా పరిగణిస్తాము</li>
+                        <li>రెఫర్ చేసిన వ్యక్తి కనీసం ఒక టాస్క్ను పూర్తి చేయాలి</li>
+                        <li>రెఫరల్ బోనస్ 24 గంటల్లో మీ ఖాతాకు జోడించబడుతుంది</li>
+                        <li>ఏకీకృత ఖాతాలు లేదా మోసపూరిత కార్యకలాపాలు అనుమతించబడవు</li>
+                        <li>EarnPe ఎప్పుడైనా రెఫరల్ ప్రోగ్రామ్ను మార్చడం లేదా రద్దు చేయడం హక్కు కలిగి ఉంది</li>
+                    </ul>
                 </div>
             </div>
         </section>
 
-        <!-- Profile Page -->
         <section class="page" id="profile">
             <div class="page-header">
-                <h1>Your Profile</h1>
-                <p>Manage your account and track your progress</p>
+                <h1>మీ ప్రొఫైల్</h1>
+                <p>మీ ఖాతాను నిర్వహించండి మరియు మీ పురోగతిని ట్రాక్ చేయండి</p>
             </div>
             <div class="card">
                 <div class="profile-header">
@@ -1082,7 +970,7 @@
                         <i class="fas fa-user"></i>
                     </div>
                     <div class="profile-info">
-                        <div class="profile-name" id="user-name">User Name</div>
+                        <div class="profile-name" id="user-name">యూజర్ పేరు</div>
                         <div class="profile-detail">
                             <i class="fas fa-phone"></i>
                             <span id="user-phone">+91 9876543210</span>
@@ -1092,404 +980,298 @@
                             <span id="user-email">user@example.com</span>
                         </div>
                         <div style="margin-top: 15px;">
-                            <a class="btn" href="#" id="edit-profile-btn"><i class="fas fa-edit"></i> Edit Profile</a>
+                            <a class="btn" href="#" id="edit-profile-btn"><i class="fas fa-edit"></i> ప్రొఫైల్ ఎడిట్ చేయండి</a>
                         </div>
                     </div>
                 </div>
                 <div class="profile-stats">
                     <div class="profile-stat">
                         <div class="profile-stat-value" id="completed-tasks">0</div>
-                        <div class="profile-stat-label">Tasks Completed</div>
+                        <div class="profile-stat-label">పూర్తి చేసిన టాస్క్స్</div>
                     </div>
                     <div class="profile-stat">
                         <div class="profile-stat-value" id="total-earnings">₹0</div>
-                        <div class="profile-stat-label">Total Earned</div>
+                        <div class="profile-stat-label>మొత్తం సంపాదించారు</div>
                     </div>
                     <div class="profile-stat">
                         <div class="profile-stat-value" id="user-referrals">0</div>
-                        <div class="profile-stat-label">Referrals</div>
+                        <div class="profile-stat-label">రెఫరల్స్</div>
                     </div>
                     <div class="profile-stat">
                         <div class="profile-stat-value" id="member-since">0</div>
-                        <div class="profile-stat-label">Days</div>
+                        <div class="profile-stat-label">రోజులు</div>
                     </div>
                 </div>
             </div>
             <div class="card">
-                <h2><i class="fas fa-cog"></i> Account Settings</h2>
+                <h2><i class="fas fa-cog"></i> ఖాతా సెట్టింగ్స్</h2>
                 <div style="margin-top: 20px;">
                     <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid var(--border);">
                         <div>
-                            <div style="font-weight: 600;">Bank Account Details</div>
-                            <div style="color: var(--gray); font-size: 0.9rem;">Manage your withdrawal accounts</div>
+                            <div style="font-weight: 600;">నోటిఫికేషన్ సెట్టింగ్స్</div>
+                            <div style="color: var(--gray); font-size: 0.9rem;">మేము మిమ్మల్ని ఎలా సంప్రదిస్తామో నిర్వహించండి</div>
                         </div>
-                        <a class="btn" href="#" id="manage-bank-btn" style="padding: 8px 15px;">Manage</a>
+                        <a class="btn" href="#" style="padding: 8px 15px;">ఎడిట్</a>
                     </div>
                     <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid var(--border);">
                         <div>
-                            <div style="font-weight: 600;">UPI Details</div>
-                            <div style="color: var(--gray); font-size: 0.9rem;">Manage your UPI withdrawal options</div>
+                            <div style="font-weight: 600;">చెల్లింపు పద్ధతులు</div>
+                            <div style="color: var(--gray); font-size: 0.9rem;">మీ ఉపసంహరణ ఎంపికలను నిర్వహించండి</div>
                         </div>
-                        <a class="btn" href="#" id="manage-upi-btn" style="padding: 8px 15px;">Manage</a>
+                        <a class="btn" href="#" style="padding: 8px 15px;">నిర్వహించండి</a>
                     </div>
                     <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid var(--border);">
                         <div>
-                            <div style="font-weight: 600;">Privacy Policy</div>
-                            <div style="color: var(--gray); font-size: 0.9rem;">How we protect your data</div>
+                            <div style="font-weight: 600;">గోప్యతా విధానం</div>
+                            <div style="color: var(--gray); font-size: 0.9rem;">మేము మీ డేటాను ఎలా రక్షిస్తాము</div>
                         </div>
-                        <a class="btn" href="#" data-page="privacy" style="padding: 8px 15px;">View</a>
+                        <a class="btn" href="#" id="privacy-policy-btn" style="padding: 8px 15px;">వీక్షించండి</a>
                     </div>
                     <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0;">
                         <div>
-                            <div style="font-weight: 600;">Terms of Service</div>
-                            <div style="color: var(--gray); font-size: 0.9rem;">Our terms and conditions</div>
+                            <div style="font-weight: 600;">సేవా నిబంధనలు</div>
+                            <div style="color: var(--gray); font-size: 0.9rem;">మా నిబంధనలు మరియు షరతులు</div>
                         </div>
-                        <a class="btn" href="#" data-page="terms" style="padding: 8px 15px;">View</a>
+                        <a class="btn" href="#" id="terms-service-btn" style="padding: 8px 15px;">వీక్షించండి</a>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- About Us Page -->
         <section class="page" id="about">
             <div class="page-header">
-                <h1>About Us</h1>
-                <p>Learn more about Pick My Task and our mission</p>
+                <h1>మా గురించి</h1>
+                <p>EarnPe - మీ సమయాన్ని డబ్బుగా మార్చండి</p>
             </div>
             <div class="card">
-                <div class="content-section">
-                    <h2>Our Story</h2>
-                    <p>Pick My Task was founded with a simple mission: to create a platform where anyone can earn money by completing simple, verified tasks. We believe that everyone should have the opportunity to earn extra income, regardless of their background or location.</p>
-                    
-                    <h2>What We Do</h2>
-                    <p>We partner with various companies and financial institutions to provide our users with legitimate earning opportunities. These tasks include opening bank accounts, applying for credit cards, completing KYC processes, and more.</p>
-                    
-                    <h2>Our Values</h2>
-                    <ul>
-                        <li><strong>Transparency:</strong> We're open about how our platform works and what users can expect to earn.</li>
-                        <li><strong>Trust:</strong> We verify all tasks and partners to ensure they're legitimate and safe.</li>
-                        <li><strong>Accessibility:</strong> Our platform is designed to be easy to use for everyone.</li>
-                        <li><strong>Fairness:</strong> We ensure all users have equal opportunities to earn.</li>
-                    </ul>
-                    
-                    <h2>Why Choose Us?</h2>
-                    <p>With thousands of satisfied users and a track record of timely payments, Pick My Task has established itself as a trusted platform for earning extra income. We're constantly adding new tasks and improving our platform to provide the best experience for our users.</p>
-                </div>
+                <h2><i class="fas fa-rocket"></i> మా కథ</h2>
+                <p style="margin-bottom: 20px;">EarnPe 2023లో ప్రారంభించబడింది, ప్రతి ఒక్కరూ తమ స్వేచ్ఛ సమయంలో డబ్బు సంపాదించగలరనే నమ్మకంతో. మేము వినియోగదారులకు వివిధ కంపెనీలు మరియు బ్రాండ్ల కోసం సరళమైన పనులను పూర్తి చేయడం ద్వారా ఆదాయాన్ని సంపాదించడానికి ఒక వేదికను అందిస్తున్నాము.</p>
+                
+                <h2><i class="fas fa-bullseye"></i> మా లక్ష్యం</h2>
+                <p style="margin-bottom: 20px;">ప్రతి భారతీయుడికి, ముఖ్యంగా విద్యార్థులు, గృహిణులు మరియు పార్ట్-టైమ్ ఉద్యోగులు తమ స్వేచ్ఛ సమయంలో అదనపు ఆదాయాన్ని సంపాదించడానికి అవకాశాలను అందించడం మా లక్ష్యం.</p>
+                
+                <h2><i class="fas fa-handshake"></i> మా విలువలు</h2>
+                <ul style="padding-left: 20px; line-height: 1.8;">
+                    <li><strong>పారదర్శకత:</strong> అన్ని టాస్క్ వివరాలు మరియు చెల్లింపులు స్పష్టంగా ఉంటాయి</li>
+                    <li><strong>నమ్మకం:</strong> సురక్షితమైన చెల్లింపులు మరియు డేటా గోప్యత</li>
+                    <li><strong>విశ్వసనీయత:</strong> సమయానికి చెల్లింపులు మరియు మద్దతు</li>
+                    <li><strong>నవోన్ముఖత:</strong> కొత్త సంపాదన అవకాశాలను నిరంతరం పరిచయం చేయడం</li>
+                </ul>
             </div>
         </section>
 
-        <!-- Contact Page -->
-        <section class="page" id="contact">
-            <div class="page-header">
-                <h1>Contact Us</h1>
-                <p>Get in touch with us for any questions or support</p>
-            </div>
-            <div class="contact-info">
-                <div class="contact-card">
-                    <i class="fas fa-user"></i>
-                    <h3>IPPILI ESWARA RAO</h3>
-                    <p>Founder & CEO</p>
-                </div>
-                <div class="contact-card">
-                    <i class="fas fa-envelope"></i>
-                    <h3>Email</h3>
-                    <p>ishwarchinna8@gmail.com</p>
-                </div>
-                <div class="contact-card">
-                    <i class="fas fa-clock"></i>
-                    <h3>Response Time</h3>
-                    <p>Within 24 hours</p>
-                </div>
-            </div>
-            <div class="card">
-                <h2><i class="fas fa-comments"></i> Send us a Message</h2>
-                <div class="form-group">
-                    <label for="contact-name">Your Name</label>
-                    <input class="form-control" id="contact-name" placeholder="Enter your name" type="text"/>
-                    <div class="error-message" id="contact-name-error">దయచేసి మీ పేరు నమోదు చేయండి</div>
-                </div>
-                <div class="form-group">
-                    <label for="contact-email">Your Email</label>
-                    <input class="form-control" id="contact-email" placeholder="Enter your email" type="email"/>
-                    <div class="error-message" id="contact-email-error">దయచేసి సరైన ఇమెయిల్ నమోదు చేయండి</div>
-                </div>
-                <div class="form-group">
-                    <label for="contact-message">Message</label>
-                    <textarea class="form-control" id="contact-message" placeholder="Enter your message" rows="5"></textarea>
-                    <div class="error-message" id="contact-message-error">దయచేసి సందేశం నమోదు చేయండి</div>
-                </div>
-                <button class="btn" id="contact-submit" style="width: 100%;">
-                    <i class="fas fa-paper-plane"></i> Send Message
-                </button>
-            </div>
-        </section>
-
-        <!-- Withdrawal Info Page -->
-        <section class="page" id="withdrawal-info">
-            <div class="page-header">
-                <h1>Withdrawal Information</h1>
-                <p>Everything you need to know about withdrawing your earnings</p>
-            </div>
-            <div class="withdrawal-info">
-                <div class="info-card">
-                    <i class="fas fa-rupee-sign"></i>
-                    <h3>Minimum Payout</h3>
-                    <p>₹100</p>
-                </div>
-                <div class="info-card">
-                    <i class="fas fa-wallet"></i>
-                    <h3>Withdrawal Methods</h3>
-                    <p>UPI or Bank Transfer</p>
-                </div>
-                <div class="info-card">
-                    <i class="fas fa-clock"></i>
-                    <h3>Processing Time</h3>
-                    <p>24 to 48 hours</p>
-                </div>
-            </div>
-            <div class="card">
-                <div class="content-section">
-                    <h2>Withdrawal Process</h2>
-                    <ol>
-                        <li>Ensure your balance is at least ₹100</li>
-                        <li>Go to the Wallet page and click "Withdraw"</li>
-                        <li>Select your preferred withdrawal method (UPI or Bank Transfer)</li>
-                        <li>Enter the required details</li>
-                        <li>Submit your withdrawal request</li>
-                        <li>Wait for processing (24-48 hours)</li>
-                        <li>Receive your payment</li>
-                    </ol>
-                    
-                    <h2>Important Notes</h2>
-                    <ul>
-                        <li>All withdrawals are subject to verification</li>
-                        <li>You must have completed at least one task successfully</li>
-                        <li>Withdrawal requests are processed on business days only</li>
-                        <li>There are no hidden fees for withdrawals</li>
-                    </ul>
-                    
-                    <h2>Need Help?</h2>
-                    <p>If you encounter any issues with withdrawals, please contact our support team through the <a href="#" data-page="contact">Contact page</a>.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Referral Terms Page -->
-        <section class="page" id="referral-terms">
-            <div class="page-header">
-                <h1>Referral Program Terms</h1>
-                <p>Rules and conditions for our referral program</p>
-            </div>
-            <div class="card">
-                <div class="content-section">
-                    <h2>Referral Program Overview</h2>
-                    <p>Our referral program allows you to earn ₹10 for each friend you refer who successfully signs up and completes at least one task on Pick My Task.</p>
-                    
-                    <h2>How It Works</h2>
-                    <ol>
-                        <li>Share your unique referral code with friends</li>
-                        <li>Your friend signs up using your referral code</li>
-                        <li>Your friend completes at least one task</li>
-                        <li>You receive ₹10 in your wallet</li>
-                    </ol>
-                    
-                    <h2>Terms & Conditions</h2>
-                    <ul>
-                        <li>You can refer unlimited friends</li>
-                        <li>Each referral must be a new user who hasn't previously signed up for Pick My Task</li>
-                        <li>The referred user must complete at least one task for you to receive the bonus</li>
-                        <li>Referral bonuses are credited within 24 hours of task completion</li>
-                        <li>We reserve the right to revoke referral bonuses in cases of suspected fraud</li>
-                        <li>You cannot refer yourself using different email addresses</li>
-                        <li>Referral bonuses are subject to the same withdrawal terms as task earnings</li>
-                    </ul>
-                    
-                    <h2>Fair Usage Policy</h2>
-                    <p>We monitor our referral program to prevent abuse. Any attempts to manipulate the system, create fake accounts, or engage in fraudulent activities will result in immediate termination of your account and forfeiture of all earnings.</p>
-                    
-                    <h2>Questions?</h2>
-                    <p>If you have any questions about our referral program, please contact us through the <a href="#" data-page="contact">Contact page</a>.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Privacy Policy Page -->
         <section class="page" id="privacy">
             <div class="page-header">
-                <h1>Privacy Policy</h1>
-                <p>How we protect and use your personal information</p>
+                <h1>గోప్యతా విధానం</h1>
+                <p>మేము మీ డేటాను ఎలా సేకరిస్తాము, ఉపయోగిస్తాము మరియు రక్షిస్తామో తెలుసుకోండి</p>
             </div>
             <div class="card">
-                <div class="content-section">
-                    <h2>Information We Collect</h2>
-                    <p>We collect information that you provide directly to us, including:</p>
-                    <ul>
-                        <li>Name, email address, and phone number</li>
-                        <li>Bank account details for withdrawals</li>
-                        <li>Task completion information</li>
-                        <li>Device and usage information</li>
-                    </ul>
-                    
-                    <h2>How We Use Your Information</h2>
-                    <p>We use the information we collect to:</p>
-                    <ul>
-                        <li>Provide, maintain, and improve our services</li>
-                        <li>Process payments and send you earnings</li>
-                        <li>Communicate with you about tasks and updates</li>
-                        <li>Detect and prevent fraud</li>
-                    </ul>
-                    
-                    <h2>Information Sharing</h2>
-                    <p>We do not sell your personal information. We may share your information with:</p>
-                    <ul>
-                        <li>Service providers who assist in our operations</li>
-                        <li>Law enforcement when required by law</li>
-                        <li>Third parties with your consent</li>
-                    </ul>
-                    
-                    <h2>Data Security</h2>
-                    <p>We implement appropriate security measures to protect your personal information from unauthorized access, alteration, or disclosure.</p>
-                    
-                    <h2>Your Rights</h2>
-                    <p>You have the right to access, correct, or delete your personal information. You can also object to or restrict certain processing of your data.</p>
-                    
-                    <h2>Contact Us</h2>
-                    <p>If you have questions about this privacy policy, please contact us through the <a href="#" data-page="contact">Contact page</a>.</p>
-                </div>
+                <h2><i class="fas fa-shield-alt"></i> డేటా సేకరణ</h2>
+                <p style="margin-bottom: 15px;">మేము మీ ఖాతాను సృష్టించడానికి మరియు మా సేవలను అందించడానికి అవసరమైన సమాచారాన్ని మాత్రమే సేకరిస్తాము:</p>
+                <ul style="padding-left: 20px; margin-bottom: 20px; line-height: 1.8;">
+                    <li>పేరు, ఇమెయిల్, ఫోన్ నంబర్</li>
+                    <li>చెల్లింపు వివరాలు (UPI ID లేదా బ్యాంకు ఖాతా వివరాలు)</li>
+                    <li>టాస్క్ పూర్తి సమయం మరియు స్టేటస్</li>
+                </ul>
+                
+                <h2><i class="fas fa-lock"></i> డేటా భద్రత</h2>
+                <p style="margin-bottom: 15px;">మేము మీ సమాచారాన్ని రక్షించడానికి వివిధ భద్రతా చర్యలను ఉపయోగిస్తాము:</p>
+                <ul style="padding-left: 20px; margin-bottom: 20px; line-height: 1.8;">
+                    <li>ఎన్క్రిప్టెడ్ డేటా ట్రాన్స్మిషన్ (SSL)</li>
+                    <li>సురక్షితమైన ఫైర్బేస్ డేటాబేస్</li>
+                    <li>రెగ్యులర్ సెక్యూరిటీ ఆడిట్లు</li>
+                </ul>
+                
+                <h2><i class="fas fa-share-alt"></i> డేటా షేరింగ్</h2>
+                <p style="margin-bottom: 15px;">మేము మీ సమాచారాన్ని మూడవ పక్షాలతో అమ్మము లేదా షేర్ చేయము, కానీ ఈ క్రింది సందర్భాల్లో మాత్రమే:</p>
+                <ul style="padding-left: 20px; margin-bottom: 20px; line-height: 1.8;">
+                    <li>చట్టపరమైన అవసరాలు</li>
+                    <li>సేవల అందించడం (చెల్లింపు ప్రాసెసింగ్)</li>
+                    <li>మీ సమ్మతితో</li>
+                </ul>
+                
+                <h2><i class="fas fa-user-cog"></i> మీ హక్కులు</h2>
+                <p style="margin-bottom: 15px;">మీరు ఈ క్రింది హక్కులను కలిగి ఉన్నారు:</p>
+                <ul style="padding-left: 20px; line-height: 1.8;">
+                    <li>మీ డేటాను యాక్సెస్ చేసుకోవడం</li>
+                    <li>మీ డేటాను సరిచేయడం</li>
+                    <li>మీ ఖాతాను తొలగించడం</li>
+                    <li>డేటా షేరింగ్కు వ్యతిరేకించడం</li>
+                </ul>
             </div>
         </section>
 
-        <!-- Terms of Service Page -->
         <section class="page" id="terms">
             <div class="page-header">
-                <h1>Terms of Service</h1>
-                <p>Rules and guidelines for using Pick My Task</p>
+                <h1>సేవా నిబంధనలు</h1>
+                <p>EarnPe ఉపయోగించడానికి నిబంధనలు మరియు షరతులు</p>
             </div>
             <div class="card">
-                <div class="content-section">
-                    <h2>Acceptance of Terms</h2>
-                    <p>By accessing or using Pick My Task, you agree to be bound by these Terms of Service and our Privacy Policy.</p>
-                    
-                    <h2>Eligibility</h2>
-                    <p>You must be at least 18 years old and have the legal capacity to enter into contracts to use our services.</p>
-                    
-                    <h2>User Accounts</h2>
-                    <p>You are responsible for maintaining the confidentiality of your account credentials and for all activities that occur under your account.</p>
-                    
-                    <h2>Task Completion</h2>
-                    <p>You agree to complete tasks honestly and in accordance with the provided instructions. We reserve the right to reject task submissions that don't meet our requirements.</p>
-                    
-                    <h2>Payments</h2>
-                    <p>Payments are made after successful verification of completed tasks. We reserve the right to withhold payments in cases of suspected fraud.</p>
-                    
-                    <h2>Prohibited Activities</h2>
-                    <p>You agree not to:</p>
-                    <ul>
-                        <li>Create multiple accounts</li>
-                        <li>Use automated tools to complete tasks</li>
-                        <li>Provide false information</li>
-                        <li>Attempt to hack or disrupt our services</li>
-                        <li>Engage in any fraudulent activities</li>
-                    </ul>
-                    
-                    <h2>Termination</h2>
-                    <p>We may terminate or suspend your account at any time for violations of these terms.</p>
-                    
-                    <h2>Limitation of Liability</h2>
-                    <p>We are not liable for any indirect, incidental, or consequential damages arising from your use of our services.</p>
-                    
-                    <h2>Changes to Terms</h2>
-                    <p>We may modify these terms at any time. Continued use of our services constitutes acceptance of the modified terms.</p>
-                    
-                    <h2>Contact Information</h2>
-                    <p>For questions about these terms, please contact us through the <a href="#" data-page="contact">Contact page</a>.</p>
+                <h2><i class="fas fa-file-contract"></i> ఖాతా నిబంధనలు</h2>
+                <ul style="padding-left: 20px; margin-bottom: 20px; line-height: 1.8;">
+                    <li>మీరు 18 సంవత్సరాలకు పైబడిన వ్యక్తి అయి ఉండాలి</li>
+                    <li>ఒక వ్యక్తికి ఒక ఖాతా మాత్రమే అనుమతించబడుతుంది</li>
+                    <li>మీరు సరైన మరియు అప్డేట్ చేయబడిన సమాచారాన్ని అందించాలి</li>
+                    <li>మీ ఖాతాను సురక్షితంగా ఉంచుకోండి మరియు పాస్వర్డ్ను షేర్ చేయకండి</li>
+                </ul>
+                
+                <h2><i class="fas fa-tasks"></i> టాస్క్ నిబంధనలు</h2>
+                <ul style="padding-left: 20px; margin-bottom: 20px; line-height: 1.8;">
+                    <li>టాస్క్లను సహీం చేయడం మరియు నిజమైన సమాచారాన్ని అందించడం అవసరం</li>
+                    <li>మోసపూరిత కార్యకలాపాలు ఖాతా సస్పెన్షన్కు దారితీస్తాయి</li>
+                    <li>టాస్క్ పూర్తి చేసిన తర్వాత మాత్రమే చెల్లింపు జరుగుతుంది</li>
+                    <li>EarnPe ఎప్పుడైనా టాస్క్లను తీసివేయడం లేదా మార్చడం హక్కు కలిగి ఉంది</li>
+                </ul>
+                
+                <h2><i class="fas fa-money-bill-wave"></i> చెల్లింపు నిబంధనలు</h2>
+                <ul style="padding-left: 20px; margin-bottom: 20px; line-height: 1.8;">
+                    <li>కనీస ఉపసంహరణ మొత్తం ₹100</li>
+                    <li>ఉపసంహరణలు 24-48 గంటల్లో ప్రాసెస్ చేయబడతాయి</li>
+                    <li>చెల్లింపు పద్ధతులు: UPI మరియు బ్యాంక్ ట్రాన్స్ఫర్</li>
+                    <li>చెల్లింపు వివాదాలను 7 రోజుల్లో పరిష్కరిస్తాము</li>
+                </ul>
+                
+                <h2><i class="fas fa-gavel"></i> నిషేధించిన కార్యకలాపాలు</h2>
+                <ul style="padding-left: 20px; line-height: 1.8;">
+                    <li>స్వయం-రెఫరల్ లేదా ఏకీకృత ఖాతాలు</li>
+                    <li>బాట్స్ లేదా ఆటోమేటెడ్ స్క్రిప్ట్లను ఉపయోగించడం</li>
+                    <li>తప్పుడు సమాచారం అందించడం</li>
+                    <li>ప్రచారం లేదా స్పామ్ కార్యకలాపాలు</li>
+                    <li>సేవలను దురుపయోగం చేయడం</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="page" id="contact">
+            <div class="page-header">
+                <h1>సంప్రదించండి</h1>
+                <p>సహాయం కోసం మమ్మల్ని సంప్రదించండి</p>
+            </div>
+            <div class="card">
+                <h2><i class="fas fa-headset"></i> మద్దతు</h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 20px;">
+                    <div style="text-align: center; padding: 20px; background: var(--light); border-radius: var(--radius);">
+                        <i class="fas fa-user" style="font-size: 2rem; color: var(--primary); margin-bottom: 15px;"></i>
+                        <h3>IPPILI ESWARA RAO</h3>
+                        <p style="color: var(--gray);">Founder & CEO</p>
+                    </div>
+                    <div style="text-align: center; padding: 20px; background: var(--light); border-radius: var(--radius);">
+                        <i class="fas fa-envelope" style="font-size: 2rem; color: var(--primary); margin-bottom: 15px;"></i>
+                        <h3>ఇమెయిల్</h3>
+                        <p style="color: var(--gray);">ishwarchinna8@gmail.com</p>
+                    </div>
+                    <div style="text-align: center; padding: 20px; background: var(--light); border-radius: var(--radius);">
+                        <i class="fas fa-clock" style="font-size: 2rem; color: var(--primary); margin-bottom: 15px;"></i>
+                        <h3>పని సమయాలు</h3>
+                        <p style="color: var(--gray);">సోమ - శుక్ర: 9 AM - 6 PM</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <h2><i class="fas fa-question-circle"></i> తరచుగా అడిగే ప్రశ్నలు</h2>
+                <div style="margin-top: 20px;">
+                    <div style="padding: 15px 0; border-bottom: 1px solid var(--border);">
+                        <h3 style="margin-bottom: 10px;">చెల్లింపు ఎప్పుడు పొందగలను?</h3>
+                        <p style="color: var(--gray);">టాస్క్ పూర్తి చేసిన తర్వాత 24-48 గంటల్లో మీ వాలెట్కు చెల్లింపు జోడించబడుతుంది.</p>
+                    </div>
+                    <div style="padding: 15px 0; border-bottom: 1px solid var(--border);">
+                        <h3 style="margin-bottom: 10px;">ఉపసంహరణకు కనీస మొత్తం ఎంత?</h3>
+                        <p style="color: var(--gray);">కనీస ఉపసంహరణ మొత్తం ₹100. మీరు UPI లేదా బ్యాంక్ ట్రాన్స్ఫర్ ద్వారా డబ్బు ఉపసంహరించుకోవచ్చు.</p>
+                    </div>
+                    <div style="padding: 15px 0; border-bottom: 1px solid var(--border);">
+                        <h3 style="margin-bottom: 10px;">రెఫరల్ నుండి ఎంత సంపాదించగలను?</h3>
+                        <p style="color: var(--gray);">ప్రతి విజయవంతమైన రెఫరల్కు మీరు ₹10 సంపాదిస్తారు. రెఫర్ చేసిన వ్యక్తి కనీసం ఒక టాస్క్ను పూర్తి చేయాలి.</p>
+                    </div>
+                    <div style="padding: 15px 0;">
+                        <h3 style="margin-bottom: 10px;">టాస్క్ పూర్తి చేయడం ఎలా నిరూపించాలి?</h3>
+                        <p style="color: var(--gray);">ప్రతి టాస్క్కు ప్రూఫ్ అవసరాలు ఉంటాయి. ఇది స్క్రీన్షాట్, అప్లికేషన్ ID లేదా ఇతర డాక్యుమెంటేషన్ కావచ్చు.</p>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Login Page -->
         <section class="page active" id="login">
             <div class="login-container">
                 <div class="login-card">
                     <div class="login-icon">
-                        <i class="fas fa-tasks"></i>
+                        <i class="fas fa-money-bill-wave"></i>
                     </div>
-                    <h1>Welcome to Pick My Task</h1>
-                    <p style="color: var(--gray); margin: 15px 0 30px;">Sign in to your account to start earning</p>
+                    <h1>EarnPe కు స్వాగతం</h1>
+                    <p style="color: var(--gray); margin: 15px 0 30px;">సంపాదించడం ప్రారంభించడానికి మీ ఖాతాకు సైన్ ఇన్ చేయండి</p>
                     <div id="login-alert" style="display: none;"></div>
                     <div class="form-group">
-                        <label for="login-email">Email Address</label>
-                        <input class="form-control" id="login-email" placeholder="Enter your email address" type="email"/>
-                        <div class="error-message" id="login-email-error">దయచేసి సరైన ఇమెయిల్ నమోదు చేయండి</div>
+                        <label for="login-email">ఇమెయిల్ చిరునామా</label>
+                        <input class="form-control" id="login-email" placeholder="మీ ఇమెయిల్ నమోదు చేయండి" type="email"/>
+                        <div class="error-message" id="login-email-error">దయచేసి వైధ్యంగా ఇమెయిల్ నమోదు చేయండి</div>
                     </div>
                     <div class="form-group">
-                        <label for="login-password">Password</label>
-                        <input class="form-control" id="login-password" placeholder="Enter your password" type="password"/>
+                        <label for="login-password">పాస్వర్డ్</label>
+                        <input class="form-control" id="login-password" placeholder="మీ పాస్వర్డ్ నమోదు చేయండి" type="password"/>
                         <div class="error-message" id="login-password-error">దయచేసి పాస్వర్డ్ నమోదు చేయండి</div>
                     </div>
                     <div class="form-group">
                         <button class="btn" id="login-submit" style="width: 100%; padding: 12px;">
-                            <i class="fas fa-sign-in-alt"></i> Login
+                            <i class="fas fa-sign-in-alt"></i> లాగిన్
                         </button>
                     </div>
                     <div style="text-align: center; margin-top: 20px;">
-                        <p>Don't have an account? <a href="#" id="signup-link" style="color: var(--primary); font-weight: 600;">Sign up here</a></p>
+                        <p>ఖాతా లేదా? <a href="#" id="signup-link" style="color: var(--primary); font-weight: 600;">ఇక్కడ సైన్ అప్ చేయండి</a></p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Signup Page -->
         <section class="page" id="signup">
             <div class="login-container">
                 <div class="login-card">
                     <div class="login-icon">
                         <i class="fas fa-user-plus"></i>
                     </div>
-                    <h1>Create Account</h1>
-                    <p style="color: var(--gray); margin: 15px 0 30px;">Sign up to start earning with Pick My Task</p>
+                    <h1>ఖాతా సృష్టించండి</h1>
+                    <p style="color: var(--gray); margin: 15px 0 30px;">EarnPe తో సంపాదించడం ప్రారంభించడానికి సైన్ అప్ చేయండి</p>
                     <div id="signup-alert" style="display: none;"></div>
                     <div class="form-group">
-                        <label for="signup-name">Full Name</label>
-                        <input class="form-control" id="signup-name" placeholder="Enter your full name" type="text"/>
-                        <div class="error-message" id="signup-name-error">దయచేసి మీ పూర్తి పేరు నమోదు చేయండి</div>
+                        <label for="signup-name">పూర్తి పేరు</label>
+                        <input class="form-control" id="signup-name" placeholder="మీ పూర్తి పేరు నమోదు చేయండి" type="text"/>
+                        <div class="error-message" id="signup-name-error">దయచేసి పేరు నమోదు చేయండి</div>
                     </div>
                     <div class="form-group">
-                        <label for="signup-email">Email Address</label>
-                        <input class="form-control" id="signup-email" placeholder="Enter your email address" type="email"/>
-                        <div class="error-message" id="signup-email-error">దయచేసి సరైన ఇమెయిల్ నమోదు చేయండి</div>
+                        <label for="signup-phone">ఫోన్ నంబర్</label>
+                        <input class="form-control" id="signup-phone" placeholder="+91 9876543210" type="tel"/>
+                        <div class="error-message" id="signup-phone-error">దయచేసి వైధ్యంగా ఫోన్ నంబర్ నమోదు చేయండి</div>
                     </div>
                     <div class="form-group">
-                        <label for="signup-phone">Phone Number</label>
-                        <input class="form-control" id="signup-phone" placeholder="Enter your phone number" type="tel"/>
-                        <div class="error-message" id="signup-phone-error">దయచేసి సరైన ఫోన్ నంబర్ నమోదు చేయండి</div>
+                        <label for="signup-email">ఇమెయిల్ చిరునామా</label>
+                        <input class="form-control" id="signup-email" placeholder="మీ ఇమెయిల్ చిరునామా నమోదు చేయండి" type="email"/>
+                        <div class="error-message" id="signup-email-error">దయచేసి వైధ్యంగా ఇమెయిల్ నమోదు చేయండి</div>
                     </div>
                     <div class="form-group">
-                        <label for="signup-password">Password</label>
-                        <input class="form-control" id="signup-password" placeholder="Create a password" type="password"/>
-                        <div class="error-message" id="signup-password-error">పాస్వర్డ్ కనీసం 6 అక్షరాలు ఉండాలి</div>
+                        <label for="signup-password">పాస్వర్డ్</label>
+                        <input class="form-control" id="signup-password" placeholder="పాస్వర్డ్ సృష్టించండి" type="password"/>
+                        <div class="error-message" id="signup-password-error">దయచేసి పాస్వర్డ్ నమోదు చేయండి (కనీసం 6 అక్షరాలు)</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-referral">రెఫరల్ కోడ్ (ఐచ్ఛికం)</label>
+                        <input class="form-control" id="signup-referral" placeholder="రెఫరల్ కోడ్ నమోదు చేయండి" type="text"/>
                     </div>
                     <div class="form-group">
                         <button class="btn" id="signup-submit" style="width: 100%; padding: 12px;">
-                            <i class="fas fa-user-plus"></i> Sign Up
+                            <i class="fas fa-user-plus"></i> సైన్ అప్
                         </button>
                     </div>
                     <div style="text-align: center; margin-top: 20px;">
-                        <p>Already have an account? <a href="#" id="login-link" style="color: var(--primary); font-weight: 600;">Login here</a></p>
+                        <p>ఇప్పటికే ఖాతా ఉందా? <a href="#" id="login-link" style="color: var(--primary); font-weight: 600;">ఇక్కడ లాగిన్ చేయండి</a></p>
                     </div>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- Notification Container -->
-    <div id="notification-container"></div>
-
     <!-- Modals -->
     <div class="modal" id="task-modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 id="task-modal-title">Task Details</h2>
+                <h2 id="task-modal-title">టాస్క్ వివరాలు</h2>
                 <button class="modal-close" id="task-modal-close">&times;</button>
             </div>
             <div id="task-modal-body">
@@ -1498,158 +1280,37 @@
         </div>
     </div>
 
-    <div class="modal" id="withdraw-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Withdraw Funds</h2>
-                <button class="modal-close" id="withdraw-modal-close">&times;</button>
-            </div>
-            <div class="form-group">
-                <label for="withdraw-amount">Amount (₹)</label>
-                <input class="form-control" id="withdraw-amount" placeholder="Enter amount to withdraw" type="number" min="100"/>
-                <div class="error-message" id="withdraw-amount-error">కనీసం ₹100 ఉండాలి</div>
-            </div>
-            <div class="form-group">
-                <label>Withdrawal Method</label>
-                <div style="display: flex; gap: 10px; margin-top: 10px;">
-                    <button class="btn tab-method active" data-method="bank">Bank Transfer</button>
-                    <button class="btn tab-method" data-method="upi">UPI</button>
-                </div>
-            </div>
-            <div id="bank-details" class="withdrawal-method">
-                <div class="form-group">
-                    <label for="bank-account">Bank Account</label>
-                    <select class="form-control" id="bank-account">
-                        <option value="">Select bank account</option>
-                    </select>
-                    <div class="error-message" id="bank-account-error">దయచేసి బ్యాంక్ ఖాతాను ఎంచుకోండి</div>
-                </div>
-                <div class="form-group">
-                    <label for="account-holder">Account Holder Name</label>
-                    <input class="form-control" id="account-holder" placeholder="Enter account holder name" type="text"/>
-                    <div class="error-message" id="account-holder-error">దయచేసి ఖాతా యజమాని పేరు నమోదు చేయండి</div>
-                </div>
-                <div class="form-group">
-                    <label for="account-number">Account Number</label>
-                    <input class="form-control" id="account-number" placeholder="Enter account number" type="text"/>
-                    <div class="error-message" id="account-number-error">దయచేసి సరైన ఖాతా నంబర్ నమోదు చేయండి</div>
-                </div>
-                <div class="form-group">
-                    <label for="ifsc-code">IFSC Code</label>
-                    <input class="form-control" id="ifsc-code" placeholder="Enter IFSC code" type="text"/>
-                    <div class="error-message" id="ifsc-code-error">దయచేసి సరైన IFSC కోడ్ నమోదు చేయండి</div>
-                </div>
-            </div>
-            <div id="upi-details" class="withdrawal-method" style="display: none;">
-                <div class="form-group">
-                    <label for="upi-id">UPI ID</label>
-                    <input class="form-control" id="upi-id" placeholder="Enter your UPI ID" type="text"/>
-                    <div class="error-message" id="upi-id-error">దయచేసి సరైన UPI ID నమోదు చేయండి</div>
-                </div>
-            </div>
-            <button class="btn" id="withdraw-submit" style="width: 100%; margin-top: 20px;">
-                <i class="fas fa-download"></i> Withdraw
-            </button>
-        </div>
-    </div>
-
-    <div class="modal" id="edit-profile-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Edit Profile</h2>
-                <button class="modal-close" id="edit-profile-modal-close">&times;</button>
-            </div>
-            <div class="form-group">
-                <label for="edit-name">Full Name</label>
-                <input class="form-control" id="edit-name" placeholder="Enter your full name" type="text"/>
-                <div class="error-message" id="edit-name-error">దయచేసి మీ పూర్తి పేరు నమోదు చేయండి</div>
-            </div>
-            <div class="form-group">
-                <label for="edit-phone">Phone Number</label>
-                <input class="form-control" id="edit-phone" placeholder="Enter your phone number" type="tel"/>
-                <div class="error-message" id="edit-phone-error">దయచేసి సరైన ఫోన్ నంబర్ నమోదు చేయండి</div>
-            </div>
-            <div class="form-group">
-                <label for="edit-email">Email Address</label>
-                <input class="form-control" id="edit-email" placeholder="Enter your email address" type="email"/>
-                <div class="error-message" id="edit-email-error">దయచేసి సరైన ఇమెయిల్ నమోదు చేయండి</div>
-            </div>
-            <button class="btn" id="save-profile-btn" style="width: 100%; margin-top: 20px;">
-                <i class="fas fa-save"></i> Save Changes
-            </button>
-        </div>
-    </div>
-
-    <div class="modal" id="bank-account-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Bank Account Details</h2>
-                <button class="modal-close" id="bank-account-modal-close">&times;</button>
-            </div>
-            <div id="bank-accounts-list">
-                <!-- Bank accounts will be listed here -->
-            </div>
-            <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border);">
-                <h3 style="margin-bottom: 15px;">Add New Bank Account</h3>
-                <div class="form-group">
-                    <label for="new-bank-name">Bank Name</label>
-                    <input class="form-control" id="new-bank-name" placeholder="Enter bank name" type="text"/>
-                    <div class="error-message" id="new-bank-name-error">దయచేసి బ్యాంక్ పేరు నమోదు చేయండి</div>
-                </div>
-                <div class="form-group">
-                    <label for="new-account-holder">Account Holder Name</label>
-                    <input class="form-control" id="new-account-holder" placeholder="Enter account holder name" type="text"/>
-                    <div class="error-message" id="new-account-holder-error">దయచేసి ఖాతా యజమాని పేరు నమోదు చేయండి</div>
-                </div>
-                <div class="form-group">
-                    <label for="new-account-number">Account Number</label>
-                    <input class="form-control" id="new-account-number" placeholder="Enter account number" type="text"/>
-                    <div class="error-message" id="new-account-number-error">దయచేసి సరైన ఖాతా నంబర్ నమోదు చేయండి</div>
-                </div>
-                <div class="form-group">
-                    <label for="new-ifsc-code">IFSC Code</label>
-                    <input class="form-control" id="new-ifsc-code" placeholder="Enter IFSC code" type="text"/>
-                    <div class="error-message" id="new-ifsc-code-error">దయచేసి సరైన IFSC కోడ్ నమోదు చేయండి</div>
-                </div>
-                <button class="btn" id="add-bank-account-btn" style="width: 100%;">
-                    <i class="fas fa-plus"></i> Add Bank Account
-                </button>
-            </div>
-        </div>
-    </div>
-
     <footer>
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3>Pick My Task</h3>
-                    <p>Earn money by completing simple tasks like opening bank accounts, applying for credit cards, and more.</p>
+                    <h3>EarnPe</h3>
+                    <p>బ్యాంకు ఖాతాలు తెరవడం, క్రెడిట్ కార్డులకు అప్లై చేయడం మరిన్ని సాధారణ పనులను పూర్తి చేసి డబ్బు సంపాదించండి.</p>
                 </div>
                 <div class="footer-section">
-                    <h3>Quick Links</h3>
-                    <a data-page="home" href="#">Home</a>
-                    <a data-page="tasks" href="#">Tasks</a>
-                    <a data-page="wallet" href="#">Wallet</a>
-                    <a data-page="referral" href="#">Referral Program</a>
-                    <a data-page="withdrawal-info" href="#">Withdrawal Info</a>
+                    <h3>త్వరిత లింకులు</h3>
+                    <a data-page="home" href="#">హోమ్</a>
+                    <a data-page="tasks" href="#">టాస్క్స్</a>
+                    <a data-page="withdrawal" href="#">విథ్డ్రావల్</a>
+                    <a data-page="referral" href="#">రెఫరల్ ప్రోగ్రామ్</a>
+                    <a data-page="about" href="#">మా గురించి</a>
                 </div>
                 <div class="footer-section">
-                    <h3>Legal</h3>
-                    <a data-page="privacy" href="#">Privacy Policy</a>
-                    <a data-page="terms" href="#">Terms of Service</a>
-                    <a data-page="referral-terms" href="#">Referral Terms</a>
-                    <a data-page="about" href="#">About Us</a>
-                    <a data-page="contact" href="#">Contact Us</a>
+                    <h3>మద్దతు</h3>
+                    <a data-page="contact" href="#">సహాయ కేంద్రం</a>
+                    <a href="#">FAQ</a>
+                    <a data-page="contact" href="#">మమ్మల్ని సంప్రదించండి</a>
+                    <a data-page="privacy" href="#">గోప్యతా విధానం</a>
+                    <a data-page="terms" href="#">సేవా నిబంధనలు</a>
                 </div>
                 <div class="footer-section">
-                    <h3>Contact Info</h3>
-                    <p><i class="fas fa-user"></i> IPPILI ESWARA RAO</p>
+                    <h3>సంప్రదింపు సమాచారం</h3>
                     <p><i class="fas fa-envelope"></i> ishwarchinna8@gmail.com</p>
-                    <p><i class="fas fa-globe"></i> www.pickmytask.com</p>
+                    <p><i class="fas fa-user"></i> IPPILI ESWARA RAO</p>
                 </div>
             </div>
             <div class="copyright">
-                <p>© 2025 Pick My Task. All rights reserved.</p>
+                <p>© 2025 EarnPe. అన్ని హక్కులు రక్షించబడినవి.</p>
             </div>
         </div>
     </footer>
@@ -1658,7 +1319,6 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
 
     <script>
         // Firebase Configuration
@@ -1676,7 +1336,6 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
         const auth = firebase.auth();
-        const storage = firebase.storage();
 
         // DOM Elements
         const pages = document.querySelectorAll('.page');
@@ -1688,89 +1347,28 @@
         // Current User State
         let currentUser = null;
         let userData = null;
-        let tasks = [];
-
-        // Notification System
-        function showNotification(message, type = 'info') {
-            const container = document.getElementById('notification-container');
-            const notification = document.createElement('div');
-            notification.className = `notification notification-${type}`;
-            notification.innerHTML = `
-                <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
-                <span>${message}</span>
-            `;
-            container.appendChild(notification);
-            
-            setTimeout(() => {
-                notification.classList.add('show');
-            }, 100);
-            
-            setTimeout(() => {
-                notification.classList.remove('show');
-                setTimeout(() => {
-                    container.removeChild(notification);
-                }, 300);
-            }, 4000);
-        }
-
-        // Form Validation Functions
-        function validateEmail(email) {
-            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return re.test(email);
-        }
-
-        function validatePhone(phone) {
-            const re = /^[6-9]\d{9}$/;
-            return re.test(phone.replace(/\D/g, ''));
-        }
-
-        function validateRequired(value) {
-            return value && value.trim().length > 0;
-        }
-
-        function validateMinLength(value, minLength) {
-            return value && value.length >= minLength;
-        }
-
-        function showError(elementId, message) {
-            const errorElement = document.getElementById(elementId);
-            errorElement.textContent = message;
-            errorElement.style.display = 'block';
-        }
-
-        function hideError(elementId) {
-            const errorElement = document.getElementById(elementId);
-            errorElement.style.display = 'none';
-        }
 
         // Navigation between pages
-        function navigateToPage(pageId) {
-            // Remove active class from all links
-            navLinks.forEach(item => {
-                item.classList.remove('active');
-            });
-            
-            // Hide all pages
-            pages.forEach(page => {
-                page.classList.remove('active');
-            });
-            
-            // Show the selected page
-            document.getElementById(pageId).classList.add('active');
-            
-            // Find and activate the corresponding nav link
-            navLinks.forEach(item => {
-                if (item.getAttribute('data-page') === pageId) {
-                    item.classList.add('active');
-                }
-            });
-        }
-
         navLinks.forEach(link => {
             link.addEventListener('click', function(e) {
                 e.preventDefault();
+                
+                // Remove active class from all links
+                navLinks.forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                // Add active class to clicked link
+                this.classList.add('active');
+                
+                // Hide all pages
+                pages.forEach(page => {
+                    page.classList.remove('active');
+                });
+                
+                // Show the selected page
                 const pageId = this.getAttribute('data-page');
-                navigateToPage(pageId);
+                document.getElementById(pageId).classList.add('active');
             });
         });
 
@@ -1801,38 +1399,6 @@
             });
         });
 
-        // Close modal when clicking outside
-        modals.forEach(modal => {
-            modal.addEventListener('click', function(e) {
-                if (e.target === this) {
-                    this.classList.remove('active');
-                }
-            });
-        });
-
-        // Withdrawal method tabs
-        document.querySelectorAll('.tab-method').forEach(tab => {
-            tab.addEventListener('click', function() {
-                const method = this.getAttribute('data-method');
-                
-                // Remove active class from all method tabs
-                document.querySelectorAll('.tab-method').forEach(t => {
-                    t.classList.remove('active');
-                });
-                
-                // Add active class to clicked tab
-                this.classList.add('active');
-                
-                // Hide all method contents
-                document.querySelectorAll('.withdrawal-method').forEach(content => {
-                    content.style.display = 'none';
-                });
-                
-                // Show the selected method content
-                document.getElementById(`${method}-details`).style.display = 'block';
-            });
-        });
-
         // Login/Signup navigation
         document.getElementById('signup-link').addEventListener('click', function(e) {
             e.preventDefault();
@@ -1846,851 +1412,567 @@
             document.getElementById('login').classList.add('active');
         });
 
-        // Join Now and Start Task buttons
+        // Join Now button
         document.getElementById('join-now-btn').addEventListener('click', function(e) {
             e.preventDefault();
-            navigateToPage('signup');
+            document.getElementById('login').classList.remove('active');
+            document.getElementById('signup').classList.add('active');
+            
+            // Update nav
+            navLinks.forEach(item => {
+                item.classList.remove('active');
+            });
         });
 
-        document.getElementById('start-task-btn').addEventListener('click', function(e) {
+        // Footer navigation
+        document.querySelectorAll('.footer-section a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                if (this.getAttribute('data-page')) {
+                    e.preventDefault();
+                    
+                    // Remove active class from all links
+                    navLinks.forEach(item => {
+                        item.classList.remove('active');
+                    });
+                    
+                    // Hide all pages
+                    pages.forEach(page => {
+                        page.classList.remove('active');
+                    });
+                    
+                    // Show the selected page
+                    const pageId = this.getAttribute('data-page');
+                    document.getElementById(pageId).classList.add('active');
+                    
+                    // Find and activate the corresponding nav link
+                    navLinks.forEach(item => {
+                        if (item.getAttribute('data-page') === pageId) {
+                            item.classList.add('active');
+                        }
+                    });
+                }
+            });
+        });
+
+        // Privacy Policy and Terms of Service buttons
+        document.getElementById('privacy-policy-btn').addEventListener('click', function(e) {
             e.preventDefault();
-            if (currentUser) {
-                navigateToPage('tasks');
-            } else {
-                navigateToPage('login');
-            }
+            document.getElementById('profile').classList.remove('active');
+            document.getElementById('privacy').classList.add('active');
+            
+            // Update nav
+            navLinks.forEach(item => {
+                item.classList.remove('active');
+            });
         });
 
-        // Signup functionality
-        document.getElementById('signup-submit').addEventListener('click', function() {
-            const name = document.getElementById('signup-name').value;
-            const email = document.getElementById('signup-email').value;
-            const phone = document.getElementById('signup-phone').value;
-            const password = document.getElementById('signup-password').value;
+        document.getElementById('terms-service-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('profile').classList.remove('active');
+            document.getElementById('terms').classList.add('active');
             
-            // Reset errors
-            hideError('signup-name-error');
-            hideError('signup-email-error');
-            hideError('signup-phone-error');
-            hideError('signup-password-error');
-            
-            let isValid = true;
-            
-            // Validate form
-            if (!validateRequired(name)) {
-                showError('signup-name-error', 'దయచేసి మీ పూర్తి పేరు నమోదు చేయండి');
-                isValid = false;
-            }
-            
-            if (!validateEmail(email)) {
-                showError('signup-email-error', 'దయచేసి సరైన ఇమెయిల్ నమోదు చేయండి');
-                isValid = false;
-            }
-            
-            if (!validatePhone(phone)) {
-                showError('signup-phone-error', 'దయచేసి సరైన ఫోన్ నంబర్ నమోదు చేయండి');
-                isValid = false;
-            }
-            
-            if (!validateMinLength(password, 6)) {
-                showError('signup-password-error', 'పాస్వర్డ్ కనీసం 6 అక్షరాలు ఉండాలి');
-                isValid = false;
-            }
-            
-            if (!isValid) return;
-            
-            // Show loading state
-            const originalText = this.innerHTML;
-            this.innerHTML = '<div class="loader"></div> Creating account...';
-            this.disabled = true;
-            
-            // Create user with Firebase Auth
-            auth.createUserWithEmailAndPassword(email, password)
-                .then((userCredential) => {
-                    const user = userCredential.user;
-                    
-                    // Generate referral code
-                    const referralCode = 'PMT' + Math.random().toString(36).substring(2, 8).toUpperCase();
-                    
-                    // Create user data
-                    const userData = {
-                        name: name,
-                        email: email,
-                        phone: phone,
-                        balance: 0,
-                        completedTasks: 0,
-                        totalEarnings: 0,
-                        referrals: 0,
-                        referralEarnings: 0,
-                        referralCode: referralCode,
-                        memberSince: new Date(),
-                        bankAccounts: [],
-                        upiIds: [],
-                        completedTaskIds: [],
-                        activeTasks: [],
-                        transactions: []
-                    };
-                    
-                    // Save user data to Firestore in users/{uid}
-                    return db.collection('users').doc(user.uid).set(userData);
-                })
-                .then(() => {
-                    showNotification('Account created successfully!', 'success');
-                    
-                    // Redirect to login after a short delay
-                    setTimeout(() => {
-                        document.getElementById('signup').classList.remove('active');
-                        document.getElementById('login').classList.add('active');
-                        
-                        // Reset form
-                        document.getElementById('signup-name').value = '';
-                        document.getElementById('signup-email').value = '';
-                        document.getElementById('signup-phone').value = '';
-                        document.getElementById('signup-password').value = '';
-                        
-                        // Reset button
-                        this.innerHTML = originalText;
-                        this.disabled = false;
-                    }, 1500);
-                })
-                .catch((error) => {
-                    console.error('Error creating account:', error);
-                    let errorMessage = 'Error creating account. Please try again.';
-                    
-                    if (error.code === 'auth/email-already-in-use') {
-                        errorMessage = 'This email is already registered. Please use a different email.';
-                    } else if (error.code === 'auth/weak-password') {
-                        errorMessage = 'Password is too weak. Please use a stronger password.';
-                    }
-                    
-                    showNotification(errorMessage, 'error');
-                    
-                    // Reset button
-                    this.innerHTML = originalText;
-                    this.disabled = false;
-                });
+            // Update nav
+            navLinks.forEach(item => {
+                item.classList.remove('active');
+            });
         });
 
-        // Login functionality
+        // Withdrawal method change
+        document.getElementById('withdraw-method').addEventListener('change', function() {
+            const method = this.value;
+            document.getElementById('upi-details').style.display = method === 'upi' ? 'block' : 'none';
+            document.getElementById('bank-details').style.display = method === 'bank' ? 'block' : 'none';
+        });
+
+        // Show alert function
+        function showAlert(containerId, message, type) {
+            const alertContainer = document.getElementById(containerId);
+            alertContainer.innerHTML = `
+                <div class="alert alert-${type}">
+                    <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+                    ${message}
+                </div>
+            `;
+            alertContainer.style.display = 'block';
+            
+            // Auto-hide after 5 seconds
+            setTimeout(() => {
+                alertContainer.style.display = 'none';
+            }, 5000);
+        }
+
+        // Validation functions
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        function validatePhone(phone) {
+            const re = /^\+91\s[6-9]\d{9}$/;
+            return re.test(phone);
+        }
+
+        function showError(elementId, message) {
+            const errorElement = document.getElementById(elementId);
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+        }
+
+        function hideError(elementId) {
+            const errorElement = document.getElementById(elementId);
+            errorElement.style.display = 'none';
+        }
+
+        // Firebase Authentication Implementation
         document.getElementById('login-submit').addEventListener('click', function() {
             const email = document.getElementById('login-email').value;
             const password = document.getElementById('login-password').value;
             
-            // Reset errors
-            hideError('login-email-error');
-            hideError('login-password-error');
+            let isValid = true;
+            
+            // Validate email
+            if (!email) {
+                showError('login-email-error', 'దయచేసి ఇమెయిల్ నమోదు చేయండి');
+                isValid = false;
+            } else if (!validateEmail(email)) {
+                showError('login-email-error', 'దయచేసి వైధ్యంగా ఇమెయిల్ నమోదు చేయండి');
+                isValid = false;
+            } else {
+                hideError('login-email-error');
+            }
+            
+            // Validate password
+            if (!password) {
+                showError('login-password-error', 'దయచేసి పాస్వర్డ్ నమోదు చేయండి');
+                isValid = false;
+            } else {
+                hideError('login-password-error');
+            }
+            
+            if (isValid) {
+                // Show loading state
+                this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> లాగిన్ అవుతోంది...';
+                this.disabled = true;
+                
+                // Firebase Email/Password Authentication
+                firebase.auth().signInWithEmailAndPassword(email, password)
+                    .then((userCredential) => {
+                        // Signed in successfully
+                        const user = userCredential.user;
+                        currentUser = user;
+                        showAlert('login-alert', 'లాగిన్ విజయవంతమైంది!', 'success');
+                        
+                        // Load user data from Firestore
+                        loadUserDataFromFirestore(user.uid);
+                        
+                        // Update UI
+                        updateUIAfterLogin();
+                    })
+                    .catch((error) => {
+                        const errorCode = error.code;
+                        const errorMessage = error.message;
+                        showAlert('login-alert', `లాగిన్ విఫలమైంది: ${errorMessage}`, 'error');
+                        
+                        // Reset button
+                        this.innerHTML = '<i class="fas fa-sign-in-alt"></i> లాగిన్';
+                        this.disabled = false;
+                    });
+            }
+        });
+
+        // Firebase Signup Implementation
+        document.getElementById('signup-submit').addEventListener('click', function() {
+            const name = document.getElementById('signup-name').value;
+            const phone = document.getElementById('signup-phone').value;
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+            const referralCode = document.getElementById('signup-referral').value;
             
             let isValid = true;
             
-            // Validate form
-            if (!validateEmail(email)) {
-                showError('login-email-error', 'దయచేసి సరైన ఇమెయిల్ నమోదు చేయండి');
+            // Validate name
+            if (!name) {
+                showError('signup-name-error', 'దయచేసి పేరు నమోదు చేయండి');
                 isValid = false;
+            } else {
+                hideError('signup-name-error');
             }
             
-            if (!validateRequired(password)) {
-                showError('login-password-error', 'దయచేసి పాస్వర్డ్ నమోదు చేయండి');
+            // Validate phone
+            if (!phone) {
+                showError('signup-phone-error', 'దయచేసి ఫోన్ నంబర్ నమోదు చేయండి');
                 isValid = false;
+            } else if (!validatePhone(phone)) {
+                showError('signup-phone-error', 'దయచేసి వైధ్యంగా ఫోన్ నంబర్ నమోదు చేయండి (+91 9876543210)');
+                isValid = false;
+            } else {
+                hideError('signup-phone-error');
             }
             
-            if (!isValid) return;
+            // Validate email
+            if (!email) {
+                showError('signup-email-error', 'దయచేసి ఇమెయిల్ నమోదు చేయండి');
+                isValid = false;
+            } else if (!validateEmail(email)) {
+                showError('signup-email-error', 'దయచేసి వైధ్యంగా ఇమెయిల్ నమోదు చేయండి');
+                isValid = false;
+            } else {
+                hideError('signup-email-error');
+            }
             
-            // Show loading state
-            const originalText = this.innerHTML;
-            this.innerHTML = '<div class="loader"></div> Logging in...';
-            this.disabled = true;
+            // Validate password
+            if (!password) {
+                showError('signup-password-error', 'దయచేసి పాస్వర్డ్ నమోదు చేయండి');
+                isValid = false;
+            } else if (password.length < 6) {
+                showError('signup-password-error', 'పాస్వర్డ్ కనీసం 6 అక్షరాలు ఉండాలి');
+                isValid = false;
+            } else {
+                hideError('signup-password-error');
+            }
             
-            // Sign in with Firebase Auth
-            auth.signInWithEmailAndPassword(email, password)
-                .then((userCredential) => {
-                    // Signed in
-                    const user = userCredential.user;
-                    currentUser = user;
-                    
-                    // Load user data from Firestore
-                    return db.collection('users').doc(user.uid).get();
-                })
-                .then((doc) => {
-                    if (doc.exists) {
-                        userData = doc.data();
-                        userData.uid = doc.id;
+            if (isValid) {
+                // Show loading state
+                this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ఖాతా సృష్టించబడుతోంది...';
+                this.disabled = true;
+                
+                // Firebase Create User
+                firebase.auth().createUserWithEmailAndPassword(email, password)
+                    .then((userCredential) => {
+                        const user = userCredential.user;
+                        currentUser = user;
                         
-                        // Update UI for logged in user
-                        updateUIForLoggedInUser();
-                        showNotification('Login successful!', 'success');
-                    } else {
-                        showNotification('User data not found.', 'error');
+                        // Create user data in Firestore
+                        createUserInFirestore(user.uid, name, email, phone, referralCode);
+                        
+                        showAlert('signup-alert', 'ఖాతా విజయవంతంగా సృష్టించబడింది!', 'success');
+                        updateUIAfterLogin();
+                    })
+                    .catch((error) => {
+                        const errorCode = error.code;
+                        const errorMessage = error.message;
+                        showAlert('signup-alert', `సైన్ అప్ విఫలమైంది: ${errorMessage}`, 'error');
+                        
+                        // Reset button
+                        this.innerHTML = '<i class="fas fa-user-plus"></i> సైన్ అప్';
+                        this.disabled = false;
+                    });
+            }
+        });
+
+        // Create user data in Firestore
+        function createUserInFirestore(uid, name, email, phone, referralCode) {
+            const userReferralCode = 'EP' + Math.random().toString(36).substring(2, 8).toUpperCase();
+            
+            const userData = {
+                name: name,
+                email: email,
+                phone: phone,
+                balance: 0,
+                completedTasks: 0,
+                totalEarnings: 0,
+                referrals: 0,
+                referralEarnings: 0,
+                referralCode: userReferralCode,
+                memberSince: new Date(),
+                bankAccounts: [],
+                usedReferralCode: referralCode || null
+            };
+            
+            db.collection('users').doc(uid).set(userData)
+                .then(() => {
+                    console.log('User data saved to Firestore');
+                    
+                    // If referral code was used, update referrer's data
+                    if (referralCode) {
+                        processReferral(referralCode, uid);
+                    }
+                    
+                    loadUserDataFromFirestore(uid);
+                })
+                .catch((error) => {
+                    console.error('Error saving user data: ', error);
+                });
+        }
+
+        // Process referral bonus
+        function processReferral(referralCode, newUserId) {
+            // Find user with this referral code
+            db.collection('users').where('referralCode', '==', referralCode).get()
+                .then((querySnapshot) => {
+                    if (!querySnapshot.empty) {
+                        querySnapshot.forEach((doc) => {
+                            const referrerData = doc.data();
+                            const referrerId = doc.id;
+                            
+                            // Update referrer's data
+                            const newReferrals = (referrerData.referrals || 0) + 1;
+                            const newReferralEarnings = (referrerData.referralEarnings || 0) + 10;
+                            const newBalance = (referrerData.balance || 0) + 10;
+                            
+                            db.collection('users').doc(referrerId).update({
+                                referrals: newReferrals,
+                                referralEarnings: newReferralEarnings,
+                                balance: newBalance
+                            });
+                            
+                            // Add transaction for referrer
+                            db.collection('transactions').add({
+                                userId: referrerId,
+                                type: 'referral',
+                                amount: 10,
+                                description: `Referral bonus for ${userData.name}`,
+                                date: new Date(),
+                                status: 'completed'
+                            });
+                            
+                            console.log('Referral processed successfully');
+                        });
                     }
                 })
                 .catch((error) => {
-                    console.error('Error signing in:', error);
-                    let errorMessage = 'Error signing in. Please try again.';
-                    
-                    if (error.code === 'auth/user-not-found') {
-                        errorMessage = 'No account found with this email.';
-                    } else if (error.code === 'auth/wrong-password') {
-                        errorMessage = 'Incorrect password. Please try again.';
-                    }
-                    
-                    showNotification(errorMessage, 'error');
-                    
-                    // Reset button
-                    this.innerHTML = originalText;
-                    this.disabled = false;
+                    console.error('Error processing referral: ', error);
                 });
+        }
+
+        // Load user data from Firestore
+        function loadUserDataFromFirestore(uid) {
+            db.collection('users').doc(uid).get()
+                .then((doc) => {
+                    if (doc.exists) {
+                        userData = doc.data();
+                        updateUserUI();
+                    } else {
+                        console.log('No user data found');
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error getting user data: ', error);
+                });
+        }
+
+        // Update user UI with data from Firestore
+        function updateUserUI() {
+            if (!userData) return;
+            
+            // Calculate days since member
+            const daysSinceMember = Math.floor((new Date() - userData.memberSince.toDate()) / (1000 * 60 * 60 * 24));
+            
+            // Update UI with user data
+            document.getElementById('user-name').textContent = userData.name;
+            document.getElementById('user-phone').textContent = userData.phone;
+            document.getElementById('user-email').textContent = userData.email;
+            document.getElementById('user-balance').textContent = `₹${userData.balance}.00`;
+            document.getElementById('wallet-balance').textContent = `₹${userData.balance}.00`;
+            document.getElementById('completed-tasks').textContent = userData.completedTasks;
+            document.getElementById('total-earnings').textContent = `₹${userData.totalEarnings}`;
+            document.getElementById('user-referrals').textContent = userData.referrals;
+            document.getElementById('member-since').textContent = daysSinceMember;
+            document.getElementById('total-referrals').textContent = userData.referrals;
+            document.getElementById('referral-earnings').textContent = `₹${userData.referralEarnings}`;
+            document.getElementById('referral-code').textContent = userData.referralCode;
+        }
+
+        // Update UI after login
+        function updateUIAfterLogin() {
+            // Hide login/signup pages
+            document.getElementById('login').classList.remove('active');
+            document.getElementById('signup').classList.remove('active');
+            
+            // Show home page
+            document.getElementById('home').classList.add('active');
+            
+            // Update navigation
+            navLinks.forEach(item => {
+                item.classList.remove('active');
+                if(item.getAttribute('data-page') === 'home') {
+                    item.classList.add('active');
+                }
+            });
+            
+            // Update user interface
+            document.getElementById('login-btn').style.display = 'none';
+            document.getElementById('logout-btn').style.display = 'inline-flex';
+            document.getElementById('user-balance').style.display = 'inline';
+            
+            // Load data
+            loadTasks();
+            loadTransactions();
+        }
+
+        // Firebase Auth State Observer
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                // User is signed in
+                currentUser = user;
+                console.log('User is signed in:', user.uid);
+                loadUserDataFromFirestore(user.uid);
+                updateUIAfterLogin();
+            } else {
+                // User is signed out
+                currentUser = null;
+                userData = null;
+                
+                // Show login page
+                document.getElementById('login').classList.add('active');
+                document.getElementById('home').classList.remove('active');
+                
+                // Update UI for logged out state
+                document.getElementById('login-btn').style.display = 'inline-flex';
+                document.getElementById('logout-btn').style.display = 'none';
+                document.getElementById('user-balance').style.display = 'none';
+            }
         });
 
-        // Logout functionality
+        // Real Firebase Logout
         document.getElementById('logout-btn').addEventListener('click', function(e) {
             e.preventDefault();
-            logout();
-        });
-
-        // Edit Profile functionality
-        document.getElementById('edit-profile-btn').addEventListener('click', function(e) {
-            e.preventDefault();
-            if (!currentUser) {
-                showNotification('Please login to edit profile.', 'error');
-                return;
-            }
-            
-            // Populate form with current data
-            document.getElementById('edit-name').value = userData.name || '';
-            document.getElementById('edit-phone').value = userData.phone || '';
-            document.getElementById('edit-email').value = userData.email || '';
-            
-            document.getElementById('edit-profile-modal').classList.add('active');
-        });
-
-        // Save Profile functionality
-        document.getElementById('save-profile-btn').addEventListener('click', function() {
-            const name = document.getElementById('edit-name').value;
-            const phone = document.getElementById('edit-phone').value;
-            const email = document.getElementById('edit-email').value;
-            
-            // Reset errors
-            hideError('edit-name-error');
-            hideError('edit-phone-error');
-            hideError('edit-email-error');
-            
-            let isValid = true;
-            
-            // Validate form
-            if (!validateRequired(name)) {
-                showError('edit-name-error', 'దయచేసి మీ పూర్తి పేరు నమోదు చేయండి');
-                isValid = false;
-            }
-            
-            if (!validatePhone(phone)) {
-                showError('edit-phone-error', 'దయచేసి సరైన ఫోన్ నంబర్ నమోదు చేయండి');
-                isValid = false;
-            }
-            
-            if (!validateEmail(email)) {
-                showError('edit-email-error', 'దయచేసి సరైన ఇమెయిల్ నమోదు చేయండి');
-                isValid = false;
-            }
-            
-            if (!isValid) return;
-            
-            // Show loading state
-            const originalText = this.innerHTML;
-            this.innerHTML = '<div class="loader"></div> Saving...';
-            this.disabled = true;
-            
-            // Update user data in Firestore
-            db.collection('users').doc(currentUser.uid).update({
-                name: name,
-                phone: phone,
-                email: email
-            })
-            .then(() => {
-                // Update local user data
-                userData.name = name;
-                userData.phone = phone;
-                userData.email = email;
-                
-                // Update UI
-                updateUserProfileUI();
-                
-                // Close modal
-                document.getElementById('edit-profile-modal').classList.remove('active');
-                
-                showNotification('Profile updated successfully!', 'success');
-                
-                // Reset button
-                this.innerHTML = originalText;
-                this.disabled = false;
-            })
-            .catch((error) => {
-                console.error('Error updating profile:', error);
-                showNotification('Error updating profile. Please try again.', 'error');
-                
-                // Reset button
-                this.innerHTML = originalText;
-                this.disabled = false;
-            });
-        });
-
-        // Manage Bank Accounts
-        document.getElementById('manage-bank-btn').addEventListener('click', function(e) {
-            e.preventDefault();
-            if (!currentUser) {
-                showNotification('Please login to manage bank accounts.', 'error');
-                return;
-            }
-            
-            loadBankAccounts();
-            document.getElementById('bank-account-modal').classList.add('active');
-        });
-
-        // Add Bank Account
-        document.getElementById('add-bank-account-btn').addEventListener('click', function() {
-            const bankName = document.getElementById('new-bank-name').value;
-            const accountHolder = document.getElementById('new-account-holder').value;
-            const accountNumber = document.getElementById('new-account-number').value;
-            const ifscCode = document.getElementById('new-ifsc-code').value;
-            
-            // Reset errors
-            hideError('new-bank-name-error');
-            hideError('new-account-holder-error');
-            hideError('new-account-number-error');
-            hideError('new-ifsc-code-error');
-            
-            let isValid = true;
-            
-            // Validate form
-            if (!validateRequired(bankName)) {
-                showError('new-bank-name-error', 'దయచేసి బ్యాంక్ పేరు నమోదు చేయండి');
-                isValid = false;
-            }
-            
-            if (!validateRequired(accountHolder)) {
-                showError('new-account-holder-error', 'దయచేసి ఖాతా యజమాని పేరు నమోదు చేయండి');
-                isValid = false;
-            }
-            
-            if (!validateRequired(accountNumber) || accountNumber.length < 9) {
-                showError('new-account-number-error', 'దయచేసి సరైన ఖాతా నంబర్ నమోదు చేయండి');
-                isValid = false;
-            }
-            
-            if (!validateRequired(ifscCode) || ifscCode.length !== 11) {
-                showError('new-ifsc-code-error', 'దయచేసి సరైన IFSC కోడ్ నమోదు చేయండి');
-                isValid = false;
-            }
-            
-            if (!isValid) return;
-            
-            // Show loading state
-            const originalText = this.innerHTML;
-            this.innerHTML = '<div class="loader"></div> Adding...';
-            this.disabled = true;
-            
-            // Create new bank account object
-            const newBankAccount = {
-                id: 'bank_' + Date.now(),
-                bankName: bankName,
-                accountHolder: accountHolder,
-                accountNumber: accountNumber,
-                ifscCode: ifscCode.toUpperCase(),
-                addedAt: new Date()
-            };
-            
-            // Add to user's bank accounts
-            const updatedBankAccounts = [...(userData.bankAccounts || []), newBankAccount];
-            
-            // Update in Firestore
-            db.collection('users').doc(currentUser.uid).update({
-                bankAccounts: updatedBankAccounts
-            })
-            .then(() => {
-                // Update local user data
-                userData.bankAccounts = updatedBankAccounts;
-                
-                // Reset form
-                document.getElementById('new-bank-name').value = '';
-                document.getElementById('new-account-holder').value = '';
-                document.getElementById('new-account-number').value = '';
-                document.getElementById('new-ifsc-code').value = '';
-                
-                // Reload bank accounts list
-                loadBankAccounts();
-                
-                showNotification('Bank account added successfully!', 'success');
-                
-                // Reset button
-                this.innerHTML = originalText;
-                this.disabled = false;
-            })
-            .catch((error) => {
-                console.error('Error adding bank account:', error);
-                showNotification('Error adding bank account. Please try again.', 'error');
-                
-                // Reset button
-                this.innerHTML = originalText;
-                this.disabled = false;
+            firebase.auth().signOut().then(() => {
+                showAlert('login-alert', 'మీరు విజయవంతంగా లాగ్అవుట్ అయ్యారు.', 'success');
+            }).catch((error) => {
+                console.error('Logout error: ', error);
             });
         });
 
         // Share referral code
         document.getElementById('share-btn').addEventListener('click', function(e) {
             e.preventDefault();
-            if (!currentUser) {
-                showNotification('Please login to share referral code.', 'error');
-                return;
-            }
+            if (!userData) return;
             
             const referralCode = userData.referralCode;
+            const shareUrl = 'https://ishwarippili7.github.io/Pickmytask/';
+            const shareText = `Use my referral code ${referralCode} to sign up for EarnPe and earn money! Join here: ${shareUrl}`;
             
             // In a real app, this would use the Web Share API or copy to clipboard
             if (navigator.share) {
                 navigator.share({
-                    title: 'Pick My Task',
-                    text: `Use my referral code ${referralCode} to sign up for Pick My Task and earn money!`,
-                    url: 'https://pickmytask.com'
+                    title: 'EarnPe',
+                    text: shareText,
+                    url: shareUrl
                 });
             } else {
                 // Fallback: copy to clipboard
-                navigator.clipboard.writeText(referralCode).then(function() {
-                    showNotification('Referral code copied to clipboard!', 'success');
+                navigator.clipboard.writeText(shareText).then(function() {
+                    showAlert('referral-alert', 'రెఫరల్ లింక్ క్లిప్బోర్డ్కు కాపీ చేయబడింది!', 'success');
                 }, function() {
-                    alert(`Share this code with your friends: ${referralCode}`);
+                    alert(shareText);
                 });
             }
         });
 
         // Withdraw functionality
-        document.getElementById('withdraw-btn').addEventListener('click', function(e) {
-            e.preventDefault();
-            if (!currentUser) {
-                showNotification('Please login to withdraw funds.', 'error');
-                return;
-            }
-            
-            if (userData.balance < 100) {
-                showNotification('Minimum withdrawal amount is ₹100.', 'error');
-                return;
-            }
-            
-            // Populate bank accounts in dropdown
-            const bankAccountSelect = document.getElementById('bank-account');
-            bankAccountSelect.innerHTML = '<option value="">Select bank account</option>';
-            
-            if (userData.bankAccounts && userData.bankAccounts.length > 0) {
-                userData.bankAccounts.forEach(account => {
-                    const option = document.createElement('option');
-                    option.value = account.id;
-                    option.textContent = `${account.bankName} - ${account.accountNumber}`;
-                    bankAccountSelect.appendChild(option);
-                });
-            }
-            
-            document.getElementById('withdraw-modal').classList.add('active');
-        });
-
-        // Withdraw submit
         document.getElementById('withdraw-submit').addEventListener('click', function() {
             const amount = parseFloat(document.getElementById('withdraw-amount').value);
-            const method = document.querySelector('.tab-method.active').getAttribute('data-method');
-            
-            // Reset errors
-            hideError('withdraw-amount-error');
-            hideError('bank-account-error');
-            hideError('account-holder-error');
-            hideError('account-number-error');
-            hideError('ifsc-code-error');
-            hideError('upi-id-error');
+            const method = document.getElementById('withdraw-method').value;
+            const upiId = document.getElementById('upi-id').value;
+            const accountNumber = document.getElementById('account-number').value;
+            const ifscCode = document.getElementById('ifsc-code').value;
             
             let isValid = true;
             
             // Validate amount
             if (!amount || amount < 100) {
-                showError('withdraw-amount-error', 'కనీసం ₹100 ఉండాలి');
+                showError('withdraw-amount-error', 'దయచేసి వైధ్యంగా మొత్తం నమోదు చేయండి (కనీసం ₹100)');
                 isValid = false;
+            } else if (amount > userData.balance) {
+                showError('withdraw-amount-error', 'మీ బ్యాలెన్స్ కంటే ఎక్కువ మొత్తం ఉపసంహరించలేరు');
+                isValid = false;
+            } else {
+                hideError('withdraw-amount-error');
             }
             
-            if (amount > userData.balance) {
-                showError('withdraw-amount-error', 'Insufficient balance');
+            // Validate method
+            if (!method) {
+                showError('withdraw-method-error', 'దయచేసి చెల్లింపు పద్ధతి ఎంచుకోండి');
                 isValid = false;
+            } else {
+                hideError('withdraw-method-error');
             }
             
-            let withdrawalDetails = {};
+            // Validate UPI details
+            if (method === 'upi' && !upiId) {
+                showError('upi-id-error', 'దయచేసి UPI ID నమోదు చేయండి');
+                isValid = false;
+            } else {
+                hideError('upi-id-error');
+            }
             
+            // Validate bank details
             if (method === 'bank') {
-                const bankAccountId = document.getElementById('bank-account').value;
-                const accountHolder = document.getElementById('account-holder').value;
-                const accountNumber = document.getElementById('account-number').value;
-                const ifscCode = document.getElementById('ifsc-code').value;
-                
-                if (!bankAccountId) {
-                    showError('bank-account-error', 'దయచేసి బ్యాంక్ ఖాతాను ఎంచుకోండి');
+                if (!accountNumber) {
+                    showError('account-number-error', 'దయచేసి ఖాతా సంఖ్య నమోదు చేయండి');
                     isValid = false;
+                } else {
+                    hideError('account-number-error');
                 }
                 
-                if (!validateRequired(accountHolder)) {
-                    showError('account-holder-error', 'దయచేసి ఖాతా యజమాని పేరు నమోదు చేయండి');
+                if (!ifscCode) {
+                    showError('ifsc-code-error', 'దయచేసి IFSC కోడ్ నమోదు చేయండి');
                     isValid = false;
-                }
-                
-                if (!validateRequired(accountNumber) || accountNumber.length < 9) {
-                    showError('account-number-error', 'దయచేసి సరైన ఖాతా నంబర్ నమోదు చేయండి');
-                    isValid = false;
-                }
-                
-                if (!validateRequired(ifscCode) || ifscCode.length !== 11) {
-                    showError('ifsc-code-error', 'దయచేసి సరైన IFSC కోడ్ నమోదు చేయండి');
-                    isValid = false;
-                }
-                
-                if (isValid) {
-                    const bankAccount = userData.bankAccounts.find(acc => acc.id === bankAccountId);
-                    withdrawalDetails = {
-                        method: 'bank',
-                        bankName: bankAccount ? bankAccount.bankName : '',
-                        accountHolder: accountHolder,
-                        accountNumber: accountNumber,
-                        ifscCode: ifscCode.toUpperCase()
-                    };
-                }
-            } else if (method === 'upi') {
-                const upiId = document.getElementById('upi-id').value;
-                
-                if (!validateRequired(upiId) || !upiId.includes('@')) {
-                    showError('upi-id-error', 'దయచేసి సరైన UPI ID నమోదు చేయండి');
-                    isValid = false;
-                }
-                
-                if (isValid) {
-                    withdrawalDetails = {
-                        method: 'upi',
-                        upiId: upiId
-                    };
+                } else {
+                    hideError('ifsc-code-error');
                 }
             }
             
-            if (!isValid) return;
-            
-            // Show loading state
-            const originalText = this.innerHTML;
-            this.innerHTML = '<div class="loader"></div> Processing...';
-            this.disabled = true;
-            
-            // Create withdrawal transaction
-            const transaction = {
-                id: 'txn_' + Date.now(),
-                type: 'withdrawal',
-                description: `Withdrawal via ${method.toUpperCase()}`,
-                amount: amount,
-                date: new Date(),
-                status: 'pending',
-                details: withdrawalDetails
-            };
-            
-            // Update user balance and add transaction
-            const updatedBalance = userData.balance - amount;
-            const updatedTransactions = [...(userData.transactions || []), transaction];
-            
-            // Update in Firestore
-            db.collection('users').doc(currentUser.uid).update({
-                balance: updatedBalance,
-                transactions: updatedTransactions
-            })
-            .then(() => {
-                // Update local user data
-                userData.balance = updatedBalance;
-                userData.transactions = updatedTransactions;
+            if (isValid && currentUser) {
+                // Show loading state
+                this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ప్రాసెస్ అవుతోంది...';
+                this.disabled = true;
                 
-                // Update UI
-                updateUserBalanceUI();
-                loadTransactions();
-                
-                // Close modal and reset form
-                document.getElementById('withdraw-modal').classList.remove('active');
-                document.getElementById('withdraw-amount').value = '';
-                document.getElementById('account-holder').value = '';
-                document.getElementById('account-number').value = '';
-                document.getElementById('ifsc-code').value = '';
-                document.getElementById('upi-id').value = '';
-                
-                showNotification(`Withdrawal request of ₹${amount} submitted successfully! It will be processed within 24-48 hours.`, 'success');
-                
-                // Reset button
-                this.innerHTML = originalText;
-                this.disabled = false;
-            })
-            .catch((error) => {
-                console.error('Error processing withdrawal:', error);
-                showNotification('Error processing withdrawal. Please try again.', 'error');
-                
-                // Reset button
-                this.innerHTML = originalText;
-                this.disabled = false;
-            });
-        });
-
-        // Contact form submission
-        document.getElementById('contact-submit').addEventListener('click', function() {
-            const name = document.getElementById('contact-name').value;
-            const email = document.getElementById('contact-email').value;
-            const message = document.getElementById('contact-message').value;
-            
-            // Reset errors
-            hideError('contact-name-error');
-            hideError('contact-email-error');
-            hideError('contact-message-error');
-            
-            let isValid = true;
-            
-            // Validate form
-            if (!validateRequired(name)) {
-                showError('contact-name-error', 'దయచేసి మీ పేరు నమోదు చేయండి');
-                isValid = false;
-            }
-            
-            if (!validateEmail(email)) {
-                showError('contact-email-error', 'దయచేసి సరైన ఇమెయిల్ నమోదు చేయండి');
-                isValid = false;
-            }
-            
-            if (!validateRequired(message)) {
-                showError('contact-message-error', 'దయచేసి సందేశం నమోదు చేయండి');
-                isValid = false;
-            }
-            
-            if (!isValid) return;
-            
-            // Show loading state
-            const originalText = this.innerHTML;
-            this.innerHTML = '<div class="loader"></div> Sending...';
-            this.disabled = true;
-            
-            // In a real app, this would send the message to a server
-            // For now, we'll just show a success message
-            setTimeout(() => {
-                // Reset form
-                document.getElementById('contact-name').value = '';
-                document.getElementById('contact-email').value = '';
-                document.getElementById('contact-message').value = '';
-                
-                showNotification('Message sent successfully! We will respond within 24 hours.', 'success');
-                
-                // Reset button
-                this.innerHTML = originalText;
-                this.disabled = false;
-            }, 1500);
-        });
-
-        // Task modal functionality
-        document.addEventListener('click', function(e) {
-            if (e.target.classList.contains('task-details-btn')) {
-                e.preventDefault();
-                const taskId = e.target.getAttribute('data-task-id');
-                showTaskDetails(taskId);
-            }
-            
-            if (e.target.classList.contains('start-task-btn')) {
-                e.preventDefault();
-                const taskId = e.target.getAttribute('data-task-id');
-                startTask(taskId);
-            }
-            
-            if (e.target.classList.contains('complete-task-btn')) {
-                e.preventDefault();
-                const taskId = e.target.getAttribute('data-task-id');
-                completeTask(taskId);
-            }
-            
-            if (e.target.classList.contains('remove-bank-account')) {
-                e.preventDefault();
-                const accountId = e.target.getAttribute('data-account-id');
-                removeBankAccount(accountId);
-            }
-            
-            // Footer navigation
-            if (e.target.hasAttribute('data-page')) {
-                e.preventDefault();
-                const pageId = e.target.getAttribute('data-page');
-                navigateToPage(pageId);
-            }
-        });
-
-        // Logout function
-        function logout() {
-            auth.signOut()
-                .then(() => {
-                    // Reset user state
-                    currentUser = null;
-                    userData = null;
+                // Create withdrawal request
+                db.collection('withdrawals').add({
+                    userId: currentUser.uid,
+                    amount: amount,
+                    method: method,
+                    upiId: upiId,
+                    accountNumber: accountNumber,
+                    ifscCode: ifscCode,
+                    status: 'pending',
+                    createdAt: new Date()
+                }).then(() => {
+                    // Update user balance
+                    const newBalance = userData.balance - amount;
+                    db.collection('users').doc(currentUser.uid).update({
+                        balance: newBalance
+                    }).then(() => {
+                        // Add transaction
+                        db.collection('transactions').add({
+                            userId: currentUser.uid,
+                            type: 'withdrawal',
+                            amount: amount,
+                            description: `Withdrawal to ${method}`,
+                            date: new Date(),
+                            status: 'pending'
+                        }).then(() => {
+                            showAlert('withdrawal-alert', 'ఉపసంహరణ అభ్యర్థన విజయవంతంగా సబ్మిట్ చేయబడింది! 24-48 గంటల్లో ప్రాసెస్ చేయబడుతుంది.', 'success');
+                            
+                            // Reset form
+                            document.getElementById('withdraw-amount').value = '';
+                            document.getElementById('withdraw-method').value = '';
+                            document.getElementById('upi-id').value = '';
+                            document.getElementById('account-number').value = '';
+                            document.getElementById('ifsc-code').value = '';
+                            document.getElementById('upi-details').style.display = 'none';
+                            document.getElementById('bank-details').style.display = 'none';
+                            
+                            // Reload user data
+                            loadUserDataFromFirestore(currentUser.uid);
+                            
+                            // Reset button
+                            this.innerHTML = '<i class="fas fa-download"></i> ఉపసంహరించండి';
+                            this.disabled = false;
+                        });
+                    });
+                }).catch((error) => {
+                    console.error('Error creating withdrawal: ', error);
+                    showAlert('withdrawal-alert', 'ఉపసంహరణ విఫలమైంది. దయచేసి మళ్లీ ప్రయత్నించండి.', 'error');
                     
-                    // Update UI for logged out user
-                    updateUIForLoggedOutUser();
-                    
-                    showNotification('You have been logged out successfully.', 'success');
-                })
-                .catch((error) => {
-                    console.error('Error signing out:', error);
-                    showNotification('Error logging out. Please try again.', 'error');
+                    // Reset button
+                    this.innerHTML = '<i class="fas fa-download"></i> ఉపసంహరించండి';
+                    this.disabled = false;
                 });
-        }
-
-        // Update UI for logged in user
-        function updateUIForLoggedInUser() {
-            // Hide login page and show home page
-            document.getElementById('login').classList.remove('active');
-            document.getElementById('home').classList.add('active');
-            
-            // Update nav
-            navLinks.forEach(item => {
-                item.classList.remove('active');
-                if(item.getAttribute('data-page') === 'home') {
-                    item.classList.add('active');
-                }
-            });
-            
-            // Hide login button, show user info
-            document.getElementById('login-btn').style.display = 'none';
-            document.getElementById('logout-btn').style.display = 'inline-flex';
-            document.getElementById('user-balance').style.display = 'inline';
-            
-            // Load user data
-            updateUserProfileUI();
-            updateUserBalanceUI();
-            loadTasks();
-            loadTransactions();
-            
-            // Reset login form
-            document.getElementById('login-email').value = '';
-            document.getElementById('login-password').value = '';
-            document.getElementById('login-submit').innerHTML = '<i class="fas fa-sign-in-alt"></i> Login';
-            document.getElementById('login-submit').disabled = false;
-        }
-
-        // Update UI for logged out user
-        function updateUIForLoggedOutUser() {
-            // Show login page
-            document.getElementById('login').classList.add('active');
-            document.getElementById('home').classList.remove('active');
-            
-            // Update nav
-            navLinks.forEach(item => {
-                item.classList.remove('active');
-                if(item.getAttribute('data-page') === 'home') {
-                    item.classList.add('active');
-                }
-            });
-            
-            // Show login button, hide user info
-            document.getElementById('login-btn').style.display = 'inline-flex';
-            document.getElementById('logout-btn').style.display = 'none';
-            document.getElementById('user-balance').style.display = 'none';
-            
-            // Clear user data from UI
-            document.getElementById('user-name').textContent = 'User Name';
-            document.getElementById('user-phone').textContent = '+91 9876543210';
-            document.getElementById('user-email').textContent = 'user@example.com';
-            document.getElementById('wallet-balance').textContent = '₹0.00';
-            document.getElementById('completed-tasks').textContent = '0';
-            document.getElementById('total-earnings').textContent = '₹0';
-            document.getElementById('user-referrals').textContent = '0';
-            document.getElementById('member-since').textContent = '0';
-            
-            // Clear tasks
-            document.getElementById('featured-tasks').innerHTML = '';
-            document.getElementById('all-tasks').innerHTML = '';
-            document.getElementById('banking-tasks').innerHTML = '';
-            document.getElementById('finance-tasks').innerHTML = '';
-            document.getElementById('other-tasks').innerHTML = '';
-            
-            // Clear transactions
-            document.getElementById('transaction-list').innerHTML = '';
-        }
-
-        // Update user profile UI
-        function updateUserProfileUI() {
-            if (!userData) return;
-            
-            // Calculate days since member
-            const daysSinceMember = Math.floor((new Date() - new Date(userData.memberSince).getTime()) / (1000 * 60 * 60 * 24));
-            
-            // Update UI with user data
-            document.getElementById('user-name').textContent = userData.name || 'User Name';
-            document.getElementById('user-phone').textContent = userData.phone || '+91 9876543210';
-            document.getElementById('user-email').textContent = userData.email || 'user@example.com';
-            document.getElementById('completed-tasks').textContent = userData.completedTasks || 0;
-            document.getElementById('total-earnings').textContent = `₹${userData.totalEarnings || 0}`;
-            document.getElementById('user-referrals').textContent = userData.referrals || 0;
-            document.getElementById('member-since').textContent = daysSinceMember;
-            document.getElementById('total-referrals').textContent = userData.referrals || 0;
-            document.getElementById('referral-earnings').textContent = `₹${userData.referralEarnings || 0}`;
-            document.getElementById('referral-code').textContent = userData.referralCode || 'PMT2025XYZ';
-        }
-
-        // Update user balance UI
-        function updateUserBalanceUI() {
-            if (!userData) return;
-            
-            document.getElementById('user-balance').textContent = `₹${userData.balance || 0}.00`;
-            document.getElementById('wallet-balance').textContent = `₹${userData.balance || 0}.00`;
-        }
-
-        // Load bank accounts
-        function loadBankAccounts() {
-            const bankAccountsList = document.getElementById('bank-accounts-list');
-            
-            if (!userData.bankAccounts || userData.bankAccounts.length === 0) {
-                bankAccountsList.innerHTML = '<p style="text-align: center; padding: 20px; color: var(--gray);">No bank accounts added yet.</p>';
-                return;
             }
-            
-            bankAccountsList.innerHTML = '<h3 style="margin-bottom: 15px;">Your Bank Accounts</h3>';
-            
-            userData.bankAccounts.forEach(account => {
-                const accountHTML = `
-                    <div class="card" style="margin-bottom: 15px;">
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <div>
-                                <div style="font-weight: 600;">${account.bankName}</div>
-                                <div style="color: var(--gray); font-size: 0.9rem;">${account.accountNumber} • ${account.ifscCode}</div>
-                                <div style="color: var(--gray); font-size: 0.9rem;">${account.accountHolder}</div>
-                            </div>
-                            <button class="btn btn-danger remove-bank-account" data-account-id="${account.id}" style="padding: 5px 10px;">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
-                    </div>
-                `;
-                bankAccountsList.innerHTML += accountHTML;
-            });
-        }
-
-        // Remove bank account
-        function removeBankAccount(accountId) {
-            if (!confirm('Are you sure you want to remove this bank account?')) {
-                return;
-            }
-            
-            // Filter out the account to remove
-            const updatedBankAccounts = userData.bankAccounts.filter(account => account.id !== accountId);
-            
-            // Update in Firestore
-            db.collection('users').doc(currentUser.uid).update({
-                bankAccounts: updatedBankAccounts
-            })
-            .then(() => {
-                // Update local user data
-                userData.bankAccounts = updatedBankAccounts;
-                
-                // Reload bank accounts list
-                loadBankAccounts();
-                
-                showNotification('Bank account removed successfully!', 'success');
-            })
-            .catch((error) => {
-                console.error('Error removing bank account:', error);
-                showNotification('Error removing bank account. Please try again.', 'error');
-            });
-        }
+        });
 
         // Load tasks from Firebase
         function loadTasks() {
@@ -2707,10 +1989,6 @@
             financeContainer.innerHTML = '';
             otherContainer.innerHTML = '';
             
-            // Show loading state
-            featuredContainer.innerHTML = '<p style="text-align: center; padding: 20px; color: var(--gray);">Loading tasks...</p>';
-            allTasksContainer.innerHTML = '<p style="text-align: center; padding: 20px; color: var(--gray);">Loading tasks...</p>';
-            
             // Load tasks from Firebase
             db.collection('tasks').where('status', '==', 'active').get()
                 .then((querySnapshot) => {
@@ -2720,13 +1998,35 @@
                         return;
                     }
                     
-                    tasks = [];
                     querySnapshot.forEach((doc) => {
                         const task = doc.data();
-                        task.id = doc.id;
-                        tasks.push(task);
+                        const taskId = doc.id;
                         
-                        const taskHTML = createTaskHTML(task);
+                        const taskHTML = `
+                            <div class="task-card">
+                                <div class="task-category">${task.category}</div>
+                                <h3>${task.title}</h3>
+                                <p>${task.description}</p>
+                                <div class="task-details-grid">
+                                    <div class="task-detail-item">
+                                        <div class="task-detail-label">పేఅవుట్</div>
+                                        <div class="task-detail-value">₹${task.reward}</div>
+                                    </div>
+                                    <div class="task-detail-item">
+                                        <div class="task-detail-label">సమయం</div>
+                                        <div class="task-detail-value">${task.duration} రోజులు</div>
+                                    </div>
+                                    <div class="task-detail-item">
+                                        <div class="task-detail-label">ప్రూఫ్</div>
+                                        <div class="task-detail-value">${task.proofType || 'స్క్రీన్షాట్'}</div>
+                                    </div>
+                                </div>
+                                <div class="task-meta">
+                                    <div class="task-reward">₹${task.reward}</div>
+                                    <a href="#" class="btn task-details-btn" data-task-id="${taskId}">వివరాలు చూడండి</a>
+                                </div>
+                            </div>
+                        `;
                         
                         // Add to all tasks
                         allTasksContainer.innerHTML += taskHTML;
@@ -2745,11 +2045,6 @@
                             otherContainer.innerHTML += taskHTML;
                         }
                     });
-                    
-                    // If no featured tasks, show message
-                    if (featuredContainer.innerHTML === '') {
-                        featuredContainer.innerHTML = '<p style="text-align: center; padding: 20px; color: var(--gray);">No featured tasks available at the moment.</p>';
-                    }
                 })
                 .catch((error) => {
                     console.error('Error loading tasks: ', error);
@@ -2758,246 +2053,66 @@
                 });
         }
 
-        // Create task HTML based on task status
-        function createTaskHTML(task) {
-            let statusHTML = '';
-            let buttonHTML = '';
-            
-            if (userData && userData.completedTaskIds && userData.completedTaskIds.includes(task.id)) {
-                statusHTML = '<span class="task-status status-completed">Completed</span>';
-                buttonHTML = `<a href="#" class="btn btn-success" disabled><i class="fas fa-check"></i> Completed</a>`;
-            } else if (userData && userData.activeTasks && userData.activeTasks.find(t => t.id === task.id)) {
-                statusHTML = '<span class="task-status status-pending">In Progress</span>';
-                buttonHTML = `<a href="#" class="btn btn-warning complete-task-btn" data-task-id="${task.id}"><i class="fas fa-flag-checkered"></i> Mark Complete</a>`;
-            } else {
-                statusHTML = '<span class="task-status status-available">Available</span>';
-                buttonHTML = `<a href="#" class="btn task-details-btn" data-task-id="${task.id}">View Details</a>`;
-            }
-            
-            // Create task details (payout, time, proof)
-            const taskDetailsHTML = `
-                <div class="task-details">
-                    <div class="task-detail">
-                        <i class="fas fa-rupee-sign"></i>
-                        <span>₹${task.reward}</span>
-                    </div>
-                    <div class="task-detail">
-                        <i class="fas fa-clock"></i>
-                        <span>${task.duration || '1-7'} days</span>
-                    </div>
-                    <div class="task-detail">
-                        <i class="fas fa-file-alt"></i>
-                        <span>${task.proof || 'Screenshot'}</span>
-                    </div>
-                    <div class="task-detail">
-                        <i class="fas fa-tag"></i>
-                        <span>${task.category}</span>
-                    </div>
-                </div>
-            `;
-            
-            // Add task image if available
-            const taskImageHTML = task.imageUrl ? 
-                `<img src="${task.imageUrl}" alt="${task.title}" class="task-image">` : 
-                `<div class="task-image" style="background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem;">
-                    <i class="fas fa-tasks"></i>
-                </div>`;
-            
-            return `
-                <div class="task-card">
-                    ${taskImageHTML}
-                    <div class="task-category">${task.category} ${statusHTML}</div>
-                    <h3>${task.title}</h3>
-                    <p>${task.description}</p>
-                    ${taskDetailsHTML}
-                    <div class="task-meta">
-                        <div class="task-reward">₹${task.reward}</div>
-                        ${buttonHTML}
-                    </div>
-                </div>
-            `;
-        }
-
         // Show task details in modal
         function showTaskDetails(taskId) {
-            const task = tasks.find(t => t.id === taskId);
-            if (!task) return;
-            
-            let actionButton = '';
-            
-            if (userData && userData.completedTaskIds && userData.completedTaskIds.includes(taskId)) {
-                actionButton = `<button class="btn btn-success" disabled><i class="fas fa-check"></i> Task Completed</button>`;
-            } else if (userData && userData.activeTasks && userData.activeTasks.find(t => t.id === taskId)) {
-                actionButton = `<a href="#" class="btn btn-warning complete-task-btn" data-task-id="${taskId}"><i class="fas fa-flag-checkered"></i> Mark Complete</a>`;
-            } else {
-                actionButton = `<a href="#" class="btn btn-accent start-task-btn" data-task-id="${taskId}"><i class="fas fa-play"></i> Start Task</a>`;
-            }
-            
-            document.getElementById('task-modal-title').textContent = task.title;
-            document.getElementById('task-modal-body').innerHTML = `
-                <div class="task-category">${task.category}</div>
-                <p>${task.description}</p>
-                <div style="margin: 20px 0;">
-                    <h3 style="margin-bottom: 10px;">Task Details:</h3>
-                    <div class="task-details">
-                        <div class="task-detail">
-                            <i class="fas fa-rupee-sign"></i>
-                            <span><strong>Payout:</strong> ₹${task.reward}</span>
-                        </div>
-                        <div class="task-detail">
-                            <i class="fas fa-clock"></i>
-                            <span><strong>Time:</strong> ${task.duration || '1-7'} days</span>
-                        </div>
-                        <div class="task-detail">
-                            <i class="fas fa-file-alt"></i>
-                            <span><strong>Proof Required:</strong> ${task.proof || 'Screenshot'}</span>
-                        </div>
-                    </div>
-                </div>
-                <div style="margin: 20px 0;">
-                    <h3 style="margin-bottom: 10px;">Requirements:</h3>
-                    <p>${task.requirements}</p>
-                </div>
-                <div style="margin: 20px 0;">
-                    <h3 style="margin-bottom: 10px;">Steps to Complete:</h3>
-                    <div class="task-steps">
-                        ${task.steps ? task.steps.map((step, index) => `
-                            <div class="step">
-                                <div class="step-number">${index + 1}</div>
-                                <div>${step}</div>
+            db.collection('tasks').doc(taskId).get()
+                .then((doc) => {
+                    if (doc.exists) {
+                        const task = doc.data();
+                        
+                        document.getElementById('task-modal-title').textContent = task.title;
+                        document.getElementById('task-modal-body').innerHTML = `
+                            <div class="task-category">${task.category}</div>
+                            <p>${task.description}</p>
+                            <div class="task-details-grid">
+                                <div class="task-detail-item">
+                                    <div class="task-detail-label">పేఅవుట్</div>
+                                    <div class="task-detail-value">₹${task.reward}</div>
+                                </div>
+                                <div class="task-detail-item">
+                                    <div class="task-detail-label">సమయం</div>
+                                    <div class="task-detail-value">${task.duration} రోజులు</div>
+                                </div>
+                                <div class="task-detail-item">
+                                    <div class="task-detail-label">ప్రూఫ్</div>
+                                    <div class="task-detail-value">${task.proofType || 'స్క్రీన్షాట్'}</div>
+                                </div>
                             </div>
-                        `).join('') : `
-                            <div class="step">
-                                <div class="step-number">1</div>
-                                <div>Click on the 'Start Task' button</div>
+                            <div style="margin: 20px 0;">
+                                <h3 style="margin-bottom: 10px;">అవసరాలు:</h3>
+                                <p>${task.requirements || 'ప్రత్యేక అవసరాలు లేవు'}</p>
                             </div>
-                            <div class="step">
-                                <div class="step-number">2</div>
-                                <div>Complete the application process</div>
+                            <div style="margin: 20px 0;">
+                                <h3 style="margin-bottom: 10px;">పూర్తి చేయడానికి దశలు:</h3>
+                                <ol style="padding-left: 20px;">
+                                    <li>'టాస్క్ ప్రారంభించండి' బటన్పై క్లిక్ చేయండి</li>
+                                    <li>అందించిన లింక్ ద్వారా ప్రక్రియను పూర్తి చేయండి</li>
+                                    <li>ధృవీకరణ కోసం మీ అప్లికేషన్ ID సబ్మిట్ చేయండి</li>
+                                    <li>విజయవంతమైన ధృవీకరణ తర్వాత మీ రివార్డ్ను స్వీకరించండి</li>
+                                </ol>
                             </div>
-                            <div class="step">
-                                <div class="step-number">3</div>
-                                <div>Submit your application ID for verification</div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px;">
+                                <div class="task-reward">₹${task.reward}</div>
+                                <a href="${task.link}" target="_blank" class="btn">టాస్క్ ప్రారంభించండి</a>
                             </div>
-                            <div class="step">
-                                <div class="step-number">4</div>
-                                <div>Receive your reward after successful verification</div>
-                            </div>
-                        `}
-                    </div>
-                </div>
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px;">
-                    <div class="task-reward">₹${task.reward}</div>
-                    ${actionButton}
-                </div>
-            `;
-            
-            document.getElementById('task-modal').classList.add('active');
+                        `;
+                        
+                        document.getElementById('task-modal').classList.add('active');
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error getting task details: ', error);
+                });
         }
 
-        // Start a task
-        function startTask(taskId) {
-            if (!currentUser) {
-                showNotification('Please login to start tasks.', 'error');
-                return;
+        // Task modal functionality
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('task-details-btn')) {
+                e.preventDefault();
+                const taskId = e.target.getAttribute('data-task-id');
+                showTaskDetails(taskId);
             }
-            
-            const task = tasks.find(t => t.id === taskId);
-            if (!task) return;
-            
-            // Add task to user's active tasks
-            const updatedActiveTasks = [...(userData.activeTasks || []), {
-                id: taskId,
-                startedAt: new Date(),
-                task: task
-            }];
-            
-            // Update in Firestore
-            db.collection('users').doc(currentUser.uid).update({
-                activeTasks: updatedActiveTasks
-            })
-            .then(() => {
-                // Update local user data
-                userData.activeTasks = updatedActiveTasks;
-                
-                // Close modal and show notification
-                document.getElementById('task-modal').classList.remove('active');
-                showNotification(`You've started the "${task.title}" task!`, 'success');
-                
-                // Reload tasks to update UI
-                loadTasks();
-            })
-            .catch((error) => {
-                console.error('Error starting task:', error);
-                showNotification('Error starting task. Please try again.', 'error');
-            });
-        }
-
-        // Complete a task
-        function completeTask(taskId) {
-            if (!currentUser) {
-                showNotification('Please login to complete tasks.', 'error');
-                return;
-            }
-            
-            const task = tasks.find(t => t.id === taskId);
-            if (!task) return;
-            
-            // Remove from active tasks
-            const updatedActiveTasks = userData.activeTasks.filter(t => t.id !== taskId);
-            
-            // Add to completed tasks
-            const updatedCompletedTaskIds = [...(userData.completedTaskIds || []), taskId];
-            
-            // Update user stats
-            const updatedCompletedTasks = (userData.completedTasks || 0) + 1;
-            const updatedBalance = (userData.balance || 0) + task.reward;
-            const updatedTotalEarnings = (userData.totalEarnings || 0) + task.reward;
-            
-            // Add transaction
-            const transaction = {
-                id: 'txn_' + Date.now(),
-                type: 'task',
-                description: `Task Completion: ${task.title}`,
-                amount: task.reward,
-                date: new Date(),
-                status: 'completed'
-            };
-            
-            const updatedTransactions = [...(userData.transactions || []), transaction];
-            
-            // Update in Firestore
-            db.collection('users').doc(currentUser.uid).update({
-                activeTasks: updatedActiveTasks,
-                completedTaskIds: updatedCompletedTaskIds,
-                completedTasks: updatedCompletedTasks,
-                balance: updatedBalance,
-                totalEarnings: updatedTotalEarnings,
-                transactions: updatedTransactions
-            })
-            .then(() => {
-                // Update local user data
-                userData.activeTasks = updatedActiveTasks;
-                userData.completedTaskIds = updatedCompletedTaskIds;
-                userData.completedTasks = updatedCompletedTasks;
-                userData.balance = updatedBalance;
-                userData.totalEarnings = updatedTotalEarnings;
-                userData.transactions = updatedTransactions;
-                
-                // Update UI
-                updateUserProfileUI();
-                updateUserBalanceUI();
-                loadTasks();
-                loadTransactions();
-                
-                // Show notification
-                showNotification(`Congratulations! You've earned ₹${task.reward} for completing "${task.title}"`, 'success');
-            })
-            .catch((error) => {
-                console.error('Error completing task:', error);
-                showNotification('Error completing task. Please try again.', 'error');
-            });
-        }
+        });
 
         // Add sample tasks to Firebase (for first-time setup)
         function addSampleTasks() {
@@ -3009,17 +2124,11 @@
                     reward: 100,
                     link: "https://airtelbank.com",
                     requirements: "Aadhaar Card, PAN Card",
-                    duration: "7 days",
-                    proof: "Application ID Screenshot",
+                    duration: 7,
+                    proofType: "Application ID Screenshot",
                     featured: true,
                     status: "active",
-                    createdAt: new Date(),
-                    steps: [
-                        "Click on the 'Start Task' button",
-                        "Complete the Airtel Payments Bank account opening process",
-                        "Submit your application ID for verification",
-                        "Receive ₹100 after successful verification"
-                    ]
+                    createdAt: new Date()
                 },
                 {
                     title: "Credit Card Application", 
@@ -3028,17 +2137,11 @@
                     reward: 150,
                     link: "https://bank.com/credit-card",
                     requirements: "Income Proof, Address Proof",
-                    duration: "14 days",
-                    proof: "Application Reference Number",
+                    duration: 14,
+                    proofType: "Application Screenshot",
                     featured: true,
                     status: "active",
-                    createdAt: new Date(),
-                    steps: [
-                        "Click on the 'Start Task' button",
-                        "Apply for a credit card through our partner link",
-                        "Submit your application reference number",
-                        "Receive ₹150 after card approval"
-                    ]
+                    createdAt: new Date()
                 },
                 {
                     title: "Trading Account Opening",
@@ -3047,18 +2150,11 @@
                     reward: 200,
                     link: "https://tradingplatform.com",
                     requirements: "PAN Card, Bank Account",
-                    duration: "3 days",
-                    proof: "Trading Account Screenshot",
+                    duration: 3,
+                    proofType: "Account Screenshot",
                     featured: true,
                     status: "active",
-                    createdAt: new Date(),
-                    steps: [
-                        "Click on the 'Start Task' button",
-                        "Open a trading account with our broker partner",
-                        "Complete your first trade",
-                        "Submit trade details for verification",
-                        "Receive ₹200 after verification"
-                    ]
+                    createdAt: new Date()
                 },
                 {
                     title: "Paytm Wallet KYC",
@@ -3067,17 +2163,11 @@
                     reward: 50,
                     link: "https://paytm.com",
                     requirements: "Aadhaar Card",
-                    duration: "1 day",
-                    proof: "KYC Completion Screenshot",
+                    duration: 1,
+                    proofType: "KYC Screenshot",
                     featured: false,
                     status: "active",
-                    createdAt: new Date(),
-                    steps: [
-                        "Click on the 'Start Task' button",
-                        "Complete your Paytm Wallet KYC",
-                        "Submit screenshot of completed KYC",
-                        "Receive ₹50 instantly after verification"
-                    ]
+                    createdAt: new Date()
                 },
                 {
                     title: "Insurance Policy Purchase",
@@ -3086,17 +2176,11 @@
                     reward: 300,
                     link: "https://insurance.com",
                     requirements: "Basic personal details",
-                    duration: "30 days",
-                    proof: "Policy Details",
+                    duration: 30,
+                    proofType: "Policy Document",
                     featured: false,
                     status: "active",
-                    createdAt: new Date(),
-                    steps: [
-                        "Click on the 'Start Task' button",
-                        "Purchase a health insurance policy",
-                        "Submit policy details",
-                        "Receive ₹300 after verification"
-                    ]
+                    createdAt: new Date()
                 },
                 {
                     title: "Mobile Recharge Offer",
@@ -3105,17 +2189,11 @@
                     reward: 20,
                     link: "https://recharge.com",
                     requirements: "Mobile number",
-                    duration: "1 day",
-                    proof: "Recharge Screenshot",
+                    duration: 1,
+                    proofType: "Recharge Screenshot",
                     featured: false,
                     status: "active",
-                    createdAt: new Date(),
-                    steps: [
-                        "Click on the 'Start Task' button",
-                        "Recharge your mobile with ₹100 or more",
-                        "Submit screenshot of successful recharge",
-                        "Receive ₹20 cashback"
-                    ]
+                    createdAt: new Date()
                 }
             ];
             
@@ -3137,68 +2215,60 @@
         function showSampleTasks() {
             const sampleTasks = [
                 {
-                    id: "task1",
                     title: "Airtel Payments Bank Account",
                     category: "banking",
                     description: "Open an Airtel Payments Bank account through our link and earn ₹100 upon successful verification.",
                     reward: 100,
-                    duration: "7 days",
-                    proof: "Application ID Screenshot",
-                    featured: true
+                    link: "https://airtelbank.com",
+                    duration: 7,
+                    proofType: "Application ID Screenshot"
                 },
                 {
-                    id: "task2",
                     title: "Credit Card Application",
                     category: "finance", 
                     description: "Apply for a credit card through our partner bank and earn ₹150 upon approval.",
                     reward: 150,
-                    duration: "14 days",
-                    proof: "Application Reference Number",
-                    featured: true
+                    link: "https://bank.com/credit-card",
+                    duration: 14,
+                    proofType: "Application Screenshot"
                 },
                 {
-                    id: "task3",
                     title: "Trading Account Opening",
                     category: "finance",
                     description: "Open a trading account with our broker partner and earn ₹200 after your first trade.",
                     reward: 200,
-                    duration: "3 days",
-                    proof: "Trading Account Screenshot",
-                    featured: true
+                    link: "https://tradingplatform.com",
+                    duration: 3,
+                    proofType: "Account Screenshot"
                 },
                 {
-                    id: "task4",
                     title: "Paytm Wallet KYC",
                     category: "banking",
                     description: "Complete your Paytm Wallet KYC and earn ₹50 instantly.",
                     reward: 50,
-                    duration: "1 day",
-                    proof: "KYC Completion Screenshot",
-                    featured: false
+                    link: "https://paytm.com",
+                    duration: 1,
+                    proofType: "KYC Screenshot"
                 },
                 {
-                    id: "task5",
                     title: "Insurance Policy Purchase",
                     category: "finance",
                     description: "Purchase a health insurance policy through our partner and earn ₹300.",
                     reward: 300,
-                    duration: "30 days",
-                    proof: "Policy Details",
-                    featured: false
+                    link: "https://insurance.com",
+                    duration: 30,
+                    proofType: "Policy Document"
                 },
                 {
-                    id: "task6",
                     title: "Mobile Recharge Offer",
                     category: "other",
                     description: "Recharge your mobile with ₹100 or more and get ₹20 cashback.",
                     reward: 20,
-                    duration: "1 day",
-                    proof: "Recharge Screenshot",
-                    featured: false
+                    link: "https://recharge.com",
+                    duration: 1,
+                    proofType: "Recharge Screenshot"
                 }
             ];
-            
-            tasks = sampleTasks;
             
             const featuredContainer = document.getElementById('featured-tasks');
             const allTasksContainer = document.getElementById('all-tasks');
@@ -3206,14 +2276,38 @@
             const financeContainer = document.getElementById('finance-tasks');
             const otherContainer = document.getElementById('other-tasks');
             
-            sampleTasks.forEach((task) => {
-                const taskHTML = createTaskHTML(task);
+            sampleTasks.forEach((task, index) => {
+                const taskHTML = `
+                    <div class="task-card">
+                        <div class="task-category">${task.category}</div>
+                        <h3>${task.title}</h3>
+                        <p>${task.description}</p>
+                        <div class="task-details-grid">
+                            <div class="task-detail-item">
+                                <div class="task-detail-label">పేఅవుట్</div>
+                                <div class="task-detail-value">₹${task.reward}</div>
+                            </div>
+                            <div class="task-detail-item">
+                                <div class="task-detail-label">సమయం</div>
+                                <div class="task-detail-value">${task.duration} రోజులు</div>
+                            </div>
+                            <div class="task-detail-item">
+                                <div class="task-detail-label">ప్రూఫ్</div>
+                                <div class="task-detail-value">${task.proofType}</div>
+                            </div>
+                        </div>
+                        <div class="task-meta">
+                            <div class="task-reward">₹${task.reward}</div>
+                            <a href="#" class="btn task-details-btn" data-task-id="${index}">వివరాలు చూడండి</a>
+                        </div>
+                    </div>
+                `;
                 
                 // Add to all tasks
                 allTasksContainer.innerHTML += taskHTML;
                 
-                // Add featured tasks
-                if (task.featured) {
+                // Add first 3 tasks as featured
+                if (index < 3) {
                     featuredContainer.innerHTML += taskHTML;
                 }
                 
@@ -3230,30 +2324,66 @@
 
         // Load transactions
         function loadTransactions() {
+            if (!currentUser) return;
+            
             const transactionList = document.getElementById('transaction-list');
-            
-            if (!userData.transactions || userData.transactions.length === 0) {
-                transactionList.innerHTML = '<p style="text-align: center; padding: 20px; color: var(--gray);">No transactions yet</p>';
-                return;
-            }
-            
-            // Sort transactions by date (newest first)
-            const sortedTransactions = userData.transactions.sort((a, b) => new Date(b.date) - new Date(a.date));
-            
             transactionList.innerHTML = '';
             
-            sortedTransactions.forEach(transaction => {
+            // Load transactions from Firebase
+            db.collection('transactions')
+                .where('userId', '==', currentUser.uid)
+                .orderBy('date', 'desc')
+                .limit(10)
+                .get()
+                .then((querySnapshot) => {
+                    if (querySnapshot.empty) {
+                        // Show sample transactions if no transactions found
+                        showSampleTransactions();
+                        return;
+                    }
+                    
+                    querySnapshot.forEach((doc) => {
+                        const transaction = doc.data();
+                        const transactionHTML = `
+                            <li class="transaction-item">
+                                <div class="transaction-details">
+                                    <div>${transaction.description}</div>
+                                    <div style="font-size: 0.8rem; color: var(--gray);">${transaction.date.toDate().toLocaleDateString('te-IN')}</div>
+                                </div>
+                                <div class="transaction-amount ${transaction.type === 'withdrawal' ? 'negative' : 'positive'}">
+                                    ${transaction.type === 'withdrawal' ? '-' : '+'}₹${transaction.amount}
+                                </div>
+                            </li>
+                        `;
+                        transactionList.innerHTML += transactionHTML;
+                    });
+                })
+                .catch((error) => {
+                    console.error('Error loading transactions: ', error);
+                    showSampleTransactions();
+                });
+        }
+
+        // Show sample transactions (fallback)
+        function showSampleTransactions() {
+            const transactions = [
+                { description: "టాస్క్ పూర్తి: Airtel బ్యాంక్", date: "15 Oct 2023", amount: 100, type: "positive" },
+                { description: "టాస్క్ పూర్తి: క్రెడిట్ కార్డ్", date: "12 Oct 2023", amount: 150, type: "positive" },
+                { description: "రెఫరల్ బోనస్", date: "10 Oct 2023", amount: 10, type: "positive" },
+                { description: "బ్యాంక్కు ఉపసంహరణ", date: "5 Oct 2023", amount: 200, type: "negative" }
+            ];
+            
+            const transactionList = document.getElementById('transaction-list');
+            
+            transactions.forEach(transaction => {
                 const transactionHTML = `
                     <li class="transaction-item">
                         <div class="transaction-details">
                             <div>${transaction.description}</div>
-                            <div style="font-size: 0.8rem; color: var(--gray);">
-                                ${new Date(transaction.date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
-                                ${transaction.status ? ` • ${transaction.status}` : ''}
-                            </div>
+                            <div style="font-size: 0.8rem; color: var(--gray);">${transaction.date}</div>
                         </div>
-                        <div class="transaction-amount ${transaction.type === 'withdrawal' ? 'negative' : 'positive'}">
-                            ${transaction.type === 'withdrawal' ? '-' : '+'}₹${transaction.amount}
+                        <div class="transaction-amount ${transaction.type}">
+                            ${transaction.type === 'positive' ? '+' : '-'}₹${transaction.amount}
                         </div>
                     </li>
                 `;
@@ -3263,35 +2393,8 @@
 
         // Initialize the app
         document.addEventListener('DOMContentLoaded', function() {
-            // Check if user is already logged in
-            auth.onAuthStateChanged((user) => {
-                if (user) {
-                    // User is signed in
-                    currentUser = user;
-                    
-                    // Load user data from Firestore
-                    db.collection('users').doc(user.uid).get()
-                        .then((doc) => {
-                            if (doc.exists) {
-                                userData = doc.data();
-                                userData.uid = doc.id;
-                                
-                                // Update UI for logged in user
-                                updateUIForLoggedInUser();
-                            } else {
-                                console.error('No user data found');
-                                showNotification('Error loading user data.', 'error');
-                            }
-                        })
-                        .catch((error) => {
-                            console.error('Error loading user data:', error);
-                            showNotification('Error loading user data.', 'error');
-                        });
-                } else {
-                    // User is signed out
-                    updateUIForLoggedOutUser();
-                }
-            });
+            // Firebase auth state observer will handle the rest
+            console.log('EarnPe app initialized');
             
             // Load tasks
             loadTasks();
