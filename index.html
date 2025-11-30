@@ -797,6 +797,38 @@
             display: none;
         }
 
+        .withdrawal-status {
+            padding: 10px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .status-pending {
+            background: rgba(255, 193, 7, 0.2);
+            color: var(--warning);
+            border: 1px solid var(--warning);
+        }
+
+        .status-processing {
+            background: rgba(0, 123, 255, 0.2);
+            color: #007bff;
+            border: 1px solid #007bff;
+        }
+
+        .status-completed {
+            background: rgba(40, 167, 69, 0.2);
+            color: var(--success);
+            border: 1px solid var(--success);
+        }
+
+        .status-rejected {
+            background: rgba(220, 53, 69, 0.2);
+            color: var(--danger);
+            border: 1px solid var(--danger);
+        }
+
         @media (max-width: 768px) {
             .header-content {
                 flex-direction: column;
@@ -959,6 +991,12 @@
                 <ul class="transaction-list" id="transaction-list">
                     <!-- Transactions will be loaded here -->
                 </ul>
+            </div>
+            <div class="card">
+                <h2><i class="fas fa-history"></i> Withdrawal History</h2>
+                <div id="withdrawal-history">
+                    <p style="text-align: center; padding: 20px; color: var(--gray);">No withdrawal history found.</p>
+                </div>
             </div>
         </section>
 
@@ -1277,6 +1315,13 @@
                 </div>
             </div>
             <div class="card">
+                <h2><i class="fab fa-telegram"></i> Join Our Telegram Channel</h2>
+                <p style="margin-bottom: 20px;">Stay updated with the latest tasks and offers by joining our Telegram channel.</p>
+                <a href="https://t.me/+cquoRacxlAIxZTg1" target="_blank" class="btn btn-accent">
+                    <i class="fab fa-telegram"></i> Join Now
+                </a>
+            </div>
+            <div class="card">
                 <h2><i class="fas fa-question-circle"></i> Frequently Asked Questions</h2>
                 <div style="margin-top: 20px;">
                     <div style="padding: 15px 0; border-bottom: 1px solid var(--border);">
@@ -1471,6 +1516,9 @@
                     <h3>Contact Info</h3>
                     <p><i class="fas fa-envelope"></i> ishwarchinna8@gmail.com</p>
                     <p><i class="fas fa-user"></i> IPPILI ESWARA RAO</p>
+                    <a href="https://t.me/+cquoRacxlAIxZTg1" target="_blank" style="color: #0088cc;">
+                        <i class="fab fa-telegram"></i> Join Our Telegram Channel
+                    </a>
                 </div>
             </div>
             <div class="copyright">
@@ -1533,6 +1581,11 @@
                 // Show the selected page
                 const pageId = this.getAttribute('data-page');
                 document.getElementById(pageId).classList.add('active');
+                
+                // Load withdrawal history if on wallet page
+                if (pageId === 'wallet' && currentUser) {
+                    loadWithdrawalHistory();
+                }
             });
         });
 
@@ -1645,7 +1698,7 @@
 
         document.getElementById('privacy-policy-btn').addEventListener('click', function(e) {
             e.preventDefault();
-            document.getElementById('profile').classList.remove('active');
+            document.getElementById('profile').classnelist.remove('active');
             document.getElementById('privacy').classList.add('active');
             
             // Update nav
@@ -2047,6 +2100,7 @@
             // Load data
             loadTasks();
             loadTransactions();
+            loadWithdrawalHistory();
         }
 
         // Firebase Auth State Observer
@@ -2109,7 +2163,7 @@
             }
         });
 
-        // Withdraw functionality
+        // Withdraw functionality with proper status tracking
         document.getElementById('withdraw-submit').addEventListener('click', function() {
             const amount = parseFloat(document.getElementById('withdraw-amount').value);
             const method = document.getElementById('withdraw-method').value;
@@ -2168,32 +2222,41 @@
                 this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
                 this.disabled = true;
                 
-                // Create withdrawal request
-                db.collection('withdrawals').add({
+                // Create withdrawal request with pending status
+                const withdrawalData = {
                     userId: currentUser.uid,
+                    userName: userData.name,
                     amount: amount,
                     method: method,
-                    upiId: upiId,
-                    accountNumber: accountNumber,
-                    ifscCode: ifscCode,
+                    upiId: method === 'upi' ? upiId : null,
+                    accountNumber: method === 'bank' ? accountNumber : null,
+                    ifscCode: method === 'bank' ? ifscCode : null,
                     status: 'pending',
-                    createdAt: new Date()
-                }).then(() => {
+                    createdAt: new Date(),
+                    processedAt: null,
+                    adminNotes: 'Withdrawal request submitted. Under verification.'
+                };
+                
+                db.collection('withdrawals').add(withdrawalData)
+                .then((docRef) => {
+                    const withdrawalId = docRef.id;
+                    
                     // Update user balance
                     const newBalance = userData.balance - amount;
                     db.collection('users').doc(currentUser.uid).update({
                         balance: newBalance
                     }).then(() => {
-                        // Add transaction
+                        // Add transaction with pending status
                         db.collection('transactions').add({
                             userId: currentUser.uid,
                             type: 'withdrawal',
                             amount: amount,
-                            description: `Withdrawal to ${method}`,
+                            description: `Withdrawal to ${method} (Pending)`,
                             date: new Date(),
-                            status: 'pending'
+                            status: 'pending',
+                            withdrawalId: withdrawalId
                         }).then(() => {
-                            showAlert('withdrawal-alert', 'Withdrawal request submitted successfully! Will be processed in 24-48 hours.', 'success');
+                            showAlert('withdrawal-alert', 'Withdrawal request submitted successfully! Status: Pending - Under verification.', 'success');
                             
                             // Reset form
                             document.getElementById('withdraw-amount').value = '';
@@ -2204,8 +2267,9 @@
                             document.getElementById('upi-details').style.display = 'none';
                             document.getElementById('bank-details').style.display = 'none';
                             
-                            // Reload user data
+                            // Reload user data and withdrawal history
                             loadUserDataFromFirestore(currentUser.uid);
+                            loadWithdrawalHistory();
                             
                             // Reset button
                             this.innerHTML = '<i class="fas fa-download"></i> Withdraw Funds';
@@ -2222,6 +2286,58 @@
                 });
             }
         });
+
+        // Load withdrawal history
+        function loadWithdrawalHistory() {
+            if (!currentUser) return;
+            
+            const withdrawalHistory = document.getElementById('withdrawal-history');
+            withdrawalHistory.innerHTML = '';
+            
+            db.collection('withdrawals')
+                .where('userId', '==', currentUser.uid)
+                .orderBy('createdAt', 'desc')
+                .limit(10)
+                .get()
+                .then((querySnapshot) => {
+                    if (querySnapshot.empty) {
+                        withdrawalHistory.innerHTML = '<p style="text-align: center; padding: 20px; color: var(--gray);">No withdrawal history found.</p>';
+                        return;
+                    }
+                    
+                    let historyHTML = '';
+                    querySnapshot.forEach((doc) => {
+                        const withdrawal = doc.data();
+                        const withdrawalId = doc.id;
+                        const date = withdrawal.createdAt.toDate().toLocaleDateString('en-IN');
+                        
+                        let statusClass = 'status-pending';
+                        if (withdrawal.status === 'processing') statusClass = 'status-processing';
+                        else if (withdrawal.status === 'completed') statusClass = 'status-completed';
+                        else if (withdrawal.status === 'rejected') statusClass = 'status-rejected';
+                        
+                        historyHTML += `
+                            <div class="transaction-item">
+                                <div class="transaction-details">
+                                    <div>Withdrawal to ${withdrawal.method}</div>
+                                    <div style="font-size: 0.8rem; color: var(--gray);">${date} • ID: ${withdrawalId.substring(0, 8)}</div>
+                                    <div style="font-size: 0.8rem; color: var(--gray); margin-top: 5px;">${withdrawal.adminNotes || 'Under verification'}</div>
+                                </div>
+                                <div style="display: flex; flex-direction: column; align-items: flex-end;">
+                                    <div class="transaction-amount negative">-₹${withdrawal.amount}</div>
+                                    <div class="withdrawal-status ${statusClass}">${withdrawal.status}</div>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    
+                    withdrawalHistory.innerHTML = historyHTML;
+                })
+                .catch((error) => {
+                    console.error('Error loading withdrawal history: ', error);
+                    withdrawalHistory.innerHTML = '<p style="text-align: center; padding: 20px; color: var(--gray);">Error loading withdrawal history.</p>';
+                });
+        }
 
         // Load tasks from Firebase
         function loadTasks() {
